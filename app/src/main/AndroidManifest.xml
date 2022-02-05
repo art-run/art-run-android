@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Artrunandroid">
         <activity
+            android:name=".BodyInformEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
