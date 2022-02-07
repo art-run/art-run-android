@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MysocialFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="516dp"
+        android:background="#BABABA"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_notice" />
+
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@+id/item_image"
+            android:layout_toLeftOf="@id/item_image"
+            android:text="제목"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/item_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_title"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@+id/item_image"
+            android:layout_toLeftOf="@+id/item_image"
+            android:text="거리: ~~km" />
+
+        <TextView
+            android:id="@+id/item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_detail"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@+id/item_image"
+            android:layout_toLeftOf="@+id/item_image"
+            android:text="20XX.XX.XX" />
+
+    </RelativeLayout>
+</FrameLayout>
