@@ -2,7 +2,6 @@ package com.example.art_run_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.art_run_android.databinding.ActivityMainBinding
 import androidx.viewpager2.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayout
