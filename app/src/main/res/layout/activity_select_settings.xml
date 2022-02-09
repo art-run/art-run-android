@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SelectSettingsActivity">
 
-    <Button
-        android:id="@+id/button41"
-        android:layout_width="50dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="13dp"
-        android:text="←"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -84,7 +74,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/example_picture" />
+        app:srcCompat="@drawable/example_picture"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/button6"

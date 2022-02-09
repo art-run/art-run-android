@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".Setrunning">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,6 +15,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button_opt1_walk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -25,6 +25,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/button_opt1_run"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -41,6 +42,7 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/button_opt2_dist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -50,6 +52,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/button_opt2_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
@@ -58,6 +61,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/button_opt2_kcal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -70,15 +74,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:gravity="center">
+        android:layout_marginTop="25dp">
 
         <EditText
             android:layout_width="250dp"
             android:layout_height="40dp"
-            android:background="@color/grey" />
+            android:background="@color/grey"
+            android:layout_marginLeft="50dp"
+            android:inputType="number"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
+            android:id="@+id/textView_bs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -86,10 +93,13 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
-            tools:text="  Kcal" />
+            android:layout_marginLeft="20dp"
+            tools:text="kcal"
+            tools:ignore="TouchTargetSizeCheck"/>
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_okay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

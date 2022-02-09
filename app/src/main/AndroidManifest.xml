@@ -9,6 +9,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".CourseRunActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FreeRunActivity"
+            android:exported="false" />
+        <activity
             android:name=".SelectSettingsActivity"
             android:exported="false" />
         <activity
@@ -25,6 +31,12 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RunningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SocialActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
