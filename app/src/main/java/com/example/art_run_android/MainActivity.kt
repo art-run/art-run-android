@@ -1,46 +1,98 @@
 package com.example.art_run_android
 
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.core.view.GravityCompat
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
-
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private lateinit var navigationView: NavigationView
-    private lateinit var drawerLayout: DrawerLayout
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_navigation_menu)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-
-        navigationView = findViewById(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener(this)
+        setListener()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId) {
-            android.R.id.home -> {
-                drawerLayout.openDrawer(GravityCompat.START)
+    private fun setListener() {
+        val tabLayout: TabLayout = findViewById(R.id.tabbar)
+        val startButton: ImageButton = findViewById(R.id.startButton)
+
+        tabLayout.selectTab(tabLayout.getTabAt(0))
+
+        startButton.setOnClickListener {
+            if (tabLayout.selectedTabPosition == 0) {
+                val intent = Intent(this, FreeRunActivity::class.java)
+                startActivity(intent)
+            }
+            if (tabLayout.selectedTabPosition == 1) {
+                setCourse()
             }
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
+    private fun setCourse() {
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheet_setcourse, null)
+        val bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+        val textView : TextView = bottomSheetView.findViewById(R.id.textView_bs)
+
+        val opt1ButtonList: List<Button> by lazy {
+            listOf<Button>(
+                bottomSheetView.findViewById(R.id.button_opt1_walk),
+                bottomSheetView.findViewById(R.id.button_opt1_run)
+            )
+        }
+
+        val opt2ButtonList: List<Button> by lazy {
+            listOf<Button>(
+                bottomSheetView.findViewById(R.id.button_opt2_dist),
+                bottomSheetView.findViewById(R.id.button_opt2_time),
+                bottomSheetView.findViewById(R.id.button_opt2_kcal)
+            )
+        }
+
+        for (but in opt1ButtonList) {
+            but.setOnClickListener {
+                but.setBackgroundColor(Color.GRAY)
+                for (ton in opt1ButtonList) {
+                    if (but == ton) {
+                        continue;
+                    }
+                    ton.setBackgroundColor(Color.WHITE)
+                }
+            }
+        }
+
+        for (but in opt2ButtonList) {
+            but.setOnClickListener {
+                but.setBackgroundColor(Color.GRAY)
+                for (ton in opt2ButtonList) {
+                    if (but == ton) {
+                        continue;
+                    }
+                    ton.setBackgroundColor(Color.WHITE)
+                }
+                val index = opt2ButtonList.indexOf(but)
+                when(index){
+                    0-> textView.text = "km"
+                    1-> textView.text = "분"
+                    2-> textView.text = "kcal"
+                }
+            }
+        }
+
+        val okayButton: Button = bottomSheetView.findViewById(R.id.button_okay)
+
+        okayButton.setOnClickListener {
+            val intent = Intent(this, CourseRunActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

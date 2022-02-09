@@ -5,19 +5,20 @@ import android.os.Bundle
 import androidx.viewpager2.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_social.*
+//import kotlinx.android.synthetic.main.activity_social.*
 
 
-class SocialActivity : AppCompatActivity() {
+class SocialActivity : BaseActivity() {
 
     private val tabTextList = arrayListOf("최근 기록", "내 기록")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_social)
-        init()
+       /* init()*/
     }
 
+/*
     private fun init() {
         viewPager2.adapter = FragmentAdapter(this)
         TabLayoutMediator(tabLayout, viewPager2) {
@@ -25,6 +26,6 @@ class SocialActivity : AppCompatActivity() {
             tab.text = tabTextList[position]
         }.attach()
     }
-
+*/
 
 }

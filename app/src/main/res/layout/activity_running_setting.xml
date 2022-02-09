@@ -81,14 +81,17 @@
                 android:layout_weight="1"
                 android:text="빨강"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
                 android:id="@+id/radioButton22"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="파랑" />
+                android:text="파랑"
+                tools:ignore="TouchTargetSizeCheck" />
+
             <RadioButton
                 android:id="@+id/radioButton33"
                 android:layout_width="0dp"
@@ -96,7 +99,8 @@
                 android:layout_weight="1"
                 android:text="초록"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </RadioGroup>
     </LinearLayout>
@@ -156,14 +160,16 @@
                 android:layout_weight="1"
                 android:text="On"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Off" />
+                android:text="Off"
+                tools:ignore="TouchTargetSizeCheck" />
         </RadioGroup>
 
     </LinearLayout>
@@ -194,6 +200,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/example_picture" />
+        app:srcCompat="@drawable/example_picture"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
