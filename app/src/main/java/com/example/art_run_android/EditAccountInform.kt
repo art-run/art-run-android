@@ -23,6 +23,9 @@ class EditAccountInform : BaseActivity() {
 
             val toast=Toast.makeText(this,message,Toast.LENGTH_LONG)
             toast.show()
+
+            val intent = Intent(this,SelectSettingsActivity::class.java)
+            startActivity(intent)
         }
     }
 }
