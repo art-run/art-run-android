@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/example_picture" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/text_userID"
             android:layout_width="225dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/text_userPassword"
             android:layout_width="225dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
@@ -46,7 +46,7 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bt_login"
             android:layout_width="225dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -66,14 +66,14 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bt_findID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="아이디/비밀번호 찾기" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/bt_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

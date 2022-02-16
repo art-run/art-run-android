@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".EditAccountInform">
     <Button
-        android:id="@+id/button41"
+        android:id="@+id/bt_back"
         android:layout_width="50dp"
         android:layout_height="55dp"
         android:layout_marginStart="7dp"
@@ -76,7 +76,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/text_userEmail"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -105,7 +105,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
+            android:id="@+id/text_weight"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -134,7 +134,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/text_height"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -145,7 +145,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/bt_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
