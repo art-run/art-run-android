@@ -10,8 +10,8 @@ class FragmentAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fragme
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> MysocialFragment()
-            else -> RecentsocialFragment()
+            0 -> RecentsocialFragment()
+            else -> MysocialFragment()
             //else -> Error()
         }
     }
