@@ -7,7 +7,7 @@
     tools:context=".RunningSettingActivity">
 
     <Button
-        android:id="@+id/button41"
+        android:id="@+id/bt_back"
         android:layout_width="50dp"
         android:layout_height="55dp"
         android:layout_marginStart="7dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/bt_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"

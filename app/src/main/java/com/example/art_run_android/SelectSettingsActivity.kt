@@ -9,9 +9,9 @@ class SelectSettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_settings)
 
-        val button6: Button = findViewById(R.id.button6)
-        val button7: Button = findViewById(R.id.button7)
-        val button8: Button = findViewById(R.id.button8)
+        val button6: Button = findViewById(R.id.bt_bodyInfoEdit)
+        val button7: Button = findViewById(R.id.bt_editAccountInfo)
+        val button8: Button = findViewById(R.id.bt_runningSetting)
         button6.setOnClickListener {
             startActivity(Intent(this, BodyInformEditActivity::class.java))
         }
