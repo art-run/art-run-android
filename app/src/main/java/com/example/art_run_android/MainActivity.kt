@@ -21,17 +21,17 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
-    private val PERMISSIONS = arrayOf(
+    val PERMISSIONS = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION)
 
-    private val REQUEST_PERMISSION_CODE = 1
+    val REQUEST_PERMISSION_CODE = 1
 
-    private val DEFAULT_ZOOM_LEVEL = 17f
+    val DEFAULT_ZOOM_LEVEL = 17f
 
-    private val CITY_HALL = LatLng(37.5662952, 126.97794509999994)
+    val defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
-    private var googleMap: GoogleMap? = null
+    var googleMap: GoogleMap? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,7 +155,7 @@ class MainActivity : BaseActivity() {
                     it.moveCamera(CameraUpdateFactory.newLatLngZoom(getMyLocation(), DEFAULT_ZOOM_LEVEL))
                 }
                 else -> {
-                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(CITY_HALL, DEFAULT_ZOOM_LEVEL))
+                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM_LEVEL))
                 }
             }
         }
@@ -173,7 +173,7 @@ class MainActivity : BaseActivity() {
         return if (lastKnownLocation != null) {
             LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
         } else {
-            CITY_HALL
+            defaultLocation
         }
     }
 
