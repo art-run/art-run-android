@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_recentsocial.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +23,8 @@ class RecentsocialFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var recyclerView : RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,7 +39,25 @@ class RecentsocialFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recentsocial, container, false)
+
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.findViewById(R.id.rv_profile)
+        val profileList = arrayListOf(
+            SocialData("김ㅇㅇ", "asdf", "3", "2022-02-13" ),
+            SocialData("이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
+            SocialData("박ㅇㅇ", "qwer", "11" , "2022-12-12"),
+            SocialData("한ㅇㅇ", "qwer44", "0", "2021-11-11"),
+            SocialData("김ㅇㅇ", "asdf", "3", "2022-02-13" ),
+            SocialData("이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
+        )
+
+        recyclerView.adapter = RecyclerAdapter_Social(profileList)
+        recyclerView.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false) }
+
+
 
     companion object {
         /**

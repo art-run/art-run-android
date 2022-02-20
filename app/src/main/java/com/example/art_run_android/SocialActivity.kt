@@ -28,20 +28,4 @@ class SocialActivity : BaseActivity() {
         }.attach()
     }
 
-//    private fun getData() {// 임시데이터
-//        val profileList = arrayListOf(
-//            SocialData("김ㅇㅇ", "asdf", "3", "2022-02-13" ),
-//            SocialData("이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
-//            SocialData("박ㅇㅇ", "qwer", "11" , "2022-12-12"),
-//            SocialData("한ㅇㅇ", "qwer44", "0", "2021-11-11"),
-//            SocialData("김ㅇㅇ", "asdf", "3", "2022-02-13" ),
-//            SocialData("이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
-//        )
-//
-//        rv_profile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        rv_profile.setHasFixedSize(true)
-//        rv_profile.adapter = RecyclerAdapter_Social(profileList)
-//
-//    }
-
 }
