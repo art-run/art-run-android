@@ -11,10 +11,15 @@ class RunningActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_running)
 
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.mapView3, MapsFragment())
+        transaction.commit()
+
         val pauseButton: ImageButton = findViewById(R.id.pauseButton)
         val startButton: ImageButton = findViewById(R.id.startButton3)
         startButton.isVisible = false
         startButton.isClickable = false
+
 
 
         pauseButton.setOnClickListener{

@@ -2,6 +2,7 @@ package com.example.art_run_android.running
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.example.art_run_android.BaseActivity
@@ -14,8 +15,13 @@ class FreeRunActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freerun)
 
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.mapView2, MapsFragment())
+        transaction.commit()
+
         val drawRouteView = DrawRouteView(this)
-        val drawRouteLayout : LinearLayout = findViewById(R.id.drawRouteLayout)
+        val drawRouteLayout : FrameLayout = findViewById(R.id.drawRouteLayout)
         drawRouteLayout.addView(drawRouteView)
 
         val undoButton : ImageButton = findViewById(R.id.undoButton)

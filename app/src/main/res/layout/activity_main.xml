@@ -35,11 +35,10 @@
                 android:text="코스추천" />
         </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.gms.maps.MapView
+        <FrameLayout
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <ImageButton
