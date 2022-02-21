@@ -25,10 +25,10 @@
             android:required="false"/>
 
         <activity
-            android:name=".CourseRunActivity"
+            android:name=".running.CourseRunActivity"
             android:exported="false" />
         <activity
-            android:name=".FreeRunActivity"
+            android:name=".running.FreeRunActivity"
             android:exported="false" />
         <activity
             android:name=".SelectSettingsActivity"
@@ -55,13 +55,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RunningActivity"
+            android:name=".running.RunningActivity"
             android:exported="false" />
         <activity
             android:name=".SocialActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".running.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

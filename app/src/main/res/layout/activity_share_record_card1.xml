@@ -13,7 +13,8 @@
         app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        tools:layout_editor_absoluteY="170dp" />
+        tools:layout_editor_absoluteY="170dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -21,8 +22,8 @@
         android:layout_height="360dp"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
         app:layout_constraintStart_toEndOf="@+id/linearLayout8"
-        app:srcCompat="@drawable/runningMapEx"
-        tools:layout_editor_absoluteY="178dp" />
+        tools:layout_editor_absoluteY="178dp"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/linearLayout8"
@@ -30,7 +31,8 @@
         android:layout_height="19dp"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="506dp">
+        tools:layout_editor_absoluteY="506dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/textView11"
@@ -69,7 +71,6 @@
         android:layout_marginBottom="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
-        app:layout_constraintEnd_toEndOf="@+id/switch1"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">

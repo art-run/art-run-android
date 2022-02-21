@@ -1,4 +1,4 @@
-package com.example.art_run_android
+package com.example.art_run_android.running
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,6 +13,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import com.example.art_run_android.BaseActivity
+import com.example.art_run_android.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng

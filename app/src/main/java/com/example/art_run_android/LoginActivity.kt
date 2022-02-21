@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.art_run_android.databinding.ActivityLoginBinding
+import com.example.art_run_android.running.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity,"통신 성공입니다!!",Toast.LENGTH_LONG).show()
 
                     val login=response.body()?.accessToken
-                    Toast.makeText(this@LoginActivity,login,Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity,login+"",Toast.LENGTH_LONG).show()
 
-                    val intent = Intent(this@LoginActivity,MainActivity::class.java)
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                 }//통신 성공시
 
