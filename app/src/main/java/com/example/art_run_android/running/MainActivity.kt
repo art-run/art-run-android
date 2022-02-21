@@ -1,28 +1,19 @@
 package com.example.art_run_android.running
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.R
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseActivity() {
+    /*
     val PERMISSIONS = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION)
@@ -34,19 +25,24 @@ class MainActivity : BaseActivity() {
     val defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
     var googleMap: GoogleMap? = null
-
-
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setListener()
-        mapView.onCreate(savedInstanceState)
 
-        if (checkPermissions()) {
-            initMap()
-        } else {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_CODE)
-        }
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.mapView, MapsFragment())
+        transaction.commit()
+        /*
+            mapView.onCreate(savedInstanceState)
+
+            if (checkPermissions()) {
+                initMap()
+            } else {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_CODE)
+            }
+             */
     }
 
     private fun setListener() {
@@ -72,7 +68,7 @@ class MainActivity : BaseActivity() {
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
 
-        val textView : TextView = bottomSheetView.findViewById(R.id.textView_bs)
+        val textView: TextView = bottomSheetView.findViewById(R.id.textView_bs)
 
         val opt1ButtonList: List<Button> by lazy {
             listOf<Button>(
@@ -111,10 +107,10 @@ class MainActivity : BaseActivity() {
                     ton.setBackgroundColor(Color.WHITE)
                 }
                 val index = opt2ButtonList.indexOf(but)
-                when(index){
-                    0-> textView.text = "km"
-                    1-> textView.text = "분"
-                    2-> textView.text = "kcal"
+                when (index) {
+                    0 -> textView.text = "km"
+                    1 -> textView.text = "분"
+                    2 -> textView.text = "kcal"
                 }
             }
         }
@@ -127,7 +123,7 @@ class MainActivity : BaseActivity() {
         }
 
     }
-
+/*
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -178,5 +174,5 @@ class MainActivity : BaseActivity() {
             defaultLocation
         }
     }
-
+*/
 }
