@@ -1,7 +1,5 @@
 package com.example.art_run_android
 
-package com.example.art_run_android
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

@@ -1,9 +1,11 @@
-package com.example.art_run_android
+package com.example.art_run_android.running
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import com.example.art_run_android.BaseActivity
+import com.example.art_run_android.R
 
 
 class FreeRunActivity : BaseActivity() {

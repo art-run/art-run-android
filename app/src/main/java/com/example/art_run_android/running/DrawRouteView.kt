@@ -1,4 +1,4 @@
-package com.example.art_run_android
+package com.example.art_run_android.running
 
 import android.content.Context
 import android.graphics.Canvas
