@@ -28,11 +28,13 @@ class MainActivity : BaseActivity() {
 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.running_activity_main)
         setListener()
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.mapView, MapsFragment())
+        val mapsFragment = MapsFragment()
+
+        transaction.add(R.id.mapView, mapsFragment)
         transaction.commit()
         /*
             mapView.onCreate(savedInstanceState)
@@ -63,7 +65,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setCourse() {
-        val bottomSheetView = layoutInflater.inflate(R.layout.bottomsheet_setcourse, null)
+        val bottomSheetView = layoutInflater.inflate(R.layout.running_bottomsheet_setcourse, null)
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()

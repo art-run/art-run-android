@@ -9,7 +9,7 @@ import com.example.art_run_android.R
 class CourseRunActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_courserun)
+        setContentView(R.layout.running_activity_courserun)
         val confirmButton: ImageButton = findViewById(R.id.confirm_button)
         confirmButton.setOnClickListener {
             val intent = Intent(this, RunningActivity::class.java)
