@@ -5,15 +5,24 @@
       <map>
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_base.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_body_inform_edit.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_courserun.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_edit_account_inform.xml" value="0.2390625" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_courserun.xml" value="0.264" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_edit_account_inform.xml" value="0.264" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_freerun.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_running.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_running_setting.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_select_settings.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_sign_up.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_sign_up2.xml" value="0.264" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_social.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/appbar.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_body_inform_edit.xml" value="0.264" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_edit_account_inform.xml" value="0.264" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_login.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_running_setting.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_sign_up.xml" value="0.2515625" />
+        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_sign_up2.xml" value="0.2" />
         <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/menu/navigation_menu.xml" value="0.2390625" />
         <entry key="..\:/art-run/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/art-run/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />

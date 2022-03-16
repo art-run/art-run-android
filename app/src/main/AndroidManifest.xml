@@ -2,14 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.art_run_android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".member_management.SignUpActivity2"
+            android:exported="false" />
         <activity
             android:name=".CourseRunActivity"
             android:exported="false" />
@@ -17,22 +21,22 @@
             android:name=".FreeRunActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectSettingsActivity"
+            android:name=".member_management.SelectSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".RunningSettingActivity"
+            android:name=".member_management.RunningSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".EditAccountInform"
+            android:name=".member_management.EditAccountInform"
             android:exported="false" />
         <activity
-            android:name=".BodyInformEditActivity"
+            android:name=".member_management.BodyInformEditActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".member_management.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".member_management.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

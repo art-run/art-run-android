@@ -1,11 +1,11 @@
-package com.example.art_run_android
+package com.example.art_run_android.member_management
 
-data class MemberInfo(
+data class EditMemberInfoResponse(
     val age: Int,
     val email: String,
     val gender: String,
     val height: Int,
     val nickname: String,
-    val password: String,
+    val profileImg: String,
     val weight: Int
 )

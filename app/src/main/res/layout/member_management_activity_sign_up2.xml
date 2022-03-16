@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RunningSettingActivity">
-
+    tools:context=".member_management.SignUpActivity2">
     <Button
         android:id="@+id/bt_back"
         android:layout_width="50dp"
@@ -22,10 +21,45 @@
         android:layout_height="20dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="36dp"
-        android:text="러닝 설정"
+        android:text="신체 정보 입력"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="353dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.95"
+            android:text="나이"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/text_age"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="ex) 25"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="세" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView9"
@@ -41,11 +75,11 @@
         android:id="@+id/bt_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="29dp"
         android:text="확인"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -58,51 +92,70 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:text="속도 별 색상"
+            android:layout_weight="2.1"
+            android:text="키"
             android:textSize="20sp" />
 
-        <RadioGroup
+        <EditText
+            android:id="@+id/text_height"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="horizontal"
-            android:weightSum="3
-">
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="ex) 174"
+            android:inputType="number|text" />
 
-            <RadioButton
-                android:id="@+id/radioButton11"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="빨강"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:text="cm"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <RadioButton
-                android:id="@+id/radioButton22"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="파랑"
-                tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/radioButton33"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="초록"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="353dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-        </RadioGroup>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.04"
+            android:text="몸무게"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/text_weight"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="ex) 73"
+            android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:text="kg"
+            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 
     <View
@@ -138,15 +191,16 @@
         app:layout_constraintTop_toBottomOf="@+id/view3">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:text="네비게이션"
+            android:text="성별"
             android:textSize="20sp" />
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -154,22 +208,20 @@
             android:weightSum="2">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rbt_male"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="On"
+                android:text="남성"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/rbt_female"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Off"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:text="여성" />
         </RadioGroup>
 
     </LinearLayout>
@@ -200,7 +252,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/example_picture"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:srcCompat="@drawable/example_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

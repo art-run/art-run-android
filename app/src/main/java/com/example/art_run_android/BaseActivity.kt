@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.FrameLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.art_run_android.member_management.SelectSettingsActivity
 import com.google.android.material.navigation.NavigationView
 
 open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

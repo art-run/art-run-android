@@ -3,9 +3,11 @@ package com.example.art_run_android
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 
@@ -14,8 +16,20 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //로그인때 받아온 유저 정보를 저장함.
+        var userAge=intent.getStringExtra("Age")?.toInt()
+        var userEmail=intent.getStringExtra("Email").toString()
+        var userGender=intent.getStringExtra("Gender").toString()
+        var userHeight=intent.getStringExtra("Height")?.toInt()
+        var userNickname=intent.getStringExtra("Nickname").toString()
+        var userPassword=intent.getStringExtra("Password").toString()
+        var userWeight=intent.getStringExtra("Weight")?.toInt()
+        Log.d("로그인7",userAge.toString()+"살의 "+userNickname+"로그인 완료!")
+
+
         setListener()
     }
+
 
     private fun setListener() {
         val tabLayout: TabLayout = findViewById(R.id.tabbar)
@@ -25,6 +39,7 @@ class MainActivity : BaseActivity() {
 
         startButton.setOnClickListener {
             if (tabLayout.selectedTabPosition == 0) {
+
                 val intent = Intent(this, FreeRunActivity::class.java)
                 startActivity(intent)
             }
