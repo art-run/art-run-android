@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BodyInformEditActivity">
+    tools:context=".member_management.BodyInformEditActivity">
 
     <Button
         android:id="@+id/bt_back"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="ex) 25"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textView8"
@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="ex) 174"
-            android:inputType="number|text" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textView6"
@@ -148,7 +148,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="ex) 73"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textView7"
@@ -203,6 +203,7 @@
             android:textSize="20sp" />
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"

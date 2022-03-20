@@ -51,17 +51,3 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity,"통신 실패!",Toast.LENGTH_LONG).show()
                 }//통신 실패시
             })
-
-            val toast = Toast.makeText(this,userInfo,Toast.LENGTH_LONG)
-            toast.show()
-
-
-
-        }
-
-        binding.btSignup.setOnClickListener{
-            val intent = Intent(this,SignUpActivity::class.java)
-            startActivity(intent)
-        }
-    }
-}
