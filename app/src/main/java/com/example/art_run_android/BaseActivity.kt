@@ -19,11 +19,11 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        setContentView(R.layout.base_activity_base)
     }
 
     override fun setContentView(layoutResID: Int) {
-        val fullView = layoutInflater.inflate(R.layout.activity_base, null)
+        val fullView = layoutInflater.inflate(R.layout.base_activity_base, null)
         val activityContainer: FrameLayout =
             fullView.findViewById(R.id.activity_content) as FrameLayout
         layoutInflater.inflate(layoutResID, activityContainer, true)
@@ -39,6 +39,8 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
