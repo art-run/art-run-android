@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/appbar"
+            layout="@layout/base_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -31,7 +31,7 @@
         android:layout_gravity="start"
         android:background="@color/white"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/header"
+        app:headerLayout="@layout/base_header"
         app:itemTextColor="@color/black"
         app:menu="@menu/navigation_menu" />
 

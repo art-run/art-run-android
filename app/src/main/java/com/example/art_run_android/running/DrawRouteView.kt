@@ -1,14 +1,14 @@
 package com.example.art_run_android.running
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.os.Build
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
+import kotlin.math.acos
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class DrawRouteView(context: Context?) : View(context) {
     private val paint = Paint()
@@ -16,8 +16,7 @@ class DrawRouteView(context: Context?) : View(context) {
     private var x = 0
     private var y = 0
 
-    private val pathList = mutableListOf<Path>()
-    private val redoPathList = mutableListOf<Path>()
+    lateinit var strokeListener: StrokeListener
 
     override fun onDraw(canvas: Canvas) {
         paint.color = Color.BLACK
@@ -25,28 +24,6 @@ class DrawRouteView(context: Context?) : View(context) {
         paint.strokeWidth = 10f
 
         canvas.drawPath(path, paint)
-        for(p in pathList) {
-            canvas.drawPath(p, paint)
-        }
-    }
-
-    fun undo(){
-        if(pathList.isNotEmpty()) {
-            path.reset()
-            val undoPath = pathList[pathList.lastIndex]
-            pathList.remove(undoPath)
-            redoPathList.add(undoPath)
-            invalidate()
-        }
-    }
-
-    fun redo(){
-        if(redoPathList.isNotEmpty()) {
-            val redoPath = redoPathList[redoPathList.lastIndex]
-            pathList.add(redoPath)
-            redoPathList.remove(redoPath)
-            invalidate()
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,24 +33,67 @@ class DrawRouteView(context: Context?) : View(context) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path.reset()
                 path.moveTo(x.toFloat(), y.toFloat())
             }
             MotionEvent.ACTION_MOVE -> {
-                x = event.x.toInt()
-                y = event.y.toInt()
                 path.lineTo(x.toFloat(), y.toFloat())
             }
             MotionEvent.ACTION_UP -> {
-                val currentPath = Path()
-                currentPath.addPath(path)
-                pathList.add(currentPath)
-                redoPathList.clear()
-                val pathPoints=path.approximate(0.5F)
+                val pathPoints = path.approximate(0.5F)
+                val pointsList = mutableListOf<Point>().apply {
+                    for (i in pathPoints.indices step (3)) {
+                        this.add(Point(pathPoints[i + 1].toInt(), pathPoints[i + 2].toInt()))
+                    }
+                }
+                optimizePoints(pointsList)
+                strokeListener.onStrokeEvent(pointsList)
+                path.reset()
             }
         }
 
         invalidate()
         return true
     }
+
+    private fun optimizePoints(pointList: MutableList<Point>) {
+        var i = 0
+        while (i < pointList.size - 2) {
+            if (isLine(pointList[i], pointList[i + 1], pointList[i + 2])) {
+                pointList.removeAt(i+1)
+                i--
+            }
+            i++
+        }
+    }
+
+    private fun isLine(p1: Point, p2: Point, p3: Point): Boolean {
+
+        val a = sqrt(
+            (p1.x.toDouble() - p3.x.toDouble()).pow(2.0)
+                    + (p1.y.toDouble() - p3.y.toDouble()).pow(2.0)
+        )
+        val b = sqrt(
+            (p1.x.toDouble() - p2.x.toDouble()).pow(2.0)
+                    + (p1.y.toDouble() - p2.y.toDouble()).pow(2.0)
+        )
+        val c = sqrt(
+            (p2.x.toDouble() - p3.x.toDouble()).pow(2.0)
+                    + (p2.y.toDouble() - p3.y.toDouble()).pow(2.0)
+        )
+
+        val temp = (b.pow(2.0) + c.pow(2.0) - a.pow(2.0)) / (2 * b * c)
+        var ang = acos(temp)
+        ang *= (180.0 / Math.PI)
+
+        return (ang in 160.0..200.0)
+    }
+
+    interface StrokeListener {
+        fun onStrokeEvent(pointList: MutableList<Point>)
+    }
+
+    fun SetStrokeListener(listener: StrokeListener) {
+        strokeListener = listener
+    }
 }
+

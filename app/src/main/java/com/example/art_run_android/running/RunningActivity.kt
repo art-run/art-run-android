@@ -9,7 +9,7 @@ import com.example.art_run_android.R
 class RunningActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_running)
+        setContentView(R.layout.running_activity_running)
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.mapView3, MapsFragment())
@@ -20,19 +20,13 @@ class RunningActivity : BaseActivity() {
         startButton.isVisible = false
         startButton.isClickable = false
 
-
-
         pauseButton.setOnClickListener{
             pauseButton.isVisible = false
-            pauseButton.isClickable = false
             startButton.isVisible = true
-            startButton.isClickable = true
         }
         startButton.setOnClickListener{
             startButton.isVisible = false
-            startButton.isClickable = false
             pauseButton.isVisible = true
-            pauseButton.isClickable = true
         }
     }
 }
