@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.art_run_android.BaseActivity
-import com.example.art_run_android.MainActivity
+import com.example.art_run_android.running.MainActivity
 import com.example.art_run_android.databinding.MemberManagementActivityEditAccountInformBinding
 import retrofit2.Call
 import retrofit2.Callback

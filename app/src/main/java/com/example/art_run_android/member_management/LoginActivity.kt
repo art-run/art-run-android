@@ -3,12 +3,12 @@ package com.example.art_run_android.member_management
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import com.auth0.android.jwt.JWT
+import com.example.art_run_android.DataContainer
 
-import com.example.art_run_android.MainActivity
+import com.example.art_run_android.running.MainActivity
 import com.example.art_run_android.databinding.MemberManagementActivityLoginBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,16 +77,14 @@ class LoginActivity : AppCompatActivity() {
                                     var userNickname=response.body()?.nickname.toString()
                                     var userPassword=response.body()?.password.toString()
                                     var userWeight=response.body()?.weight.toString().toInt()
-                                    intent.putExtra("Age",userAge)
-                                    intent.putExtra("Email",userEmail)
-                                    intent.putExtra("Gender",userGender)
-                                    intent.putExtra("Height",userHeight)
-                                    intent.putExtra("Nickname",userNickname)
-                                    intent.putExtra("Password",userPassword)
-                                    intent.putExtra("Weight",userWeight)
+                                    DataContainer.userAge = userAge
+                                    DataContainer.userEmail = userEmail
+                                    DataContainer.userGender = userGender
+                                    DataContainer.userHeight = userHeight
+                                    DataContainer.userNickname = userNickname
+                                    DataContainer.userPassword = userPassword
+                                    DataContainer.userWeight = userWeight
                                     startActivity(intent)
-
-
                                 }
 
                                 override fun onFailure(call: Call<MemberInfoDClass>, t: Throwable) {

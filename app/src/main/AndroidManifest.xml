@@ -26,8 +26,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:usesCleartextTraffic="true">
         <activity
             android:name=".member_management.SignUpActivity2"
             android:exported="false" />
@@ -76,6 +74,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

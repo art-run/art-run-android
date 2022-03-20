@@ -5,6 +5,6 @@ import android.os.Bundle
 class Practice_HY : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_running_setting)
+        //setContentView(R.layout.activity_running_setting)
     }
 }

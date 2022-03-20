@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.art_run_android.running.MainActivity
@@ -41,6 +42,10 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         navigationView.setNavigationItemSelectedListener(this)
 
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+        val navHeaderView = navigationView.getHeaderView(0)
+        val nickName = navHeaderView.findViewById<TextView>(R.id.nickName)
+        nickName.text = DataContainer.userNickname + " 님"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
