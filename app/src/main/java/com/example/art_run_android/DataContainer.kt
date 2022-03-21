@@ -9,6 +9,7 @@ class DataContainer {
         var userNickname: String? = null
         var userPassword: String? = null
         var userWeight: Int? = null
+        var token: Token? = null
 
         fun clear() {
             userAge = null
@@ -18,6 +19,14 @@ class DataContainer {
             userNickname = null
             userPassword = null
             userWeight = null
+            token = null
         }
     }
+}
+
+class Token {
+    var accessToken: String? = null
+    var accessTokenExpiresIn: Int? = null
+    var grantType: String? = null
+    var refreshToken: String? = null
 }
