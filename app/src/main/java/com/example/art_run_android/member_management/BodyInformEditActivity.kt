@@ -5,6 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.art_run_android.DataContainer
+import com.example.art_run_android.DataContainer.Companion.header
+import com.example.art_run_android.DataContainer.Companion.userEmail
+import com.example.art_run_android.DataContainer.Companion.userGender
+import com.example.art_run_android.DataContainer.Companion.userNickname
+import com.example.art_run_android.DataContainer.Companion.userNumber
+import com.example.art_run_android.DataContainer.Companion.userProfileImg
 import com.example.art_run_android.R
 import com.example.art_run_android.databinding.MemberManagementActivityBodyInformEditBinding
 import retrofit2.Call
@@ -28,6 +36,12 @@ class BodyInformEditActivity : AppCompatActivity() {
             val intent = Intent(this, SelectSettingsActivity::class.java)
             startActivity(intent)
         }
+        //닉네임과 프로필 불러오기
+        val imageButton=binding.imgBtnProfile
+        val url=userProfileImg
+        Glide.with(this).load(url).into(imageButton)
+
+        binding.textNickname.text= userNickname
 
         //레트로핏 생성
         var retrofit = Retrofit.Builder()
@@ -37,50 +51,52 @@ class BodyInformEditActivity : AppCompatActivity() {
 
         var loginService=retrofit.create(LoginService::class.java)
 
+        binding.radioGroup.setOnCheckedChangeListener { radioGroup, checkedGender ->
+            when (checkedGender) {
+                R.id.rabtnMale -> {
+                    DataContainer.userGender= "MALE"
+                    Log.d("성별 선택", "${DataContainer.userGender}")
+                }
+                R.id.rabtnFemale -> {
+                    DataContainer.userGender = "FEMALE"
+                    Log.d("성별 선택", "${DataContainer.userGender}")                }
+
+            }
+        }
         binding.btConfirm.setOnClickListener {
             val height = binding.textHeight.text.toString().toInt()
             val weight = binding.textWeight.text.toString().toInt()
             val age = binding.textAge.text.toString().toInt()
-            var gender: String = "A"
             //성별 체크먼저
-            binding.radioGroup.setOnCheckedChangeListener { radioGroup, checkedGender ->
-                when (checkedGender) {
-                    R.id.rbt_male -> {
-                        gender = "MALE"
-                    }
-                    R.id.rbt_female -> {
-                        gender = "FEMALE"
-                    }
 
-                }
+            val editAccountInfoDClass = EditAccountInfoDClass(age, userEmail, userGender,height,
+                userNickname, userProfileImg,weight)
+            loginService.editBodyInfo(header,userNumber.toString(),editAccountInfoDClass)
+                .enqueue(object : Callback<EditMemberInfoResponse> {
+                    //통신 실패시 실행되는 코드
+                    override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
+                        Log.e("정보수정", "${t.localizedMessage}")
 
-                loginService.editBodyInfo(memberId,gender, height, weight, age)
-                    .enqueue(object : Callback<EditMemberInfoResponse> {
-                        //통신 실패시 실행되는 코드
-                        override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
-                            Log.e("정보수정", "${t.localizedMessage}")
+                      }
 
-                          }
+                    //통신 성공시 실행되는 코드
+                    override fun onResponse(call: Call<EditMemberInfoResponse>, response: Response<EditMemberInfoResponse>) {
+                        //Log.d("SignUp",signupCheck)
+                        //val signupCheck=response.body()?.email.toString()
+                        Log.d("정보수정",response.toString())
+                        Log.d("정보수정2",response.body().toString())
+                        Log.d("정보수정3",editAccountInfoDClass.toString())
 
-                        //통신 성공시 실행되는 코드
-                        override fun onResponse(call: Call<EditMemberInfoResponse>, response: Response<EditMemberInfoResponse>) {
-                            //Log.d("SignUp",signupCheck)
-                            //val signupCheck=response.body()?.email.toString()
-                            var signUpCheck=response
-                            Log.d("정보수정",signUpCheck.toString())
-                            Log.d("정보수정2",signUpCheck.body().toString())
-
-                            }
                         }
+                    }
 
-                    )
-                //val message = "키 : "+height+"cm\n몸무게 : "+weight+"kg\n나이 : "+age
+                )
+            //val message = "키 : "+height+"cm\n몸무게 : "+weight+"kg\n나이 : "+age
 
-                //val toast = Toast.makeText(this,message,Toast.LENGTH_LONG)
-                //toast.show()
-                //val intent = Intent(this, SelectSettingsActivity::class.java)
-                //startActivity(intent)
+            //val toast = Toast.makeText(this,message,Toast.LENGTH_LONG)
+            //toast.show()
+            //val intent = Intent(this, SelectSettingsActivity::class.java)
+            //startActivity(intent)
             }
         }
     }
-}

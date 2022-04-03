@@ -20,6 +20,7 @@ data class MemberInfoDClass(
     @SerializedName("gender") val gender: String,
     @SerializedName("height") val height: Int,
     @SerializedName("nickname") val nickname: String,
-    @SerializedName("password") val password: String,
+    @SerializedName("profileImg") val userProfileImg: String,
+    //@SerializedName("password") val password: String,
     @SerializedName("weight") val weight: Int
 )

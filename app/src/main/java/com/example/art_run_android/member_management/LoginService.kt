@@ -17,6 +17,7 @@ interface LoginService {
     ) : Call<SignUpResponse>
     /*
     처음에 시도한 방식, 이것은 인터페이스에서 Body가 아닌 Field로 보내는 경우 쓰임. 비교를 위해 남겨둠.
+    Body형식으로 쓸 때는 @FormUrlEncoded를 지워주자.
 
     fun signUp(
         @Field ("age") age: Int,
@@ -36,35 +37,36 @@ interface LoginService {
         ) : Call<MemberInfoDClass>
 
 
-    @FormUrlEncoded
     @PUT("/member/{memberId}")
     fun editBodyInfo(
-        @Path("memberId") memberId: Int,
-        @Field("gender") gender: String,
-        @Field("height") height:Int,
-        @Field("weight") weight:Int,
-        @Field("age") age: Int
+        @Header("Authorization") authorization:String?,
+        @Path("memberId") memberId: String,
+        @Body editAccountInfoDClass:EditAccountInfoDClass
     ) : Call<EditMemberInfoResponse>
 
-    @FormUrlEncoded
+
     @PUT("/member/{memberId}")
     fun editEmail(
+        @Header("Authorization") authorization:String?,
+        @Path ("memberId") memberId:String,
+        @Body editAccountInfoDClass:EditAccountInfoDClass
+    ) : Call<EditMemberInfoResponse>
+
+
+
+    @PUT("/member/{memberId}")
+    fun editNickname(
+        @Header("Authorization") authorization:String?,
         @Path("memberId") memberId: Int,
-        @Field("email") email:String
+        @Body editAccountInfoDClass:EditAccountInfoDClass
     ) : Call<EditMemberInfoResponse>
 
     @FormUrlEncoded
     @PUT("/member/{memberId}")
     fun editPassword(
+        @Header("Authorization") authorization:String?,
         @Path("memberId") memberId: Int,
         @Field("password") password: String
-    ) : Call<EditMemberInfoResponse>
-
-    @FormUrlEncoded
-    @PUT("/member/{memberId}")
-    fun editNickname(
-        @Path("memberId") memberId: Int,
-        @Field("nickname") nickname:String
     ) : Call<EditMemberInfoResponse>
 
 }

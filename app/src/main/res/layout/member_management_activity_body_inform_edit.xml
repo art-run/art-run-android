@@ -64,14 +64,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
         android:text="ExampleID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnProfile" />
 
     <Button
         android:id="@+id/bt_confirm"
@@ -180,7 +180,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textNickname" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -211,18 +211,20 @@
             android:weightSum="2">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rabtnMale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="남성"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/rabtnFemale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="여성" />
         </RadioGroup>
@@ -247,7 +249,7 @@
         app:layout_constraintGuide_begin="205dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imgBtnProfile"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="74dp"

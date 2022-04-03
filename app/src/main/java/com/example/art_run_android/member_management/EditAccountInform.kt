@@ -4,7 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.art_run_android.BaseActivity
+import com.example.art_run_android.DataContainer
+import com.example.art_run_android.DataContainer.Companion.header
+import com.example.art_run_android.DataContainer.Companion.userAge
+import com.example.art_run_android.DataContainer.Companion.userEmail
+import com.example.art_run_android.DataContainer.Companion.userGender
+import com.example.art_run_android.DataContainer.Companion.userHeight
+import com.example.art_run_android.DataContainer.Companion.userNickname
+import com.example.art_run_android.DataContainer.Companion.userNumber
+import com.example.art_run_android.DataContainer.Companion.userProfileImg
+import com.example.art_run_android.DataContainer.Companion.userWeight
 import com.example.art_run_android.running.MainActivity
 import com.example.art_run_android.databinding.MemberManagementActivityEditAccountInformBinding
 import retrofit2.Call
@@ -23,9 +34,11 @@ class EditAccountInform : BaseActivity() {
             val intent = Intent(this, SelectSettingsActivity::class.java)
             startActivity(intent)
         }
+        val imageButton=binding.imgBtnProfile
+        val url=userProfileImg
+        Glide.with(this).load(url).into(imageButton)
 
-        //멤버 아이디 임시로 초기화
-        var memberId=1
+        binding.textNickname.text= userNickname
 
         //레트로핏 생성
         var retrofit = Retrofit.Builder()
@@ -38,34 +51,30 @@ class EditAccountInform : BaseActivity() {
         //이메일 수정
         binding.btnEmailFix.setOnClickListener {
             val userEmail = binding.textUserEmail.text.toString()
-            //val message="유저 이메일 : "+userEmail
-            //val toast=Toast.makeText(this,message,Toast.LENGTH_LONG)
-            //toast.show()
+            val editAccountInfoDClass=EditAccountInfoDClass(userAge,userEmail, userGender, userHeight,
+                userNickname, userProfileImg, userWeight)
 
-            loginService.editEmail(memberId,userEmail)
-                .enqueue(object : Callback<EditMemberInfoResponse> {
-                    //통신 성공시
-
+            loginService.editEmail(header, userNumber.toString(),editAccountInfoDClass)
+                .enqueue(object : Callback<EditMemberInfoResponse>{
                     override fun onResponse(
                         call: Call<EditMemberInfoResponse>,
                         response: Response<EditMemberInfoResponse>
                     ) {
-                        Toast.makeText(this@EditAccountInform, "통신 성공입니다!!", Toast.LENGTH_LONG)
-                            .show()
-
-                        val editResponse = response
-                        Log.d("정보수정", editResponse.toString())
-                        Log.d("정보수정2", editResponse.body().toString())
-
+                        Log.d("계정정보수정 : 이메일 변경",response.body()?.email.toString())
                     }
 
-                    //통신 실패시
                     override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
-                        Log.e("정보수정", t.localizedMessage)
+                        Log.e("계정정보수정 : 이메일 변경","${t.localizedMessage}")
                     }
-                })
-            }
+                }
 
+            )
+
+        }
+        binding.btnPasswordFix.setOnClickListener{
+            Toast.makeText(this,"비밀번호 변경은 아직 구현되지 않았습니다.",Toast.LENGTH_SHORT).show()
+        }
+        /*비밀번호 수정은 아직 구현되지 않음
         //비밀번호 수정
         binding.btnPasswordFix.setOnClickListener{
             val userPassword=binding.password.text.toString()
@@ -73,7 +82,7 @@ class EditAccountInform : BaseActivity() {
             //val toast=Toast.makeText(this,message,Toast.LENGTH_LONG)
             //toast.show()
 
-            loginService.editPassword(memberId,userPassword)
+            loginService.editPassword(header, userNumber,userPassword)
                 .enqueue(object:Callback<EditMemberInfoResponse>{
                     //통신 성공시
 
@@ -91,24 +100,28 @@ class EditAccountInform : BaseActivity() {
                     }
                 })
             }
+
+         */
         //닉네임 수정
         binding.btnNicknameFIx.setOnClickListener{
             val userNickname=binding.nickName.text.toString()
+            val editAccountInfoDClass=EditAccountInfoDClass(userAge,userEmail, userGender, userHeight,
+                userNickname, userProfileImg, userWeight)
             //val message="유저 이메일 : "+userEmail
             //val toast=Toast.makeText(this,message,Toast.LENGTH_LONG)
             //toast.show()
 
-            loginService.editPassword(memberId,userNickname)
+            loginService.editNickname(header, userNumber,editAccountInfoDClass)
                 .enqueue(object:Callback<EditMemberInfoResponse>{
                     //통신 성공시
 
                     override fun onResponse(call: Call<EditMemberInfoResponse>, response: Response<EditMemberInfoResponse>) {
                         Toast.makeText(this@EditAccountInform,"통신 성공입니다!!",Toast.LENGTH_LONG).show()
 
-                        val editResponse=response
-                        Log.d("정보수정",editResponse.toString())
-                        Log.d("정보수정2",editResponse.body().toString())
-
+                        Log.d("정보수정",response.toString())
+                        Log.d("정보수정2",response.body()?.nickname.toString())
+                        binding.textNickname.text= response.body()?.nickname.toString()
+                        DataContainer.userNickname=response.body()?.nickname.toString()
                     }
                     //통신 실패시
                     override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
