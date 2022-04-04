@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.example.art_run_android.running.MainActivity
 import com.example.art_run_android.member_management.SelectSettingsActivity
 import com.google.android.material.navigation.NavigationView
@@ -46,6 +48,8 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val navHeaderView = navigationView.getHeaderView(0)
         val nickName = navHeaderView.findViewById<TextView>(R.id.nickName)
         nickName.text = DataContainer.userNickname + " 님"
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

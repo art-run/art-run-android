@@ -120,8 +120,10 @@ class EditAccountInform : BaseActivity() {
 
                         Log.d("정보수정",response.toString())
                         Log.d("정보수정2",response.body()?.nickname.toString())
+
                         binding.textNickname.text= response.body()?.nickname.toString()
                         DataContainer.userNickname=response.body()?.nickname.toString()
+                        Log.d("정보수정3",DataContainer.userNickname.toString())
                     }
                     //통신 실패시
                     override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
