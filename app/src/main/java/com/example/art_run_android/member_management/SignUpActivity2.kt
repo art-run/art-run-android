@@ -20,7 +20,7 @@ class SignUpActivity2 : AppCompatActivity() {
         setContentView(binding.root)
 
         //SignUpActivity에서 정보를 인텐트로 받아와 닉네임 칸을 수정한 후, 토스트 메시지로 다 받아왔는지 확인
-        binding.textView9.text=intent.getStringExtra("nickname")
+        binding.textNickname.text=intent.getStringExtra("nickname")
         var nickname=intent.getStringExtra("nickname").toString()
         var email=intent.getStringExtra("email").toString()
         var password=intent.getStringExtra("password").toString()
@@ -72,7 +72,7 @@ class SignUpActivity2 : AppCompatActivity() {
         binding.btConfirm.setOnClickListener{
             var height=binding.textHeight.text.toString().toInt()
             var weight=binding.textWeight.text.toString().toInt()
-            var age=binding.textWeight.text.toString().toInt()
+            var age=binding.textAge.text.toString().toInt()
 
             //val toast = Toast.makeText(this,"나이 : $age, email: $email, 성별 : $gender, 키 : $height, 닉네임 : $nickname, 비밀번호 : $password,  몸무게 : $weight, ",Toast.LENGTH_SHORT)
             //toast.show()

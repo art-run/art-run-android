@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.running_activity_main)
-        Log.d("로그인7", DataContainer.userAge+"살의 "+DataContainer.userNickname+"로그인 완료!")
+        Log.d("로그인7", DataContainer.userAge.toString()+"살의 "+DataContainer.userNickname+"로그인 완료!")
         setContentView(R.layout.running_activity_main)
         setListener()
 

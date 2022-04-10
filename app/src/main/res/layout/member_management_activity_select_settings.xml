@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".member_management.SelectSettingsActivity">
-
+    <Button
+        android:id="@+id/bt_back"
+        android:layout_width="50dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="13dp"
+        android:text="←"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -18,14 +26,14 @@
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
         android:text="ExampleID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnProfile" />
 
     <View
         android:id="@+id/view3"
@@ -46,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textNickname" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -66,7 +74,7 @@
         app:layout_constraintGuide_begin="205dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imgBtnProfile"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="74dp"
