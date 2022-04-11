@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.art_run_android.BaseActivity
@@ -15,19 +16,8 @@ import com.google.android.material.tabs.TabLayout
 
 
 class MainActivity : BaseActivity() {
-    /*
-    val PERMISSIONS = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION)
+    private val mapsFragment = MapsFragment()
 
-    val REQUEST_PERMISSION_CODE = 1
-
-    val DEFAULT_ZOOM_LEVEL = 17f
-
-    val defaultLocation = LatLng(37.5662952, 126.97794509999994)
-
-    var googleMap: GoogleMap? = null
-*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.running_activity_main)
@@ -36,19 +26,9 @@ class MainActivity : BaseActivity() {
         setListener()
 
         val transaction = supportFragmentManager.beginTransaction()
-        val mapsFragment = MapsFragment()
 
         transaction.add(R.id.mapView, mapsFragment)
         transaction.commit()
-        /*
-            mapView.onCreate(savedInstanceState)
-
-            if (checkPermissions()) {
-                initMap()
-            } else {
-                ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_CODE)
-            }
-             */
     }
 
 
@@ -76,7 +56,12 @@ class MainActivity : BaseActivity() {
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
 
+        var opt1 = -1
+        var opt2 = -1
+        var distance = 0.0
+
         val textView: TextView = bottomSheetView.findViewById(R.id.textView_bs)
+        val editText: EditText = bottomSheetView.findViewById(R.id.editText_bs)
 
         val opt1ButtonList: List<Button> by lazy {
             listOf<Button>(
@@ -96,6 +81,7 @@ class MainActivity : BaseActivity() {
         for (but in opt1ButtonList) {
             but.setOnClickListener {
                 but.setBackgroundColor(Color.GRAY)
+                opt1 = opt1ButtonList.indexOf(but)
                 for (ton in opt1ButtonList) {
                     if (but == ton) {
                         continue;
@@ -108,14 +94,14 @@ class MainActivity : BaseActivity() {
         for (but in opt2ButtonList) {
             but.setOnClickListener {
                 but.setBackgroundColor(Color.GRAY)
+                opt2 = opt2ButtonList.indexOf(but)
                 for (ton in opt2ButtonList) {
                     if (but == ton) {
                         continue;
                     }
                     ton.setBackgroundColor(Color.WHITE)
                 }
-                val index = opt2ButtonList.indexOf(but)
-                when (index) {
+                when (opt2) {
                     0 -> textView.text = "km"
                     1 -> textView.text = "분"
                     2 -> textView.text = "kcal"
@@ -126,61 +112,36 @@ class MainActivity : BaseActivity() {
         val okayButton: Button = bottomSheetView.findViewById(R.id.button_okay)
 
         okayButton.setOnClickListener {
-            val intent = Intent(this, CourseRunActivity::class.java)
-            startActivity(intent)
-        }
-
-    }
-/*
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        initMap()
-    }
-
-    private fun checkPermissions(): Boolean {
-
-        for (permission in PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
-        }
-        return true
-    }
-
-    @SuppressLint("MissingPermission")
-    fun initMap() {
-        mapView.getMapAsync {
-
-            googleMap = it
-            it.uiSettings.isMyLocationButtonEnabled = false
-
-            when {
-                checkPermissions() -> {
-                    it.isMyLocationEnabled = true
-                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(getMyLocation(), DEFAULT_ZOOM_LEVEL))
+            val inputNum = editText.text.toString().toIntOrNull()
+            if(opt1 != -1 && opt2 != -1 && inputNum != null) {
+                when(opt2) {
+                    0 -> {
+                        distance = inputNum.toDouble()
+                    }
+                    1 -> {
+                        distance = if(opt1 == 0) {
+                            inputNum*4/60.0
+                        } else {
+                            inputNum*8/60.0
+                        }
+                    }
+                    2 -> {
+                        distance = if(opt1 == 0) {
+                            (inputNum*20*4)/(2.9*3.5*DataContainer.userWeight!!*60)
+                        } else {
+                            (inputNum*20*8)/(8.0*3.5*DataContainer.userWeight!!*60)
+                        }
+                    }
                 }
-                else -> {
-                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM_LEVEL))
-                }
+
+                val intent = Intent(this, CourseRunActivity::class.java)
+                intent.putExtra("distance", distance)
+                intent.putExtra("currentLocation", mapsFragment.currentLocation)
+                startActivity(intent)
+            } else {
+                //다시입력
             }
         }
     }
 
-    @SuppressLint("MissingPermission")
-    fun getMyLocation(): LatLng {
-
-        val locationProvider: String = LocationManager.GPS_PROVIDER
-
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        val lastKnownLocation: Location? = locationManager.getLastKnownLocation(locationProvider)
-
-        return if (lastKnownLocation != null) {
-            LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
-        } else {
-            defaultLocation
-        }
-    }
-*/
 }
