@@ -19,7 +19,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 
@@ -36,6 +35,8 @@ class MapsFragment : Fragment() {
 
     private var defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
+    var currentLocation = defaultLocation
+
     private fun checkPermissions(): Boolean {
 
         for (permission in PERMISSIONS) {
@@ -48,7 +49,6 @@ class MapsFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
@@ -61,13 +61,13 @@ class MapsFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
-        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Current Loacation"))
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
         when {
             checkPermissions() -> {
                 googleMap.isMyLocationEnabled = true
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getMyLocation(), DEFAULT_ZOOM_LEVEL))
+                currentLocation = getMyLocation()
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
             }
             else -> {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM_LEVEL))
@@ -98,12 +98,11 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (checkPermissions()) {
-            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(callback)
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, REQUEST_PERMISSION_CODE)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        if (!checkPermissions()) {
+            requestPermissions(PERMISSIONS, REQUEST_PERMISSION_CODE)
         }
+        mapFragment?.getMapAsync(callback)
     }
 
     fun getLatLngList(points: MutableList<Point>): MutableList<LatLng> {

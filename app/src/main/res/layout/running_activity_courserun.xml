@@ -6,42 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".running.CourseRunActivity">
 
-    <com.google.android.gms.maps.MapView
+    <FrameLayout
         android:id="@+id/mapView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_course"
-        app:layout_constraintBottom_toBottomOf="@+id/mapView3"
         android:layout_width="match_parent"
+        android:layout_height="230dp"
         android:background="@color/white"
-        android:layout_height="230dp"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/running_item_courserun"
+        app:layout_constraintBottom_toBottomOf="@+id/mapView3" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="40dp"
         android:text="제목 \n거리: km \n예상 소요 시간: "
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@id/recycler_course"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="40dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
         android:id="@+id/confirm_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="10dp"
         android:adjustViewBounds="true"
         android:background="@color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
