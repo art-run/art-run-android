@@ -2,18 +2,17 @@ package com.example.art_run_android.running
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Point
-import android.location.Location
-import android.location.LocationManager
-import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.example.art_run_android.R
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+
 
 class MapsFragment : Fragment() {
 
@@ -66,7 +66,7 @@ class MapsFragment : Fragment() {
         when {
             checkPermissions() -> {
                 googleMap.isMyLocationEnabled = true
-                currentLocation = getMyLocation()
+                getMyLocation()
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
             }
             else -> {
@@ -85,15 +85,20 @@ class MapsFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    fun getMyLocation(): LatLng {
-
-        val locationProvider: String = LocationManager.GPS_PROVIDER
-
-        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        val lastKnownLocation: Location = locationManager.getLastKnownLocation(locationProvider)!!
-
-        return LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
+    private fun getMyLocation() {
+        val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        mFusedLocationClient.lastLocation
+            .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
+                location?.let {
+                    Log.d("위치",it.toString())
+                    currentLocation = LatLng(it.latitude, it.longitude)
+                    thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d("MapDemoActivity", "Error trying to get last GPS location")
+                e.printStackTrace()
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
