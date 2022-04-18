@@ -26,12 +26,14 @@
         android:layout_margin="5dp">
 
         <TextView
+            android:id="@+id/courseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="제목: "
             android:textSize="15dp"
             android:textColor="@color/black"/>
         <TextView
+            android:id="@+id/courseDist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="거리: "
