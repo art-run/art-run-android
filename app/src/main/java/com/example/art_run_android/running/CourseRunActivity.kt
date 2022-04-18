@@ -61,6 +61,8 @@ class CourseRunActivity : BaseActivity() {
                         val title = it.title
                         println("제목 : $title")
                     }
+                    courseAdapter.datas = datas
+                    courseAdapter.notifyDataSetChanged()
 
                 } else { // code == 400
                     Log.d("경로 추천","통신 실패")
@@ -71,8 +73,5 @@ class CourseRunActivity : BaseActivity() {
                 Log.d("경로 추천", "통신 실패 : $t")
             }
         })
-
-        courseAdapter.datas = datas
-        courseAdapter.notifyDataSetChanged()
     }
 }
