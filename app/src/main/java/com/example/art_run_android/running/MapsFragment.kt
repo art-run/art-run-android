@@ -90,7 +90,6 @@ class MapsFragment : Fragment() {
         mFusedLocationClient.lastLocation
             .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
                 location?.let {
-                    Log.d("위치",it.toString())
                     currentLocation = LatLng(it.latitude, it.longitude)
                     thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
                 }
