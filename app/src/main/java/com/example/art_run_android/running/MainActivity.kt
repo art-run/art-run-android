@@ -136,7 +136,6 @@ class MainActivity : BaseActivity() {
 
                 val intent = Intent(this, CourseRunActivity::class.java)
                 intent.putExtra("distance", distance)
-                intent.putExtra("currentLocation", mapsFragment.currentLocation)
                 startActivity(intent)
             } else {
                 //다시입력
