@@ -3,28 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/layout/activity_compelete_record_card.xml" value="0.2" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/layout/activity_make_record_card.xml" value="0.2" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/layout/activity_share_record_card1.xml" value="0.264" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/layout/running_activity_running.xml" value="0.20820863616930313" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/menu/card_color.xml" value="0.4" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/menu/card_dotmenu.xml" value="0.20735356990166737" />
-        <entry key="..\:/Users/LG/StudioProjects/art-run-android/app/src/main/res/menu/card_line.xml" value="0.20735356990166737" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_compelete_record_card.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/activity_make_record_card.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/base_activity_base.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/base_appbar.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/base_header.xml" value="0.259375" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/fragment_mysocial.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/fragment_recentsocial.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/item_my.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/item_social.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/map_fragment_maps.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_body_inform_edit.xml" value="0.3605128205128205" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_login.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_running_setting.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/member_management_activity_select_settings.xml" value="0.22395833333333334" />
-        <entry key="..\:/Users/xkg12/AndroidStudioProjects/art-run-android/app/src/main/res/layout/settings_activity.xml" value="0.259375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1155" />
@@ -72,6 +50,9 @@
         <entry key="app/src/main/res/layout/item_social.xml" value="0.13467293715262932" />
         <entry key="app/src/main/res/layout/map_fragment_maps.xml" value="0.14460562103354488" />
         <entry key="app/src/main/res/layout/member_management_activity_sign_up2.xml" value="0.10816588285592134" />
+        <entry key="app/src/main/res/layout/running_activity_courserun.xml" value="0.18244628906250004" />
+        <entry key="app/src/main/res/layout/running_activity_freerun.xml" value="0.20688476562500005" />
+        <entry key="app/src/main/res/layout/running_activity_running.xml" value="0.21561279296875002" />
         <entry key="app/src/main/res/layout/running_activity_courserun.xml" value="0.14460562103354488" />
         <entry key="app/src/main/res/layout/running_activity_freerun.xml" value="0.21425323486328124" />
         <entry key="app/src/main/res/layout/running_activity_running.xml" value="0.14460562103354488" />

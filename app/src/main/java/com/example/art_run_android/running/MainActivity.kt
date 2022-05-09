@@ -120,16 +120,16 @@ class MainActivity : BaseActivity() {
                     }
                     1 -> {
                         distance = if(opt1 == 0) {
-                            inputNum*4/60.0
+                            inputNum*4/60.0*1000
                         } else {
-                            inputNum*8/60.0
+                            inputNum*8/60.0*1000
                         }
                     }
                     2 -> {
                         distance = if(opt1 == 0) {
-                            (inputNum*20*4)/(2.9*3.5*DataContainer.userWeight!!*60)
+                            (inputNum*20*4)/(2.9*3.5*DataContainer.userWeight!!*60)*1000
                         } else {
-                            (inputNum*20*8)/(8.0*3.5*DataContainer.userWeight!!*60)
+                            (inputNum*20*8)/(8.0*3.5*DataContainer.userWeight!!*60)*1000
                         }
                     }
                 }

@@ -5,12 +5,15 @@ import android.graphics.Point
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.R
 import com.google.maps.android.PolyUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class FreeRunActivity : BaseActivity() {
 
@@ -50,7 +53,7 @@ class FreeRunActivity : BaseActivity() {
                             val match = response.body() as RouteDataClass
                             match.routes.forEach {
                                 val polyline = PolyUtil.decode(it.geometry)
-                                mapsFragment.drawPolyline(polyline, false)
+                                mapsFragment.drawPolyline(polyline, false, false)
                             }
 
                         } else { // code == 400
@@ -67,7 +70,7 @@ class FreeRunActivity : BaseActivity() {
             }
         })
 
-
+        val toolbar: Toolbar = findViewById(R.id.toolbar2)
         val undoButton: ImageButton = findViewById(R.id.undoButton)
         undoButton.setOnClickListener {
             mapsFragment.undoPolyline()
@@ -78,13 +81,39 @@ class FreeRunActivity : BaseActivity() {
             mapsFragment.redoPolyline()
         }
 
+        val mapButton: ImageButton = findViewById(R.id.mapButton)
+        mapButton.setOnClickListener {
+            if (drawRouteView.isVisible) {
+                mapButton.setImageResource(R.drawable.ic_outline_draw_24)
+                redoButton.isVisible = false
+                undoButton.isVisible = false
+                drawRouteView.isVisible = false
+                toolbar.subtitle = "지도 위치를 조정하세요."
+            } else {
+                mapButton.setImageResource(R.drawable.ic_baseline_map_24)
+                redoButton.isVisible = true
+                undoButton.isVisible = true
+                drawRouteView.isVisible = true
+                toolbar.subtitle = "지도 위에 경로 그림을 그려주세요."
+            }
+        }
+
         val startButton: ImageButton = findViewById(R.id.startButton2)
         startButton.setOnClickListener {
-            val intent = Intent(this, RunningActivity::class.java)
-            startActivity(intent)
+            if (mapsFragment.undoPolylineList.isNotEmpty()) {
+                val intent = Intent(this, RunningActivity::class.java)
+                val runningRoute = ArrayList<String>().apply {
+                    mapsFragment.undoPolylineList.forEach {
+                        this.add(PolyUtil.encode(it.points))
+                    }
+                }
+                intent.putExtra("runningRoute", runningRoute)
+                startActivity(intent)
+            } else {
+                //그림그려주세요
+            }
         }
     }
-
 }
 
 

@@ -3,6 +3,7 @@ package com.example.art_run_android.running
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
@@ -17,21 +18,19 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 
 
 class MapsFragment : Fragment() {
 
-    val PERMISSIONS = arrayOf(
+    private val PERMISSIONS = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    val REQUEST_PERMISSION_CODE = 1
+    private val REQUEST_PERMISSION_CODE = 1
 
-    val DEFAULT_ZOOM_LEVEL = 16f
+    private val DEFAULT_ZOOM_LEVEL = 16f
 
     private var defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
@@ -53,14 +52,14 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-    private val undoPolylineList = mutableListOf<Polyline>()
+    val undoPolylineList = mutableListOf<Polyline>()
     private val redoPolylineList = mutableListOf<MutableList<LatLng>>()
     private var lastLatLng: LatLng? = null
-
     lateinit var thisGoogleMap: GoogleMap
+    lateinit var mapReadyListener: MapInitializedListener
 
     @SuppressLint("MissingPermission")
-    private val callback = OnMapReadyCallback { googleMap ->
+    val callback = OnMapReadyCallback { googleMap ->
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
         when {
@@ -74,6 +73,9 @@ class MapsFragment : Fragment() {
             }
         }
         thisGoogleMap = googleMap
+        if(this.activity!!::class.simpleName == RunningActivity::class.simpleName) {
+            mapReadyListener.onMapInitializedEvent()
+        }
     }
 
     override fun onCreateView(
@@ -95,7 +97,7 @@ class MapsFragment : Fragment() {
                 }
             }
             .addOnFailureListener { e ->
-                Log.d("MapDemoActivity", "Error trying to get last GPS location")
+                Log.d("MapsFragment@${activity!!::class.simpleName}", "Error trying to get last GPS location")
                 e.printStackTrace()
             }
     }
@@ -120,13 +122,17 @@ class MapsFragment : Fragment() {
         }
     }
 
-    fun drawPolyline(polyline: MutableList<LatLng>, isRedo: Boolean) {
-        thisGoogleMap.addPolyline(PolylineOptions().clickable(true).addAll(polyline)).apply {
+    fun drawPolyline(polyline: List<LatLng>, isRedo: Boolean, isRunning: Boolean) {
+        val result = thisGoogleMap.addPolyline(PolylineOptions().clickable(true).addAll(polyline)).apply {
             undoPolylineList.add(this)
         }
         lastLatLng = polyline.last()
         if (!isRedo) {
             redoPolylineList.clear()
+        }
+        if(isRunning) {
+            result.pattern = listOf(Dash(20F), Gap(20F))
+            result.color = Color.GRAY
         }
     }
 
@@ -146,8 +152,15 @@ class MapsFragment : Fragment() {
         if (redoPolylineList.isNotEmpty()) {
             val polyline = redoPolylineList.last()
             redoPolylineList.remove(polyline)
-            drawPolyline(polyline, true)
+            drawPolyline(polyline, true, false)
         }
     }
 
+    interface MapInitializedListener {
+        fun onMapInitializedEvent()
+    }
+
+    fun setMapInitializedListener(listener: MapInitializedListener) {
+        mapReadyListener = listener
+    }
 }
