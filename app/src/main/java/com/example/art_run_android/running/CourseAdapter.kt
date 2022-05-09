@@ -67,7 +67,7 @@ class CourseAdapter(private val context: Context) :
 
         fun bind(item: RecommendedRoute) {
             txtName.text = item.title
-            txtDistance.text = item.distance.toString()
+            txtDistance.text = item.distance.toString() + "m"
             polyline = wktToPolyline(item.wktRoute)
             centerLatLng = calculateCenterPosition(polyline)
             recommendationId = item.id
@@ -86,21 +86,6 @@ class CourseAdapter(private val context: Context) :
             setMapLocation()
         }
 
-        private fun wktToPolyline(wktRoute: String): MutableList<LatLng> {
-            val prim1 = wktRoute.substring(wktRoute.indexOf('(') + 1, wktRoute.indexOf(')'))
-            val prim2 = prim1.split(", ")
-            val polyline = mutableListOf<LatLng>()
-            prim2.forEach {
-                val prim3 = it.split(" ")
-                if (prim3.size >= 2) {
-                    val latLng = LatLng(prim3[1].toDouble(), prim3[0].toDouble())
-                    polyline.add(latLng)
-                }
-            }
-
-            return polyline
-        }
-
         private fun calculateCenterPosition(polyline: MutableList<LatLng>): LatLng {
             val maxLat = polyline.maxOf { it.latitude }
             val minLat = polyline.minOf { it.latitude }
@@ -109,5 +94,18 @@ class CourseAdapter(private val context: Context) :
 
             return LatLng((maxLat + minLat) / 2, (maxLng + minLng) / 2)
         }
+    }
+
+    fun wktToPolyline(wktRoute: String): MutableList<LatLng> {
+        val prim = wktRoute.substring(wktRoute.indexOf('(') + 1, wktRoute.indexOf(')')).split(", ")
+        val polyline = mutableListOf<LatLng>().apply {
+            prim.forEach {
+                val prim2 = it.split(" ")
+                if (prim2.size >= 2) {
+                    this.add(LatLng(prim2[1].toDouble(), prim2[0].toDouble()))
+                }
+            }
+        }
+        return polyline
     }
 }

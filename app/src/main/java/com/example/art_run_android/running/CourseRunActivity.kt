@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
-import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.PolyUtil
 import kotlinx.android.synthetic.main.running_activity_courserun.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,8 +36,18 @@ class CourseRunActivity : BaseActivity() {
         textView = findViewById(R.id.infoTextView)
         val confirmButton: ImageButton = findViewById(R.id.confirm_button)
         confirmButton.setOnClickListener {
-            val intent = Intent(this, RunningActivity::class.java)
-            startActivity(intent)
+            if(mapsFragment.undoPolylineList.isNotEmpty()) {
+                val intent = Intent(this, RunningActivity::class.java)
+                val runningRoute = ArrayList<String>().apply {
+                    mapsFragment.undoPolylineList.forEach {
+                        this.add(PolyUtil.encode(it.points))
+                    }
+                }
+                intent.putExtra("runningRoute", runningRoute)
+                startActivity(intent)
+            } else {
+                //경로를 선택해주세요
+            }
         }
     }
 
@@ -49,8 +59,7 @@ class CourseRunActivity : BaseActivity() {
         val distance = intent.getDoubleExtra("distance",0.0)
 
         var queryMap1 = mapOf("distance" to distance.toInt().toString(), "offset" to "0",
-            "pageNumber" to "0"/*, "pageSize" to "10", "paged" to "true", "sort.sorted" to "true",
-            "sort.unsorted" to "false", "unpaged" to "true"*/)
+            "pageNumber" to "0")
         val callGetRecommendationList = RecommendationClient.recommendationApiService.getRecommendationList(DataContainer.header,queryMap1)
 
         callGetRecommendationList.enqueue(object : Callback<List<RecommendedRoute>> {
@@ -88,9 +97,9 @@ class CourseRunActivity : BaseActivity() {
                         if (response.isSuccessful) { // <--> response.code == 200
                             Log.d("경로 추천 보간","통신 성공")
                             val route = response.body() as RecommendedRoute
-                            val routePrim = wktToPolyline(route.wktRoute)
-                            mapsFragment.drawPolyline(routePrim,false)
-                            infoTextView.text = "제목 ${data.title}\n거리: ${data.distance}km \n예상 소요 시간: 분"
+                            val routePrim = courseAdapter.wktToPolyline(route.wktRoute)
+                            mapsFragment.drawPolyline(routePrim,false, false)
+                            infoTextView.text = "제목 ${data.title}\n거리: ${data.distance}m \n예상 소요 시간: 분"
 
                         } else { // code == 400
                             Log.d("경로 추천 보간","통신 실패")
@@ -105,20 +114,5 @@ class CourseRunActivity : BaseActivity() {
             }
             })
 
-    }
-
-    private fun wktToPolyline(wktRoute: String): MutableList<LatLng> {
-        val prim1 = wktRoute.substring(wktRoute.indexOf('(') + 1, wktRoute.indexOf(')'))
-        val prim2 = prim1.split(", ")
-        val polyline = mutableListOf<LatLng>()
-        prim2.forEach {
-            val prim3 = it.split(" ")
-            if (prim3.size >= 2) {
-                val latLng = LatLng(prim3[1].toDouble(), prim3[0].toDouble())
-                polyline.add(latLng)
-            }
-        }
-
-        return polyline
     }
 }
