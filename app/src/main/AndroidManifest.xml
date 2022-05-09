@@ -27,6 +27,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+
         <activity
             android:name=".member_management.SignUpActivity2"
             android:exported="false" />
@@ -65,6 +66,15 @@
             android:exported="false" />
         <activity
             android:name=".SocialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakeRecordCard"
+            android:exported="false" />
+        <activity
+            android:name=".CompleteRecordCard"
+            android:exported="false" />
+        <activity
+            android:name=".ShareRecordCard1"
             android:exported="false" />
         <activity
             android:name=".running.MainActivity"
