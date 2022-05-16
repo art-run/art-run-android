@@ -13,7 +13,7 @@ interface LoginService {
     //@FormUrlEncoded
     @POST("/auth/signup")
     fun signUp(
-        @Body memberInfoDClass: MemberInfoDClass
+        @Body signUpDClass: SignUpDClass
     ) : Call<SignUpResponse>
     /*
     처음에 시도한 방식, 이것은 인터페이스에서 Body가 아닌 Field로 보내는 경우 쓰임. 비교를 위해 남겨둠.
@@ -69,4 +69,10 @@ interface LoginService {
         @Field("password") password: String
     ) : Call<EditMemberInfoResponse>
 
+    @DELETE("/member/{memberId}")
+    fun deleteAccount(
+        @Header("Authorization") authorization:String?,
+        @Path("memberId") memberId: Int,
+        //@Body editAccountInfoDClass:EditAccountInfoDClass 이건 나중에 서버 상황에 맞춰 설정
+    ) : Call<EditMemberInfoResponse>
 }

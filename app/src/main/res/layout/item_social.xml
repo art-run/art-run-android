@@ -46,14 +46,36 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
-            <ImageView
-                android:id="@+id/item_image"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mayLayout"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="0dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_alignParentEnd="true">
+
+                <FrameLayout
+                    android:id="@+id/mapView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:id="@+id/drawRouteLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/item_image"-->
+            <!--                android:layout_width="100dp"-->
+            <!--                android:layout_height="100dp"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentRight="true"-->
+            <!--                android:layout_marginTop="13dp"-->
+            <!--                android:layout_marginEnd="0dp"-->
+            <!--                android:layout_marginRight="13dp"-->
+            <!--                android:src="@mipmap/ic_launcher" />-->
 
 
             <TextView
@@ -61,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toStartOf="@+id/item_image"
-                android:layout_toLeftOf="@id/item_image"
+                android:layout_toStartOf="@+id/mayLayout"
+                android:layout_toLeftOf="@+id/mayLayout"
                 android:text="제목"
                 android:textSize="30sp" />
 
@@ -72,8 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_title"
                 android:layout_alignParentLeft="true"
-                android:layout_toStartOf="@+id/item_image"
-                android:layout_toLeftOf="@+id/item_image"
+                android:layout_toStartOf="@+id/mayLayout"
+                android:layout_toLeftOf="@+id/mayLayout"
                 android:text="거리: ~~km" />
 
             <TextView
@@ -82,8 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_detail"
                 android:layout_alignParentLeft="true"
-                android:layout_toStartOf="@+id/item_image"
-                android:layout_toLeftOf="@+id/item_image"
+                android:layout_toStartOf="@+id/mayLayout"
+                android:layout_toLeftOf="@+id/mayLayout"
                 android:text="20XX.XX.XX" />
 
         </RelativeLayout>
