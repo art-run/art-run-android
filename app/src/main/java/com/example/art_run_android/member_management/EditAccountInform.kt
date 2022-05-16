@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.DataContainer
@@ -61,7 +62,12 @@ class EditAccountInform : BaseActivity() {
                         response: Response<EditMemberInfoResponse>
                     ) {
                         Log.d("계정정보수정 : 이메일 변경",response.body()?.email.toString())
+                        val builder = AlertDialog.Builder(this@EditAccountInform)
+                        builder.setTitle("수정 완료").
+                        setMessage("정보 수정이 완료되었습니다.")
+                        builder.show()
                     }
+
 
                     override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {
                         Log.e("계정정보수정 : 이메일 변경","${t.localizedMessage}")
@@ -73,6 +79,10 @@ class EditAccountInform : BaseActivity() {
         }
         binding.btnPasswordFix.setOnClickListener{
             Toast.makeText(this,"비밀번호 변경은 아직 구현되지 않았습니다.",Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this@EditAccountInform)
+            builder.setTitle("준비중").
+            setMessage("비밀번호 수정기능은 준비중입니다.")
+            builder.show()
         }
         /*비밀번호 수정은 아직 구현되지 않음
         //비밀번호 수정
@@ -124,6 +134,11 @@ class EditAccountInform : BaseActivity() {
                         binding.textNickname.text= response.body()?.nickname.toString()
                         DataContainer.userNickname=response.body()?.nickname.toString()
                         Log.d("정보수정3",DataContainer.userNickname.toString())
+
+                        val builder = AlertDialog.Builder(this@EditAccountInform)
+                        builder.setTitle("수정 완료").
+                        setMessage("정보 수정이 완료되었습니다.")
+                        builder.show()
                     }
                     //통신 실패시
                     override fun onFailure(call: Call<EditMemberInfoResponse>, t: Throwable) {

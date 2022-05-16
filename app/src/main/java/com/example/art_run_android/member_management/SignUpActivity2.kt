@@ -7,13 +7,16 @@ import android.util.Log
 import android.widget.Toast
 import com.example.art_run_android.R
 import com.example.art_run_android.databinding.MemberManagementActivitySignUp2Binding
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class SignUpActivity2 : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = MemberManagementActivitySignUp2Binding.inflate(layoutInflater)
@@ -67,7 +70,6 @@ class SignUpActivity2 : AppCompatActivity() {
         var loginService=retrofit.create(LoginService::class.java)
 
 
-
         //확인 버튼 설정_ 눌렀을 때 받아온 정보를 서버로 넘김.
         binding.btConfirm.setOnClickListener{
             var height=binding.textHeight.text.toString().toInt()
@@ -78,9 +80,9 @@ class SignUpActivity2 : AppCompatActivity() {
             //toast.show()
 
             //여태 받은 자료들을 Json 객체로 생성
-            val memberInfoDClass=MemberInfoDClass(age,email,gender,height,nickname,password,weight)
+            val signUpDClass=SignUpDClass(age,email,gender,height,nickname,password,weight)
 
-            loginService.signUp(memberInfoDClass)
+            loginService.signUp(signUpDClass)
                 .enqueue(object: Callback<SignUpResponse>{
                     //통신 실패시 실행되는 코드
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
@@ -97,8 +99,16 @@ class SignUpActivity2 : AppCompatActivity() {
                         var signUpCheck=response
                         Log.d("회원가입",signUpCheck.toString())
                         Log.d("회원가입2",signUpCheck.body().toString())
-                        val intent=Intent(this@SignUpActivity2, LoginActivity::class.java)
-                        startActivity(intent)
+
+                        if(response.code()==400){
+                            Log.d("회원가입3",response.errorBody()?.string()!!)
+
+
+                        }
+                        else{
+                            val intent=Intent(this@SignUpActivity2, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
                 }
                 )

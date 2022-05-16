@@ -130,4 +130,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_editAccountInfo" />
 
+    <Button
+        android:id="@+id/bt_logout"
+        android:layout_width="298dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="96dp"
+        android:background="#D6D3D3"
+        android:backgroundTint="#3E96999A"
+        android:gravity="center"
+        android:text="로그아웃"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_editAccountInfo" />
+
+    <Button
+        android:id="@+id/bt_deleteAccount"
+        android:layout_width="85dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="172dp"
+        android:background="#D6D3D3"
+        android:backgroundTint="#00000000"
+        android:gravity="center"
+        android:text="회원탈퇴"
+        android:textColor="#2DFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.819"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_editAccountInfo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

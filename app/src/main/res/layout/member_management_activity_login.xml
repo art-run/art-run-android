@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="411dp"
-        android:layout_height="534dp"
+        android:layout_width="409dp"
+        android:layout_height="563dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
             android:layout_height="197dp"
             android:layout_gravity="center"
             android:layout_marginTop="72dp"
-            app:srcCompat="@drawable/example_picture" />
+            app:srcCompat="@mipmap/ic_artrun" />
 
         <EditText
             android:id="@+id/text_userID"
@@ -53,12 +53,19 @@
             android:layout_marginTop="8dp"
             android:text="로그인" />
 
+        <CheckBox
+            android:id="@+id/check_AutoLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="200dp"
+            android:text="자동 로그인" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="275dp"
         android:layout_height="79dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="52dp"
         android:baselineAligned="true"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
