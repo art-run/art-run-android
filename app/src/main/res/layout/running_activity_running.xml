@@ -35,6 +35,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/runningDistTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -49,6 +50,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/runningSpeedTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -82,6 +84,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/runningKcalTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

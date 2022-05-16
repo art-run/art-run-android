@@ -9,9 +9,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_compelete_record_card.*
 
-
-
-
 class CompleteRecordCard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
