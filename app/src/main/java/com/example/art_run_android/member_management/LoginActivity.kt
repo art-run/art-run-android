@@ -108,7 +108,7 @@ class LoginActivity : AppCompatActivity() {
                                         DataContainer.userNickname = userNickname
                                         DataContainer.userProfileImg = userProfileImg
                                         DataContainer.userWeight = userWeight
-                                        DataContainer.user_id = lastRouteId
+//                                        DataContainer.user_id = lastRouteId
                                         DataContainer.memberHeader = setAccessToekn
                                         startActivity(intent)
                                     }

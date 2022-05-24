@@ -13,7 +13,7 @@ class DataContainer {
         var token: Token? = null
         var userNumber: Int=0    //멤버 정보 조회시 memberId에 들어가는 정보
         var header: String?=null    //멤버 정보 조회시 header에 들어가야하는 정보
-        var user_id: String? =  null
+//        var user_id: String? =  null
         var memberHeader: String? = null
 
         fun clear() {
@@ -28,7 +28,7 @@ class DataContainer {
             token = null
             userNumber = 0
             header = null
-            user_id = null
+//            user_id = null
             memberHeader = null
         }
     }

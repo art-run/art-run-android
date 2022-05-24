@@ -53,7 +53,8 @@ class RecentsocialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.rv_profile)
-        Log.i("RecentsocialFragment", "DataContainer : " + DataContainer.user_id)
+        Log.i("RecentsocialFragment", "DataContainer : " + "")
+//                DataContainer.user_id)
         fragment = childFragmentManager
         CallRecentSocial(1)
 
@@ -67,7 +68,8 @@ class RecentsocialFragment : Fragment() {
             .build()
 
         var socialService = retrofit.create(SocialService::class.java)
-        val lastRouteId = DataContainer.user_id
+        val lastRouteId = 5
+//            DataContainer.user_id
         val memberHeader = DataContainer.memberHeader
         var testtoken =
             "Bearer {" + "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2NTMxMTkxODF9.200u47deSU9q0YujpaWWTe9C1HWtZ2iAJYyhKoXL2DBaHG5lDBxKdQzHcVSWQmQGttFSuidLVyjiPOq-lrnKuQ}"
@@ -81,7 +83,7 @@ class RecentsocialFragment : Fragment() {
                     call: Call<List<SocialDClass>>,
                     response: Response<List<SocialDClass>>
                 ) {
-                    Log.d("route 1 : 데이터파싱 테스트", response.body()?.get(0)?.nickname.toString())
+                    Log.d("route 1 : 데이터파싱 테스트", response.body()?.get(0)?.title.toString())
                     Log.i("route 1", " ROUTE 1 SIZE : " + response.body()?.size)
                     if(response.body()?.size == 0 || response.body()?.size == null){
                         val profileList = arrayListOf(

@@ -2,6 +2,7 @@ package com.example.art_run_android
 
 import android.content.Context
 import android.graphics.Point
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,57 +44,58 @@ class RecyclerAdapter_Social(val profileList : ArrayList<SocialData>
         transaction.add(R.id.mapView2, mapsFragment)
         transaction.commit()
 
-        val drawRouteView = DrawRouteView(context)
-        holder.drawRouteLayout.addView(drawRouteView)
-
-        drawRouteView.SetStrokeListener(object : DrawRouteView.StrokeListener {
-            override fun onStrokeEvent(pointList: MutableList<Point>) {
-                val list = mapsFragment.getLatLngList(pointList)
-                val string = StringBuilder()
+//        val drawRouteView = DrawRouteView(context)
+//        holder.drawRouteLayout.addView(drawRouteView)
+//
+//        drawRouteView.SetStrokeListener(object : DrawRouteView.StrokeListener {
+//            override fun onStrokeEvent(pointList: MutableList<Point>) {
+//                val list = mapsFragment.getLatLngList(pointList)
+//                val string = StringBuilder()
+////                list.forEach {
+////                    string.append(it.longitude)
+////                    string.append(",")
+////                    string.append(it.latitude)
+////                    if (list.indexOf(it) != list.size - 1) {
+////                        string.append(";")
+////                    }
+////                }
+//
 //                list.forEach {
-//                    string.append(it.longitude)
+//                    string.append(37.542465)
 //                    string.append(",")
-//                    string.append(it.latitude)
+//                    string.append(127.068837)
 //                    if (list.indexOf(it) != list.size - 1) {
 //                        string.append(";")
 //                    }
 //                }
-                list.forEach {
-                    string.append(35.8554266)
-                    string.append(",")
-                    string.append(128.7521366)
-                    if (list.indexOf(it) != list.size - 1) {
-                        string.append(";")
-                    }
-                }
-
-                val callGetMatch = OsrmClient.matchApiService.getMatch(string.toString())
-
-//                callGetMatch.enqueue(object : Callback<RouteDataClass> {
-//                    override fun onResponse(
-//                        call: Call<RouteDataClass>,
-//                        response: Response<RouteDataClass>
-//                    ) {
-//                        if (response.isSuccessful) { // <--> response.code == 200
-//                            val match = response.body() as RouteDataClass
-//                            match.routes.forEach {
-//                                val polyline = PolyUtil.decode(it.geometry)
-//                                mapsFragment.drawPolyline(polyline, false, false)
-//                            }
 //
-//                        } else { // code == 400
-//                            // 실패 처리
-//                        }
-//                    }
+//                val callGetMatch = OsrmClient.matchApiService.getMatch(string.toString())
 //
-//                    override fun onFailure(call: Call<RouteDataClass>, t: Throwable) {
-//                        TODO("Not yet implemented")
-//                    }
-//                })
-
-
-            }
-        })
+////                callGetMatch.enqueue(object : Callback<RouteDataClass> {
+////                    override fun onResponse(
+////                        call: Call<RouteDataClass>,
+////                        response: Response<RouteDataClass>
+////                    ) {
+////                        if (response.isSuccessful) { // <--> response.code == 200
+////                            val match = response.body() as RouteDataClass
+////                            match.routes.forEach {
+////                                val polyline = PolyUtil.decode(it.geometry)
+////                                mapsFragment.drawPolyline(polyline, false, false)
+////                            }
+////
+////                        } else { // code == 400
+////                            // 실패 처리
+////                        }
+////                    }
+////
+////                    override fun onFailure(call: Call<RouteDataClass>, t: Throwable) {
+////                        TODO("Not yet implemented")
+////                    }
+////                })
+//
+//
+//            }
+//        })
     }
 
     override fun getItemCount(): Int {

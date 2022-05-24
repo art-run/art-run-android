@@ -76,7 +76,8 @@ class MysocialFragment : Fragment() {
             .build()
 
         var socialService = retrofit.create(SocialService::class.java)
-        val lastRouteId = DataContainer.user_id
+        val lastRouteId = 6
+//            DataContainer.user_id
         val memberHeader = DataContainer.memberHeader
         var testtoken =
             "Bearer {" + "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2NTMxMTkxODF9.200u47deSU9q0YujpaWWTe9C1HWtZ2iAJYyhKoXL2DBaHG5lDBxKdQzHcVSWQmQGttFSuidLVyjiPOq-lrnKuQ}"

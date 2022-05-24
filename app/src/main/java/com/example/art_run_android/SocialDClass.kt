@@ -1,7 +1,5 @@
 package com.example.art_run_android
 
-import com.google.gson.annotations.SerializedName
-
 data class SocialDClass(
     //createdAt   string($date-time)
     //distance   integer($int32)
@@ -10,11 +8,11 @@ data class SocialDClass(
     //routeId   integer($int64)
     //title   string
     //wktRunRoute   string
-    @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("distance") val distance: Int,
-    @SerializedName("nickname") val nickname: String,
-    @SerializedName("profileImg") val profileImg: String,
-    @SerializedName("routeId") val routeId: Int,
-    @SerializedName("title") val title: String,
-    @SerializedName("wktRunRoute") val wktRunRoute: String
+    val createdAt: String,
+    val distance: Int,
+    val nickname: String,
+    val profileImg: String,
+    val routeId: Int,
+    val title: String,
+    val wktRunRoute: String
 )
