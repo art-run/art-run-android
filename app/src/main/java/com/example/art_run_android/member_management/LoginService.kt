@@ -69,10 +69,15 @@ interface LoginService {
         @Field("password") password: String
     ) : Call<EditMemberInfoResponse>
 
+    @GET("/member/duplication")
+    fun emailDuplicationCheck(
+        @Query("email") email: String,
+    ): Call<Unit>
+
     @DELETE("/member/{memberId}")
     fun deleteAccount(
         @Header("Authorization") authorization:String?,
-        @Path("memberId") memberId: Int,
+        @Path("memberId") userNumber: String?
         //@Body editAccountInfoDClass:EditAccountInfoDClass 이건 나중에 서버 상황에 맞춰 설정
-    ) : Call<EditMemberInfoResponse>
+    ) : Call<Unit>
 }
