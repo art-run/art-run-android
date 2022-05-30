@@ -10,4 +10,5 @@
     <color name="grey">#FF999999</color>
     <color name="lightblack">#FF101010</color>
     <color name="transparent">#00000000</color>
+    <color name="skyblue">#325ED9</color>
 </resources>

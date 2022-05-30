@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.R
 import com.example.art_run_android.DataContainer
@@ -86,7 +87,7 @@ class MainActivity : BaseActivity() {
                     if (but == ton) {
                         continue;
                     }
-                    ton.setBackgroundColor(Color.WHITE)
+                    ton.setBackgroundColor(Color.BLACK)
                 }
             }
         }
@@ -100,6 +101,7 @@ class MainActivity : BaseActivity() {
                         continue;
                     }
                     ton.setBackgroundColor(Color.WHITE)
+
                 }
                 when (opt2) {
                     0 -> textView.text = "km"
