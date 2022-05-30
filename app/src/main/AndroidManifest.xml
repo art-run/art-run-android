@@ -20,7 +20,8 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="API_KEY" />
+            android:value="AIzaSyDIqmgQ6JuY9mPmVQ_eAtB8O9-0L1p7akM" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -28,6 +29,7 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
 
         <activity
             android:name=".member_management.SignUpActivity2"
@@ -67,6 +69,15 @@
             android:exported="false" />
         <activity
             android:name=".SocialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakeRecordCard"
+            android:exported="false" />
+        <activity
+            android:name=".CompleteRecordCard"
+            android:exported="false" />
+        <activity
+            android:name=".ShareRecordCard1"
             android:exported="false" />
         <activity
             android:name=".running.MainActivity"

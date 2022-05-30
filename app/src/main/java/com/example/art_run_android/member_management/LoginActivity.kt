@@ -1,5 +1,6 @@
 package com.example.art_run_android.member_management
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -97,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
                                 login.body().toString().split(",")[2].split("=")[1]
                             //memberInfo 조회시 필요한 헤더
                             var memberHeader = "Bearer " + accessToken
+                            var setAccessToekn = "Bearer {$accessToken}"
+
                             Log.d("로그인4:memberHeader", memberHeader)
 
                             header = "Bearer " + accessToken
@@ -125,9 +128,11 @@ class LoginActivity : AppCompatActivity() {
                                         var userGender = response.body()?.gender.toString()
                                         var userHeight = response.body()?.height.toString().toInt()
                                         var userNickname = response.body()?.nickname.toString()
-                                        var userProfileImg=response.body()?.userProfileImg.toString()
+                                        var userProfileImg = response.body()?.userProfileImg.toString()
+                                        var lastRouteId = userJwt.getSubject().toString();
                                         //var userPassword = response.body()?.password.toString()
                                         var userWeight = response.body()?.weight.toString().toInt()
+
                                         DataContainer.userAge = userAge
                                         DataContainer.userEmail = userEmail
                                         DataContainer.userGender = userGender
@@ -135,6 +140,8 @@ class LoginActivity : AppCompatActivity() {
                                         DataContainer.userNickname = userNickname
                                         DataContainer.userProfileImg = userProfileImg
                                         DataContainer.userWeight = userWeight
+//                                        DataContainer.user_id = lastRouteId
+                                        DataContainer.memberHeader = setAccessToekn
                                         startActivity(intent)
                                     }
 
@@ -151,14 +158,14 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("로그인실패","아이디 비밀번호 잘못입력")
                             Toast.makeText(this@LoginActivity,"이메일 혹은 비밀번호가 틀렸습니다.",Toast.LENGTH_SHORT).show()
                         }
-                }
+                    }
                     //통신 실패시
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                         Log.e("로그인",t.localizedMessage)
-                        //Toast.makeText(this@LoginActivity,"통신 실패!",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity,"통신 실패!",Toast.LENGTH_LONG).show()
 
-                }//통신 실패시
-            })
+                    }//통신 실패시
+                })
 
             val toast = Toast.makeText(this,userInfo,Toast.LENGTH_LONG)
             toast.show()
