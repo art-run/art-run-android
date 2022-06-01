@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.art_run_android.databinding.FragmentRecentsocialBinding
 import kotlinx.android.synthetic.main.fragment_recentsocial.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -71,7 +72,7 @@ class RecentsocialFragment : Fragment() {
 
 
 
-        val lastRouteId = 5
+        val lastRouteId = 6
 /*            DataContainer.user_id
         val memberHeader = DataContainer.memberHeader
         var testtoken =
@@ -95,6 +96,101 @@ class RecentsocialFragment : Fragment() {
                     var serverCheck=response
                     Log.d("서버에서 소셜정보 받아오기 : 성공1",serverCheck.toString())
                     Log.d("서버에서 소셜정보 받아오기 : 성공2",serverCheck.body().toString())
+                    Log.d("사이즈",response.body()?.size.toString())
+                    if(response.body()?.size == 0 || response.body()?.size == null){
+                        Log.d("이상하다 데이터가없는데",response.body()?.size.toString())
+                        /*val profileList = arrayListOf(
+                            SocialData("","김ㅇㅇ", "asdf", "3", "2022-02-13"),
+                            SocialData("","이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
+                            SocialData("","박ㅇㅇ", "qwer", "11", "2022-12-12"),
+                            SocialData("","한ㅇㅇ", "qwer44", "0", "2021-11-11"),
+                            SocialData("","김ㅇㅇ", "asdf", "3", "2022-02-13"),
+                            SocialData("","이ㅇㅇ", "adsf22", "1.5", "2022-02-13"),
+                        )
+                        recyclerView.adapter = RecyclerAdapter_Social(profileList)
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)*/
+                    }else{
+                        val size: Int? = response.body()?.size
+                        if (size != null) {
+                            Log.d("사이즈:4",response.body()?.size.toString())
+                            var data : MutableList<SocialData> = mutableListOf()
+
+                            for(i: Int in size-1 downTo size-lastRouteId+1){
+                                Log.d("여기부터",i.toString())
+                                var socialData=SocialData(
+                                    response.body()?.get(i)?.profileImg.toString(),
+                                    response.body()?.get(i)?.nickname.toString(),
+                                    response.body()?.get(i)?.title.toString(),
+                                    response.body()?.get(i)?.distance.toString(),
+                                    response.body()?.get(i)?.createdAt.toString())
+
+                                data.add(socialData)
+
+                                Log.d("socialData 확인",socialData.toString())
+                                Log.d("data 확인",data.toString())
+                                //data라는 이름으로 데이터리스트 생성 완료!(for문을 다 마치면!)
+                                recyclerView.adapter = RecyclerAdapter_Social(data,view!!.context)
+                                recyclerView.layoutManager =
+                                    LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
+
+                                /*했던작업 잠시멈춤 6월1일 2시44분
+                                var adapter=RecyclerAdapter_Social()
+                                adapter.listData=data
+                                val binding by lazy{FragmentRecentsocialBinding.inflate(layoutInflater)}
+                                binding.rvProfile.adapter=adapter
+                                binding.rvProfile.layoutManager= LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+
+*/
+
+
+
+
+
+                                /*
+                                val profileList = arrayListOf(
+                                    SocialData(
+                                        ""
+                                        , response.body()?.get(i)?.nickname.toString()
+                                        , response.body()?.get(i)?.title.toString()
+                                        , response.body()?.get(i)?.distance.toString()
+                                        , response.body()?.get(i)?.createdAt.toString())
+                                )
+
+                                Log.d("여기사이에서 문제 발생",i.toString())
+                                Log.d("여기사이에서 문제 발생",profileList.toString())
+
+                                /*이 부분은 아예 다시써보기
+                                recyclerView.adapter = RecyclerAdapter_Social(profileList,context,fragment)
+                                recyclerView.layoutManager =
+                                    LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
+                                */
+
+                                rv_profile.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                                rv_profile.setHasFixedSize(true)
+
+                                rv_profile.adapter=RecyclerAdapter_Social(profileList)
+                                Log.d("여기사이에서 문제 발생2",profileList.toString())
+
+                                /* 여기서 무한걸리는듯!!
+
+                                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+                                    override fun onScrolled(recyclerView: RecyclerView, dx:Int, dy:Int){
+                                        super.onScrolled(recyclerView, dx, dy)
+                                        // 스크롤이 끝에 도달했는지 확인
+                                        if (!recyclerView.canScrollVertically(1)) {
+                                            CallRecentSocial(size-4)
+
+                                        }
+                                    }
+                                })*/
+
+
+111111111111111111*/
+                            }
+                        }
+                    }
 
 
                     /*if(response.code()==400){
