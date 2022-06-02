@@ -1,27 +1,47 @@
-package com.example.art_run_android
+package com.example.art_run_android.running.record_card
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import kotlinx.android.synthetic.main.activity_compelete_record_card.*
+import com.example.art_run_android.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
 
 class CompleteRecordCard : AppCompatActivity() {
+    private lateinit var map: GoogleMap
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compelete_record_card)
-        val lockButton: ImageButton = findViewById(R.id.btn_lock_c)
-        val unlockButton: ImageButton = findViewById(R.id.btn_unlock_c)
-        val dotmenu : ImageButton = findViewById(R.id.share_btn)
+        val lockButton: ImageButton = findViewById(R.id.lockCRC)
+        val dotmenu : ImageButton = findViewById(R.id.shareCRC)
+        val titleFixed: TextView = findViewById(R.id.titleCRC)
         // 앞의 activity 에서 lock 의 상태를 받아 complete에서는 변경시키지 못하고, 수정으로 넘어가야만 할 수 있는 것..!
         // lock의 상태에 따라 모양만 변경시키게 하려는 의도.. --> 변경하는게 나을까요..?
         lockButton.isVisible = false
-        unlockButton.isVisible = false
         // dot 메뉴로 수정하기(뒤로 이동) , share activity로 이동
+        val callback = OnMapReadyCallback { googleMap ->
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.5662952, 126.97794509999994), 16f))
+            map = googleMap
+            map.uiSettings.isMapToolbarEnabled = false
+        }
+
+        val mapView: MapView = findViewById<MapView?>(R.id.recordCardMap).apply {
+            this.isClickable = false
+            this.onCreate(null)
+            this.getMapAsync(callback)
+        }
+
         dotmenu.setOnClickListener {
             var dotPopup = PopupMenu(applicationContext,it)
             menuInflater?.inflate(R.menu.card_dotmenu,dotPopup.menu)
@@ -31,7 +51,7 @@ class CompleteRecordCard : AppCompatActivity() {
                     R.id.card_go_to_share ->{
                         // 공유하기 버튼을 누르면 공유하기 activity로 넘어간다
                         Toast.makeText(applicationContext,"공유하기", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this,ShareRecordCard1::class.java)
+                        val intent = Intent(this, ShareRecordCard1::class.java)
                         intent.putExtra("title",title.toString())  //제목 intent로 전달해주기
                         startActivity(intent)
                         return@setOnMenuItemClickListener true
@@ -48,7 +68,7 @@ class CompleteRecordCard : AppCompatActivity() {
 
         // 제목 받아서 오기
         if(intent.hasExtra("title")){  // 전단계에서 intent로 title을 받아 title 설정해주기
-            title_fixed.text=intent.getStringExtra("title")
+            titleFixed.text=intent.getStringExtra("title")
         }
     }
 

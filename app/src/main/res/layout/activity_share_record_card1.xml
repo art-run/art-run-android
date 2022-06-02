@@ -1,122 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/share_googlemap"
-        android:layout_width="367dp"
-        android:layout_height="355dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        tools:layout_editor_absoluteX="22dp" />
-
     <LinearLayout
-        app:layout_constraintBottom_toBottomOf="@+id/share_googlemap"
-        android:id="@+id/linearLayout8"
-        android:layout_width="389dp"
-        android:layout_height="19dp"
-        android:orientation="horizontal"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="616dp">
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="35dp"
+        android:background="#ECECEC"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/ShareView"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView11"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:text="2.1km"
-            android:textAlignment="center"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="11M30S"
-            android:textAlignment="center"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="5'47''/KM"
-            android:textAlignment="center"
-            android:textColor="#000000" />
-
+            android:text="제목"
+            android:textColor="@color/black"
+            android:textSize="10pt" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ShareView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ShareMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:cameraZoom="13"
+            map:liteMode="true"
+            map:mapType="normal" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2.1km"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="10pt" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="11M30S"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="10pt" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5'47''/KM"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="10pt" />
+        </LinearLayout>
+    </FrameLayout>
 
 
     <LinearLayout
         android:id="@+id/linearLayout7"
-        android:layout_width="140dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_googlemap">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ShareView"
+        app:layout_constraintTop_toBottomOf="@id/ShareView">
 
         <Switch
             android:id="@+id/share_show_map"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="지도표시"
             android:textColor="#000000"
-            android:textColorHint="#000000" />
+            android:textColorHint="#000000"
+            android:textSize="10pt" />
 
         <Switch
             android:id="@+id/share_show_statistic"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="러닝통계표시"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="10pt" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:paddingEnd="20dp">
+
+            <ImageButton
+                android:id="@+id/share_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/backicon" />
+
+            <ImageButton
+                android:id="@+id/share_select_SNS"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_baseline_share_24" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
-
-        <ImageButton
-            android:id="@+id/share_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:backgroundTint="@color/transparent"
-            app:srcCompat="@drawable/backicon" />
-
-        <ImageButton
-            android:id="@+id/share_select_SNS"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:backgroundTint="@color/transparent"
-            app:srcCompat="@drawable/shareicon" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

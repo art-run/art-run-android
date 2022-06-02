@@ -8,74 +8,64 @@
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="391dp"
-        android:layout_height="157dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_margin="20dp"
         android:background="#C2C2C2"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/FixedMap">
 
         <LinearLayout
-            android:layout_width="212dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Space
-                android:layout_width="28dp"
-                android:layout_height="123dp" />
-
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="129dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <Space
-                    android:layout_width="148dp"
-                    android:layout_height="30dp" />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="현재거리"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="시간"
-                    android:textColor="@color/black"
-                   />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="평균속도"
-                    android:textColor="@color/black"
-                     />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="소모칼로리"
-                    android:textColor="@color/black"
-                 />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="108dp"
-                android:layout_height="128dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-                <Space
-                    android:layout_width="148dp"
-                    android:layout_height="30dp" />
 
                 <TextView
                     android:id="@+id/textView17"
@@ -89,6 +79,7 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="8km"
                     android:textColor="@color/black"
                     tools:text="08:23" />
@@ -97,90 +88,68 @@
                     android:id="@+id/textView19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="4km/h"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textView20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="55kcal"
-                    android:textColor="@color/black"
-                     />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="165dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="148dp"
-                android:layout_height="23dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/color_change"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#C2C2C2"
-                    android:contentDescription="changecolor"
-                    android:scaleType="centerInside"
+                    android:background="@color/transparent"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/coloricon"
                     tools:ignore="ImageContrastCheck" />
-
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="23dp" />
 
                 <ImageButton
                     android:id="@+id/line_change"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#C2C2C2"
-                    android:contentDescription="changeline"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/lineicon" />
-
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="23dp" />
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_line_style_24" />
 
                 <ImageButton
-                    android:id="@+id/lockable"
+                    android:id="@+id/lockMRC"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#C2C2C2"
-                    android:contentDescription="changelock"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/lockicon" />
+                    android:layout_marginLeft="10dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_outline_lock_24" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/lock_open" />
             </LinearLayout>
-
-            <Space
-                android:layout_width="148dp"
-                android:layout_height="13dp"
-                tools:layout_editor_absoluteX="7dp"
-                tools:layout_editor_absoluteY="770dp" />
 
             <Button
                 android:id="@+id/save_card"
-                android:layout_width="134dp"
-                android:layout_height="48dp"
-                android:layout_marginBottom="308dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="저장"
                 android:textAlignment="center"
                 android:textColor="#CFD8DC"
@@ -191,57 +160,42 @@
 
     <LinearLayout
         android:id="@+id/linearLayout9"
-        android:layout_width="330dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="173dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="35dp"
         android:background="#ECECEC"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/FixedMap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/FixedMap"
         app:layout_constraintTop_toTopOf="parent">
-
-        <Space
-            android:layout_width="364dp"
-            android:layout_height="19dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:counterEnabled="true"
-            app:counterMaxLength="10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="10">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_title_text"
-                android:layout_width="240dp"
-                android:layout_height="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
                 android:hint="제목을 입력해주세요"
-                android:selectAllOnFocus="true"
-                android:textColor="#000000"
-                tools:ignore="Deprecated,TouchTargetSizeCheck"
-                android:editable="true"
-                  />
+                android:textColor="#000000" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <com.google.android.gms.maps.MapView
+    <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/FixedMap"
-        android:layout_width="336dp"
-        android:layout_height="260dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="15dp"
-        android:contentDescription="lock"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        map:cameraZoom="13"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintTop_toTopOf="parent"
+        map:liteMode="true"
+        map:mapType="normal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

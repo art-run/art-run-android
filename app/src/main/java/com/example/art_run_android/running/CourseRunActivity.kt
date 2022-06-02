@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
+import com.google.android.gms.maps.model.Polyline
 import com.google.maps.android.PolyUtil
 import kotlinx.android.synthetic.main.running_activity_courserun.*
 import retrofit2.Call
@@ -43,8 +44,32 @@ class CourseRunActivity : BaseActivity() {
                         this.add(PolyUtil.encode(it.points))
                     }
                 }
+                var queryMap = mapOf("memberId" to "0", "wktTargetRoute" to polylineToWkt(mapsFragment.undoPolylineList))
+                val callPostRouteStart = ArtRunClient.routeApiService.postRouteStart(DataContainer.header,queryMap)
+
+                callPostRouteStart.enqueue(object : Callback<RouteId>{
+                    override fun onResponse(call: Call<RouteId>, response: Response<RouteId>) {
+                        if (response.isSuccessful) { // <--> response.code == 200
+                            Log.d("post route start","통신 성공")
+                            val routeId = response.body() as RouteId
+
+                            //intent.putExtra("routeID", routeId.routeId)
+
+
+                        } else { // code == 400
+                            Log.d("post route start","통신 실패 : " + response.errorBody()?.string()!!)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RouteId>, t: Throwable) {
+                        Log.d("post route start", "통신 실패 : $t")
+                    }
+
+                })
+
                 intent.putExtra("runningRoute", runningRoute)
                 startActivity(intent)
+
             } else {
                 //경로를 선택해주세요
             }
@@ -60,7 +85,7 @@ class CourseRunActivity : BaseActivity() {
 
         var queryMap1 = mapOf("distance" to distance.toInt().toString(), "offset" to "0",
             "pageNumber" to "0")
-        val callGetRecommendationList = RecommendationClient.recommendationApiService.getRecommendationList(DataContainer.header,queryMap1)
+        val callGetRecommendationList = ArtRunClient.recommendationApiService.getRecommendationList(DataContainer.header,queryMap1)
 
         callGetRecommendationList.enqueue(object : Callback<List<RecommendedRoute>> {
             override fun onResponse(
@@ -87,8 +112,7 @@ class CourseRunActivity : BaseActivity() {
             override fun onItemClick(v: View, data: RecommendedRoute) {
                 val currentLocation = mapsFragment.currentLocation
                 val queryMap2 = mapOf("lat" to currentLocation.latitude , "lng" to currentLocation.longitude)
-                val callGetRecommendation = RecommendationClient.recommendationApiService.getRecommendation(DataContainer.header,data.id,queryMap2)
-
+                val callGetRecommendation = ArtRunClient.recommendationApiService.getRecommendation(DataContainer.header,data.id,queryMap2)
                 callGetRecommendation.enqueue(object : Callback<RecommendedRoute> {
                     override fun onResponse(
                         call: Call<RecommendedRoute>,
@@ -98,11 +122,12 @@ class CourseRunActivity : BaseActivity() {
                             Log.d("경로 추천 보간","통신 성공")
                             val route = response.body() as RecommendedRoute
                             val routePrim = courseAdapter.wktToPolyline(route.wktRoute)
+                            mapsFragment.undoPolyline()
                             mapsFragment.drawPolyline(routePrim,false, false)
                             infoTextView.text = "제목 ${data.title}\n거리: ${data.distance}m \n예상 소요 시간: 분"
 
                         } else { // code == 400
-                            Log.d("경로 추천 보간","통신 실패")
+                            Log.d("경로 추천 보간","통신 실패 : ")
                         }
                     }
 
@@ -114,5 +139,25 @@ class CourseRunActivity : BaseActivity() {
             }
             })
 
+    }
+
+    private fun polylineToWkt(polylineList: List<Polyline>): String {
+        var sb= StringBuilder()
+        sb.append("LINESTRING (")
+
+
+        polylineList.forEach{ polyline ->
+            polyline.points.forEach {
+                sb.append(it.longitude.toString())
+                sb.append(" ")
+                sb.append(it.latitude.toString())
+                if(it != polylineList.last().points.last()) {
+                    sb.append(", ")
+                }
+            }
+        }
+        sb.append(")")
+
+        return sb.toString()
     }
 }
