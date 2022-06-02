@@ -87,7 +87,7 @@ class MapsFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getMyLocation() {
+    fun getMyLocation() {
         val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         mFusedLocationClient.lastLocation
             .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
@@ -122,7 +122,7 @@ class MapsFragment : Fragment() {
         }
     }
 
-    fun drawPolyline(polyline: List<LatLng>, isRedo: Boolean, isRunning: Boolean) {
+    fun drawPolyline(polyline: List<LatLng>, isRedo: Boolean, isRunning: Boolean) : Polyline{
         val result = thisGoogleMap.addPolyline(PolylineOptions().clickable(true).addAll(polyline)).apply {
             undoPolylineList.add(this)
         }
@@ -134,6 +134,8 @@ class MapsFragment : Fragment() {
             result.pattern = listOf(Dash(20F), Gap(20F))
             result.color = Color.GRAY
         }
+
+        return result
     }
 
     fun undoPolyline() {

@@ -20,7 +20,21 @@ interface RecommendationApiService {
     ): Call<RecommendedRoute>
 }
 
-object RecommendationClient {
+interface RouteApiService {
+    @POST("/route/start")
+    fun postRouteStart(
+        @Header("Authorization") authorization: String?,
+        @QueryMap par: Map<String, String?>
+    ): Call<RouteId>
+
+    @POST("/route/finish")
+    fun postRouteFinish(
+        @Header("Authorization") authorization: String?,
+        @QueryMap par: Map<String, String?>
+    ): Call<RouteId>
+}
+
+object ArtRunClient {
     private val retrofitClient: Retrofit.Builder by lazy {
         Retrofit.Builder()
             .baseUrl("http://artrun.kro.kr:80")
@@ -28,5 +42,8 @@ object RecommendationClient {
     }
     val recommendationApiService: RecommendationApiService by lazy {
         retrofitClient.build().create(RecommendationApiService::class.java)
+    }
+    val routeApiService: RouteApiService by lazy {
+        retrofitClient.build().create(RouteApiService::class.java)
     }
 }

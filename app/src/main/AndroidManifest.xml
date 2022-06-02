@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_artrun"
         android:roundIcon="@mipmap/ic_artrun_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:theme="@style/Theme.MaterialComponents.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".member_management.DeleteAccountActivity"
@@ -29,6 +29,16 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.art_run_android.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
 
         <activity
@@ -71,13 +81,13 @@
             android:name=".SocialActivity"
             android:exported="false" />
         <activity
-            android:name=".MakeRecordCard"
+            android:name="com.example.art_run_android.running.record_card.MakeRecordCard"
             android:exported="false" />
         <activity
-            android:name=".CompleteRecordCard"
+            android:name="com.example.art_run_android.running.record_card.CompleteRecordCard"
             android:exported="false" />
         <activity
-            android:name=".ShareRecordCard1"
+            android:name="com.example.art_run_android.running.record_card.ShareRecordCard1"
             android:exported="false" />
         <activity
             android:name=".running.MainActivity"
