@@ -1,6 +1,8 @@
 package com.example.art_run_android.member_management
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,11 +22,28 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = MemberManagementActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val pref = getSharedPreferences("userEmail", 0)
+        var savedEmail=pref.getString("email","").toString()
+        var savedPassword=pref.getString("password","").toString()
+        Log.d("자동로그인 정보 불러오기(이메일)",savedEmail)
+        Log.d("자동로그인 정보 불러오기(비밀번호)",savedPassword)
+
+        if (savedEmail!=""){
+            Log.d("자동로그인 정보 채워넣기 : ","자동로그인 정보를 불러올 수 있었다.")
+            binding.textUserID.setText(savedEmail)
+            binding.textUserPassword.setText(savedPassword)
+            binding.checkAutoLogin.isChecked=true
+        }
+        else{
+            Log.d("자동로그인 정보 채워넣기 실패 : ","불러 올 로그인 정보가 없었다.")
+            binding.checkAutoLogin.isChecked=false
+        }
         //retrofit 만들기
         var retrofit =Retrofit.Builder()
             .baseUrl("http://artrun.kro.kr:80")
@@ -35,18 +54,32 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.btLogin.setOnClickListener{
-            val email=binding.textUserID.text.toString()
-            val password=binding.textUserPassword.text.toString()
-            val userInfo="ID :"+email+"\nPassword :"+password
+
+            var email=binding.textUserID.text.toString().replace(" ","")
+            var password=binding.textUserPassword.text.toString()
+
+
+            var userInfo="ID :"+email+"\nPassword :"+password
+
+            if(binding.checkAutoLogin.isChecked){
+                saveData(email,password)
+                Log.d("방금 자동로그인 저장시킨 ID",email)
+                val pref = getSharedPreferences("userEmail", 0)
+                /*var savedEmail=pref.getString("email","저장정보 없음").toString()
+                var savedPassword=pref.getString("password","저장정보 없음2").toString()
+                Log.d("자동로그인 정보 불러오기 실행은 해봤어",savedEmail)*/
+            }
+            else{
+                clearData()
+                Log.d("자동로그인 정보삭제 : ","자동로그인 정보 삭제요청에 따라 지움.")
+            }
 
             val loginDClass=LoginDClass(email,password)
 
             loginService.requestLogin(loginDClass)
                 .enqueue(object:Callback<LoginResponse>{
                     //통신 성공시
-
                     override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-
                         val login=response
                         if (login.body().toString()!="null") {
                             Log.d("로그인", login.toString())
@@ -65,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
                                 login.body().toString().split(",")[2].split("=")[1]
                             //memberInfo 조회시 필요한 헤더
                             var memberHeader = "Bearer " + accessToken
+                            var setAccessToekn = "Bearer {$accessToken}"
+
                             Log.d("로그인4:memberHeader", memberHeader)
 
                             header = "Bearer " + accessToken
@@ -93,9 +128,11 @@ class LoginActivity : AppCompatActivity() {
                                         var userGender = response.body()?.gender.toString()
                                         var userHeight = response.body()?.height.toString().toInt()
                                         var userNickname = response.body()?.nickname.toString()
-                                        var userProfileImg=response.body()?.userProfileImg.toString()
+                                        var userProfileImg = response.body()?.userProfileImg.toString()
+                                        var lastRouteId = userJwt.getSubject().toString();
                                         //var userPassword = response.body()?.password.toString()
                                         var userWeight = response.body()?.weight.toString().toInt()
+
                                         DataContainer.userAge = userAge
                                         DataContainer.userEmail = userEmail
                                         DataContainer.userGender = userGender
@@ -103,6 +140,8 @@ class LoginActivity : AppCompatActivity() {
                                         DataContainer.userNickname = userNickname
                                         DataContainer.userProfileImg = userProfileImg
                                         DataContainer.userWeight = userWeight
+//                                        DataContainer.user_id = lastRouteId
+                                        DataContainer.memberHeader = setAccessToekn
                                         startActivity(intent)
                                     }
 
@@ -119,14 +158,14 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("로그인실패","아이디 비밀번호 잘못입력")
                             Toast.makeText(this@LoginActivity,"이메일 혹은 비밀번호가 틀렸습니다.",Toast.LENGTH_SHORT).show()
                         }
-                }
+                    }
                     //통신 실패시
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                         Log.e("로그인",t.localizedMessage)
-                        //Toast.makeText(this@LoginActivity,"통신 실패!",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity,"통신 실패!",Toast.LENGTH_LONG).show()
 
-                }//통신 실패시
-            })
+                    }//통신 실패시
+                })
 
             val toast = Toast.makeText(this,userInfo,Toast.LENGTH_LONG)
             toast.show()
@@ -139,5 +178,21 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun saveData( loginEmail :String,password:String ){
+        val pref =getSharedPreferences("userEmail", MODE_PRIVATE) //shared key 설정
+        val edit = pref.edit() // 수정모드
+        edit.putString("email", loginEmail) // 값 넣기
+        edit.putString("password",password)
+        edit.apply() // 적용하기
+    }
+
+    fun clearData(){
+        val pref =getSharedPreferences("userEmail", MODE_PRIVATE) //shared key 설정
+        val edit = pref.edit() // 수정모드
+        edit.remove("email")
+        edit.remove("password")
+        edit.apply() // 적용하기
     }
 }

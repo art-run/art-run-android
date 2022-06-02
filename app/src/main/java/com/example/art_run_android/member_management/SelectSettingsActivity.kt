@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Gallery
 import com.bumptech.glide.Glide
 import com.example.art_run_android.BaseActivity
+import com.example.art_run_android.DataContainer
 import com.example.art_run_android.DataContainer.Companion.userNickname
 import com.example.art_run_android.DataContainer.Companion.userProfileImg
 import com.example.art_run_android.R
@@ -54,6 +55,17 @@ class SelectSettingsActivity : BaseActivity() {
             intent.action=Intent.ACTION_GET_CONTENT
 
             startActivityForResult(intent, Gallery)
+        }
+
+        binding.btLogout.setOnClickListener{
+            DataContainer.clear()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btDeleteAccount.setOnClickListener{
+            val intent = Intent(this, DeleteAccountActivity::class.java)
+            startActivity(intent)
         }
     }
 

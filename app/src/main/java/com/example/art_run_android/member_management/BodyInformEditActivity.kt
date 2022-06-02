@@ -1,10 +1,13 @@
 package com.example.art_run_android.member_management
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.DataContainer.Companion.header
@@ -86,9 +89,17 @@ class BodyInformEditActivity : AppCompatActivity() {
                         Log.d("정보수정",response.toString())
                         Log.d("정보수정2",response.body().toString())
                         Log.d("정보수정3",editAccountInfoDClass.toString())
+                        //수정완료 알림창 띄우기
+                        val builder = AlertDialog.Builder(this@BodyInformEditActivity)
+                        builder.setTitle("수정 완료").
+                                setMessage("정보 수정이 완료되었습니다.")
+                        builder.show()
+                        val intent = Intent(this@BodyInformEditActivity, SelectSettingsActivity::class.java)
+                        startActivity(intent)
 
                         }
-                    }
+
+                }
 
                 )
             //val message = "키 : "+height+"cm\n몸무게 : "+weight+"kg\n나이 : "+age

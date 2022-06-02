@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-    id 'jacoco'
+//    id 'jacoco'
 
 }
 Properties properties = new Properties()
@@ -21,21 +21,22 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [googleMapApiKey:googleMapApiKey]
+        manifestPlaceholders = [googleMapApiKey:'API_KEY']
     }
 
-    jacoco{
-        tooVersion = '0.8.5'
-        //결과 저장은 default로 $/jacoco 
-    }
+//    jacoco{
+//        tooVersion = '0.8.5'
+//        //결과 저장은 default로 $/jacoco
+//    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }debug{
-            testCoverageEnabled=true
         }
+//        debug{
+//            testCoverageEnabled=true
+//        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

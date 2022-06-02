@@ -2,7 +2,7 @@ package com.example.art_run_android
 
 
 data class SocialData (
-//    val profileImg : String,
+    val profileImg : String,
     val nickname : String,
     val title : String,
     val distance : String,
