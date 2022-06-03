@@ -114,7 +114,8 @@ class RunningActivity : BaseActivity() {
 
         startButton.setOnClickListener {
             startButton.isVisible = false
-            pauseButton.isVisible = false
+            pauseButton.isVisible = true
+            stopButton.isVisible = false
             cmTimer.base = SystemClock.elapsedRealtime() + pauseTime
             cmTimer.start()
             tracker=TrackerThread()
