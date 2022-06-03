@@ -9,7 +9,7 @@ plugins {
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def googleMapApiKey = properties.getProperty('google.map.key')
+def googleMapApiKey = properties.getProperty('API_KEY')
 android {
     compileSdk 32
 
@@ -21,7 +21,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [googleMapApiKey:'AIzaSyDIqmgQ6JuY9mPmVQ_eAtB8O9-0L1p7akM']
+        manifestPlaceholders = [googleMapApiKey:googleMapApiKey]
     }
 
 //    jacoco{
