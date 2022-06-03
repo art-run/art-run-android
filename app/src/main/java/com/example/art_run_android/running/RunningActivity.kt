@@ -25,6 +25,8 @@ class RunningActivity : BaseActivity() {
         transaction.add(R.id.mapView3, mapsFragment)
         transaction.commit()
 
+        val startRouteId = intent.getIntExtra("startRouteID",0)
+
         val pauseButton: ImageButton = findViewById(R.id.pauseButton)
         val startButton: ImageButton = findViewById(R.id.startButton3)
         val stopButton: ImageButton = findViewById(R.id.stopButton3)
@@ -129,6 +131,7 @@ class RunningActivity : BaseActivity() {
             intent.putExtra("distance",runningDistance.roundToInt())
             intent.putExtra("kcal",runningKcal.roundToInt())
             intent.putExtra("time", ((SystemClock.elapsedRealtime() - cmTimer.base)/1000).toInt())
+            intent.putExtra("startRouteId",startRouteId)
             startActivity(intent)
         }
 

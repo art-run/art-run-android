@@ -7,6 +7,24 @@ data class RecommendedRoute(
     val wktRoute: String
 )
 
+data class RouteStartRequest(
+    val memberId: Int,
+    val wktTargetRoute: String
+)
+
+data class RouteFinishRequest(
+    val color: String,
+    val distance: Int,
+    val isPublic: Boolean,
+    val kcal: Int,
+    val memberId: Int,
+    val routeId: Int,
+    val thickness: String,
+    val time: Int,
+    val title: String,
+    val wktRunRoute: String
+)
+
 data class RouteId(
     val routeId: Int
 )
@@ -17,7 +35,7 @@ data class CompleteRoute(
     val distance: Int,
     val isPublic: Boolean,
     val kcal: Int,
-    val speed: Int,
+    val speed: Double,
     val time: Int,
     val title: String,
     val wktRunRoute: String

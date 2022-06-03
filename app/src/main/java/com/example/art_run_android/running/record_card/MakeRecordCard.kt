@@ -13,6 +13,7 @@ import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
 import com.example.art_run_android.running.ArtRunClient
 import com.example.art_run_android.running.CompleteRoute
+import com.example.art_run_android.running.RouteFinishRequest
 import com.example.art_run_android.running.RouteId
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -38,9 +39,10 @@ class MakeRecordCard : AppCompatActivity(){
         val kcal = intent.getIntExtra("kcal",0)
         val time = intent.getIntExtra("time",0)
         val finalRoutePrim = intent.getStringExtra("finalRoute")
+        val startRouteId = intent.getIntExtra("startRouteId",0)
         var lockStatus = true
-        var lineColor = "black"
-        var lineStyle = ""
+        var lineColor = Color.BLACK.toString()
+        var lineStyle = "line"
 
         val title : TextInputEditText= findViewById(R.id.id_title_text)
         val completeBtn : Button = findViewById(R.id.save_card)
@@ -85,11 +87,13 @@ class MakeRecordCard : AppCompatActivity(){
                     R.id.line_dot ->{
                         Toast.makeText(applicationContext,"점선", Toast.LENGTH_SHORT).show()
                         polyline.pattern = listOf(Dash(20F), Gap(20F))
+                        lineStyle = "dot"
                         return@setOnMenuItemClickListener true
                     }
                     R.id.line_line ->{
                         Toast.makeText(applicationContext,"실선", Toast.LENGTH_SHORT).show()
                         polyline.pattern = null
+                        lineStyle = "line"
                         return@setOnMenuItemClickListener true
                     }
                     else ->{ return@setOnMenuItemClickListener false}
@@ -98,8 +102,8 @@ class MakeRecordCard : AppCompatActivity(){
         }
 
         //색상 버튼 --> res 의 menu를 사용해 구성, 색상 변경은 아직..
-        colorChange.setOnClickListener {
-           var colorPopup = PopupMenu(applicationContext,it)
+        colorChange.setOnClickListener { view ->
+            var colorPopup = PopupMenu(applicationContext,view)
             menuInflater?.inflate(R.menu.card_color,colorPopup.menu)
             colorPopup.show()
             colorPopup.setOnMenuItemClickListener {
@@ -107,21 +111,25 @@ class MakeRecordCard : AppCompatActivity(){
                     R.id.line_black -> {
                         Toast.makeText(applicationContext,"검은색", Toast.LENGTH_SHORT).show()
                         polyline.color = Color.BLACK
+                        lineColor = polyline.color.toString()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.line_white -> {
                         Toast.makeText(applicationContext,"하얀색", Toast.LENGTH_SHORT).show()
                         polyline.color = Color.WHITE
+                        lineColor = polyline.color.toString()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.line_yello -> {
                         Toast.makeText(applicationContext,"노란색", Toast.LENGTH_SHORT).show()
                         polyline.color = Color.YELLOW
+                        lineColor = polyline.color.toString()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.line_blue -> {
                         Toast.makeText(applicationContext,"파란색", Toast.LENGTH_SHORT).show()
                         polyline.color = Color.BLUE
+                        lineColor = polyline.color.toString()
                         return@setOnMenuItemClickListener true
                     }
                     else ->{ return@setOnMenuItemClickListener false}
@@ -133,23 +141,21 @@ class MakeRecordCard : AppCompatActivity(){
         // 저장 버튼 누르면 완료 화면으로 넘어간다
         completeBtn.setOnClickListener{
             if(title.text!=null) {
-                var queryMap1 = mapOf( "color" to lineColor, "distance" to distance.toString(), "isPublic" to lockStatus.toString(),
-                    "kcal" to kcal.toString(), "memberId" to DataContainer.userEmail, "routeId" to "0", "thickness" to lineStyle,
-                    "time" to time.toString(), "title" to title.text.toString(), "wktRunRoute" to polylineToWkt(finalRoute))
-                val callPostRouteFinish = ArtRunClient.routeApiService.postRouteFinish(
-                    DataContainer.header, queryMap1)
                 val intent = Intent(this, CompleteRecordCard::class.java)
+
+                val requestBody = RouteFinishRequest(lineColor,distance,lockStatus,kcal,
+                    DataContainer.userNumber,startRouteId,"3",time,title.text.toString(),polylineToWkt(finalRoute))
+                val callPostRouteFinish = ArtRunClient.routeApiService.postRouteFinish(
+                    DataContainer.header, requestBody)
 
                 callPostRouteFinish.enqueue(object : Callback<RouteId> {
                     override fun onResponse(call: Call<RouteId>, response: Response<RouteId>) {
                         if (response.isSuccessful) { // <--> response.code == 200
-                            Log.d("post route finish","통신 성공")
-                            val routeId = response.body() as RouteId
+                            val finishRouteId = response.body() as RouteId
+                            Log.d("post route finish","통신 성공 : $finishRouteId")
 
-                            //intent.putExtra("routeID", routeId.routeId)
-
-                            intent.putExtra("routeID", routeId.routeId)  //제목 intent로 전달해주기
-
+                            intent.putExtra("finishRouteID", finishRouteId.routeId)
+                            startActivity(intent)
 
                         } else { // code == 400
                             Log.d("post route finish","통신 실패 : " + response.errorBody()?.string()!!)
@@ -162,11 +168,6 @@ class MakeRecordCard : AppCompatActivity(){
 
                 })
 
-                intent.putExtra("title",title.text.toString())
-                intent.putExtra("lineStyle",lineStyle)
-                intent.putExtra("lineColor",lineColor)
-                intent.putExtra("route",finalRoutePrim)
-                startActivity(intent)
 
             }
         }
@@ -185,12 +186,11 @@ class MakeRecordCard : AppCompatActivity(){
         var sb= StringBuilder()
         sb.append("LINESTRING (")
 
-
-        polyline.forEach{
-            sb.append(it.longitude.toString())
+        for(i in polyline.indices) {
+            sb.append(polyline[i].longitude.toString())
             sb.append(" ")
-            sb.append(it.latitude.toString())
-            if(it != polyline.last()) {
+            sb.append(polyline[i].latitude.toString())
+            if(i != polyline.size-1) {
                 sb.append(", ")
             }
         }

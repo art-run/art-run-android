@@ -3,12 +3,15 @@ package com.example.art_run_android.running
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.example.art_run_android.BaseActivity
+import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
+import com.google.android.gms.maps.model.Polyline
 import com.google.maps.android.PolyUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -107,12 +110,66 @@ class FreeRunActivity : BaseActivity() {
                         this.add(PolyUtil.encode(it.points))
                     }
                 }
-                intent.putExtra("runningRoute", runningRoute)
-                startActivity(intent)
+                val requestBody = RouteStartRequest(DataContainer.userNumber,polylineToWkt(mapsFragment.undoPolylineList))
+                val callPostRouteStart = ArtRunClient.routeApiService.postRouteStart(DataContainer.header,requestBody)
+
+                callPostRouteStart.enqueue(object : Callback<RouteId>{
+                    override fun onResponse(call: Call<RouteId>, response: Response<RouteId>) {
+                        if (response.isSuccessful) { // <--> response.code == 200
+                            val startRouteId = response.body() as RouteId
+                            Log.d("post route start", "통신 성공 : $startRouteId")
+
+                            intent.putExtra("startRouteID", startRouteId.routeId)
+                            intent.putExtra("runningRoute", runningRoute)
+                            startActivity(intent)
+
+                        } else { // code == 400
+                            Log.d("post route start","통신 실패 : " + response.errorBody()?.string()!!)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RouteId>, t: Throwable) {
+                        Log.d("post route start", "통신 실패 : $t")
+                    }
+
+                })
             } else {
                 //그림그려주세요
             }
         }
+    }
+
+    private fun polylineToWkt(polylineList: List<Polyline>): String {
+        var sb= StringBuilder()
+        sb.append("LINESTRING (")
+
+
+        for (i in polylineList.indices) {
+            val polyline = polylineList[i].points
+            for (j in polyline.indices){
+                sb.append(polyline[j].longitude.toString())
+                sb.append(" ")
+                sb.append(polyline[j].latitude.toString())
+                if(!((i == polylineList.size-1)&&(j == polyline.size-1))) {
+                    sb.append(", ")
+                }
+            }
+        }
+        /*
+        polylineList.forEach{ polyline ->
+            polyline.points.forEach {
+                sb.append(it.longitude.toString())
+                sb.append(" ")
+                sb.append(it.latitude.toString())
+                if(it != polylineList.last().points.last()) {
+                    sb.append(", ")
+                }
+            }
+        }
+         */
+        sb.append(")")
+
+        return sb.toString()
     }
 }
 

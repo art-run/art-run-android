@@ -23,6 +23,7 @@ class CourseRunActivity : BaseActivity() {
     val recommendedRoutes = mutableListOf<RecommendedRoute>()
     private val mapsFragment = MapsFragment()
     lateinit var textView: TextView
+    lateinit var runningWkt: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +45,19 @@ class CourseRunActivity : BaseActivity() {
                         this.add(PolyUtil.encode(it.points))
                     }
                 }
-                var queryMap = mapOf("memberId" to "0", "wktTargetRoute" to polylineToWkt(mapsFragment.undoPolylineList))
-                val callPostRouteStart = ArtRunClient.routeApiService.postRouteStart(DataContainer.header,queryMap)
+
+                val requestBody = RouteStartRequest(DataContainer.userNumber,runningWkt)
+                val callPostRouteStart = ArtRunClient.routeApiService.postRouteStart(DataContainer.header,requestBody)
 
                 callPostRouteStart.enqueue(object : Callback<RouteId>{
                     override fun onResponse(call: Call<RouteId>, response: Response<RouteId>) {
                         if (response.isSuccessful) { // <--> response.code == 200
-                            Log.d("post route start","통신 성공")
-                            val routeId = response.body() as RouteId
+                            val startRouteId = response.body() as RouteId
+                            Log.d("post route start", "통신 성공 : $startRouteId")
 
-                            //intent.putExtra("routeID", routeId.routeId)
+                            intent.putExtra("startRouteID", startRouteId.routeId)
+                            intent.putExtra("runningRoute", runningRoute)
+                            startActivity(intent)
 
 
                         } else { // code == 400
@@ -66,9 +70,6 @@ class CourseRunActivity : BaseActivity() {
                     }
 
                 })
-
-                intent.putExtra("runningRoute", runningRoute)
-                startActivity(intent)
 
             } else {
                 //경로를 선택해주세요
@@ -122,6 +123,7 @@ class CourseRunActivity : BaseActivity() {
                             Log.d("경로 추천 보간","통신 성공")
                             val route = response.body() as RecommendedRoute
                             val routePrim = courseAdapter.wktToPolyline(route.wktRoute)
+                            runningWkt = route.wktRoute
                             mapsFragment.undoPolyline()
                             mapsFragment.drawPolyline(routePrim,false, false)
                             infoTextView.text = "제목 ${data.title}\n거리: ${data.distance}m \n예상 소요 시간: 분"
@@ -139,25 +141,5 @@ class CourseRunActivity : BaseActivity() {
             }
             })
 
-    }
-
-    private fun polylineToWkt(polylineList: List<Polyline>): String {
-        var sb= StringBuilder()
-        sb.append("LINESTRING (")
-
-
-        polylineList.forEach{ polyline ->
-            polyline.points.forEach {
-                sb.append(it.longitude.toString())
-                sb.append(" ")
-                sb.append(it.latitude.toString())
-                if(it != polylineList.last().points.last()) {
-                    sb.append(", ")
-                }
-            }
-        }
-        sb.append(")")
-
-        return sb.toString()
     }
 }
