@@ -21,7 +21,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [googleMapApiKey:'API_KEY']
+        manifestPlaceholders = [googleMapApiKey:'AIzaSyDIqmgQ6JuY9mPmVQ_eAtB8O9-0L1p7akM']
     }
 
 //    jacoco{
