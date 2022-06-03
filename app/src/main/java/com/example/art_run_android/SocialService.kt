@@ -14,7 +14,7 @@ interface SocialService {
     @GET("/routes/me")
     fun MyRoutesInfo(
         @Header("Authorization") authorization:String?,
-        @Query("lastRouteId") lastRouteId: Int?
+        @Query("lastRouteId") lastRouteId: String?
     ) : Call<List<SocialDClass>>
 
     @GET("/route/{routeId}")
