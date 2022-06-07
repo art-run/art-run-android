@@ -103,6 +103,7 @@ class RunningActivity : BaseActivity() {
             drawable!!.start()
             pause = !pause
 
+
             if(pause) {
                 ObjectAnimator.ofFloat(stopButton, "translationY", 0f).apply { start() }
                 cmTimer.base = SystemClock.elapsedRealtime() + pauseTime
