@@ -38,21 +38,22 @@
         <FrameLayout
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/startButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        app:backgroundTint="@color/black"
+        android:src="@drawable/ic_play"
+        app:tint="@color/white"
+        app:fabCustomSize="67dp"
+        app:maxImageSize="40dp"
+        app:rippleColor="@color/grey"
+        android:layout_marginBottom="105dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="100dp"
-        android:adjustViewBounds="true"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_baseline_play_circle_filled_24" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

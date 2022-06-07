@@ -27,20 +27,25 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.roundToInt
 
 
 class ShareRecordCard1 : AppCompatActivity() {
     private lateinit var map: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share_record_card1)
+        setContentView(R.layout.record_card_activity_share)
         val showmap: Switch = findViewById(R.id.share_show_map)
         val showstats : Switch = findViewById(R.id.share_show_statistic)
         val back : ImageButton = findViewById(R.id.share_back)
         val goto_share: ImageButton = findViewById(R.id.share_select_SNS)
         val frameLayout : FrameLayout = findViewById(R.id.ShareView)
         val linearLayout : LinearLayout = findViewById(R.id.linearLayout8)
+
         val shareTitle : TextView = findViewById(R.id.shareTitle)
+        val srcDist: TextView = findViewById(R.id.srcDist)
+        val srcSpeed: TextView = findViewById(R.id.srcSpeed)
+        val srcTime: TextView = findViewById(R.id.srcTime)
 
         val finishRouteId = intent.getIntExtra("finishRouteId",0)
 
@@ -65,15 +70,21 @@ class ShareRecordCard1 : AppCompatActivity() {
                         val polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(polylinePrim))
                         polyline.color = completeRoute.color.toInt()
                         shareTitle.text = completeRoute.title
-
+                        srcDist.text = "${completeRoute.distance} m"
+                        srcSpeed.text = "${completeRoute.speed.roundToInt()} km/h"
+                        srcTime.text = formatTime(completeRoute.time)
 
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
+                        frameLayout.isVisible = false
+                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<CompleteRoute>, t: Throwable) {
                     Log.d("get route", "통신 실패 : $t")
+                    frameLayout.isVisible = false
+                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                 }
 
             })
@@ -134,7 +145,6 @@ class ShareRecordCard1 : AppCompatActivity() {
     }
 
     private fun saveImage(image: Bitmap): Uri? {
-        //TODO - Should be processed in another thread
         val imagesFolder = File(cacheDir, "images")
         var uri: Uri? = null
         try {
@@ -171,5 +181,13 @@ class ShareRecordCard1 : AppCompatActivity() {
             }
         }
         return polyline
+    }
+
+    private fun formatTime(time : Int): String {
+        val hours = String.format("%02d", time/3600)
+        val minutes = String.format("%02d",(time%3600)/60)
+        val seconds = String.format("%02d",((time%3600)%60))
+
+        return "$hours:$minutes:$seconds"
     }
 }

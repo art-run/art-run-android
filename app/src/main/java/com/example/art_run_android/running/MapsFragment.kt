@@ -32,7 +32,7 @@ class MapsFragment : Fragment() {
 
     private val DEFAULT_ZOOM_LEVEL = 16f
 
-    private var defaultLocation = LatLng(37.5662952, 126.97794509999994)
+    var defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
     var currentLocation = defaultLocation
 
@@ -93,7 +93,7 @@ class MapsFragment : Fragment() {
             .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
                 location?.let {
                     currentLocation = LatLng(it.latitude, it.longitude)
-                    thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
+                    thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
                 }
             }
             .addOnFailureListener { e ->

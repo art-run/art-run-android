@@ -1,102 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@drawable/shape2"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+        android:id="@+id/sbg1"
+        android:layout_marginVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        app:borderColor="@color/black"
+        app:borderWidth="1dp"
+        app:divider="@color/black"
+        app:dividerPadding="10dp"
+        app:dividerWidth="1dp"
+        app:position="0"
+        app:radius="40dp"
+        app:ripple="true"
+        app:rippleColor="@color/grey"
+        app:selectedBackground="@color/black">
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:drawableGravity="top"
+            app:selectedTextColor="@color/white"
+            app:text="걷기"
+            app:textColor="@color/black"
+            app:textSize="18sp" />
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:drawableGravity="top"
+            app:selectedTextColor="@color/white"
+            app:text="달리기"
+            app:textColor="@color/black"
+            app:textSize="18sp" />
+    </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+    <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+        android:id="@+id/sbg2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        app:borderColor="@color/black"
+        app:borderWidth="1dp"
+        app:divider="@color/black"
+        app:dividerPadding="10dp"
+        app:dividerWidth="1dp"
+        app:position="0"
+        app:radius="40dp"
+        app:ripple="true"
+        app:rippleColor="@color/grey"
+        app:selectedBackground="@color/black">
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:drawableGravity="top"
+            app:selectedTextColor="@color/white"
+            app:text="거리 기준"
+            app:textColor="@color/black"
+            app:textSize="18sp" />
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:drawableGravity="top"
+            app:selectedTextColor="@color/white"
+            app:text="시간 기준"
+            app:textColor="@color/black"
+            app:textSize="18sp" />
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:drawableGravity="top"
+            app:selectedTextColor="@color/white"
+            app:text="칼로리 기준"
+            app:textColor="@color/black"
+            app:textSize="18sp" />
+    </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_opt1_walk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:background="@color/transparent"
-            android:text="걷기"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_opt1_run"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:background="@color/transparent"
-            android:text="달리기"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_opt2_dist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:background="@color/transparent"
-            android:text="거리 기준"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_opt2_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:text="시간 기준"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_opt2_kcal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:background="@color/transparent"
-            android:text="칼로리 기준"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp">
+        android:paddingVertical="30dp"
+        android:weightSum="5">
 
         <EditText
             android:id="@+id/editText_bs"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:background="@color/grey"
-            android:layout_marginLeft="50dp"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="4"
+            android:background="@drawable/shape1"
             android:inputType="number"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView_bs"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text=""
-            android:textAlignment="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="m"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_marginLeft="20dp"
-            tools:text="kcal"
-            tools:ignore="TouchTargetSizeCheck"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
     <Button
@@ -104,7 +133,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="30dp"
+        android:gravity="center"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="5dp"
         android:text="확인"
+        android:textAlignment="center"
         android:textSize="20sp" />
+
 </LinearLayout>

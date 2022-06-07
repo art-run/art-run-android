@@ -1,45 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
-    <com.google.android.gms.maps.MapView
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/courseMap"
-        android:layout_width="145dp"
-        android:layout_height="145dp"
-        android:layout_margin="25dp"
-        map:cameraZoom="13"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:liteMode="true"
-        map:mapType="normal" />
 
-    <LinearLayout
-        app:layout_constraintBottom_toBottomOf="@id/courseMap"
-        app:layout_constraintEnd_toEndOf="@id/courseMap"
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/crCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="25dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/courseMap"
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            map:cameraZoom="13"
+            map:liteMode="true"
+            map:mapType="normal" />
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/crCardView"
+        app:layout_constraintEnd_toEndOf="@id/crCardView">
 
         <TextView
             android:id="@+id/courseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="제목: "
-            android:textSize="15dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/courseDist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="거리: "
-            android:textSize="15dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="15dp" />
 
     </LinearLayout>
 

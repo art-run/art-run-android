@@ -17,39 +17,29 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             app:layout_constraintTop_toTopOf="parent"
-            app:subtitle="지도 위에 경로 그림을 그려주세요.">
+            app:subtitle="지도 위에 경로를 그려주세요.">
 
             <ImageButton
                 android:id="@+id/undoButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
-                android:adjustViewBounds="true"
-                android:background="@color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_undo_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:background="@drawable/ic_baseline_undo_24" />
 
             <ImageButton
                 android:id="@+id/redoButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
-                android:adjustViewBounds="true"
-                android:background="@color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_redo_24" />
+                android:background="@drawable/ic_baseline_redo_24" />
 
             <ImageButton
                 android:id="@+id/mapButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="15dp"
                 android:layout_gravity="end"
-                android:adjustViewBounds="true"
-                android:background="@color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_map_24" />
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ic_baseline_map_24" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -65,23 +55,23 @@
             <FrameLayout
                 android:id="@+id/drawRouteLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/startButton2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
-        android:adjustViewBounds="true"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_baseline_play_circle_filled_24"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/ic_play"
+        app:backgroundTint="@color/black"
+        app:fabCustomSize="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:maxImageSize="40dp"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

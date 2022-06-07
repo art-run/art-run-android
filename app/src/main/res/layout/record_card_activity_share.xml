@@ -9,7 +9,7 @@
         android:id="@+id/linearLayout9"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="35dp"
+        android:layout_marginHorizontal="35dp"
         android:background="#ECECEC"
         android:gravity="center"
         android:orientation="vertical"
@@ -20,7 +20,7 @@
             android:id="@+id/shareTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="제목"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="10pt" />
     </LinearLayout>
@@ -29,9 +29,9 @@
         android:id="@+id/ShareView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout9"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout7">
 
         <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ShareMap"
@@ -50,31 +50,31 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
+                android:id="@+id/srcDist"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2.1km"
+                android:text="m"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="10pt" />
 
             <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:id="@+id/srcTime"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="11M30S"
+                android:text="00:00:00"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="10pt" />
 
             <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
+                android:id="@+id/srcSpeed"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="5'47''/KM"
+                android:text="km/h"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="10pt" />
@@ -114,28 +114,55 @@
             android:id="@+id/linearLayout10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:paddingEnd="20dp">
 
             <ImageButton
                 android:id="@+id/share_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
                 android:background="@color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/backicon" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back" />
 
             <ImageButton
                 android:id="@+id/share_select_SNS"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_baseline_share_24" />
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="770dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,10 +16,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.android.PolyUtil
+import kotlinx.android.synthetic.main.running_activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.roundToInt
 
 class CompleteRecordCard : AppCompatActivity() {
     private lateinit var map: GoogleMap
@@ -27,12 +31,19 @@ class CompleteRecordCard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_compelete_record_card)
+        setContentView(R.layout.record_card_activity_compelete)
         val finishRouteId = intent.getIntExtra("finishRouteID",0)
         val lockButton: ImageButton = findViewById(R.id.lockCRC)
         val dotmenu : ImageButton = findViewById(R.id.shareCRC)
         val titleFixed: TextView = findViewById(R.id.titleCRC)
         val saveCardButton: Button = findViewById(R.id.save_card)
+
+        val crcDist: TextView = findViewById(R.id.crcDist)
+        val crcKcal: TextView = findViewById(R.id.crcKcal)
+        val crcSpeed: TextView = findViewById(R.id.crcSpeed)
+        val crcTime: TextView = findViewById(R.id.crcTime)
+        lateinit var polyline: Polyline
+        lateinit var completeRoute: CompleteRoute
         lockButton.isVisible = false
 
         val callback = OnMapReadyCallback { googleMap ->
@@ -45,25 +56,32 @@ class CompleteRecordCard : AppCompatActivity() {
             callGetRoute.enqueue(object : Callback<CompleteRoute> {
                 override fun onResponse(call: Call<CompleteRoute>, response: Response<CompleteRoute>) {
                     if (response.isSuccessful) { // <--> response.code == 200
-                        val completeRoute = response.body() as CompleteRoute
+                        completeRoute = response.body() as CompleteRoute
                         Log.d("get route","통신 성공 : ${completeRoute.title}")
 
                         val polylinePrim = wktToPolyline(completeRoute.wktRunRoute)
                         val centerLocation = calculateCenterPosition(polylinePrim)
                         map.moveCamera(CameraUpdateFactory.newLatLng(centerLocation))
-                        val polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(polylinePrim))
+                        polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(polylinePrim))
                         polyline.color = completeRoute.color.toInt()
 
                         titleFixed.text=completeRoute.title
-
+                        crcDist.text = "${completeRoute.distance} m"
+                        crcSpeed.text = "${completeRoute.speed.roundToInt()} km/h"
+                        crcTime.text = formatTime(completeRoute.time)
+                        crcKcal.text = "${completeRoute.kcal} km/h"
 
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
+                        mapView.isVisible = false
+                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<CompleteRoute>, t: Throwable) {
                     Log.d("get route", "통신 실패 : $t")
+                    mapView.isVisible = false
+                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                 }
 
             })
@@ -91,6 +109,16 @@ class CompleteRecordCard : AppCompatActivity() {
                     }
                     R.id.card_back_to_make ->{
                         // 다시 돌아가는 건 아직..!
+                        val intent = Intent(this,MakeRecordCard::class.java)
+                        val finalRoutePrim = PolyUtil.encode(polyline.points)
+                        intent.putExtra("finalRoute",finalRoutePrim)
+                        intent.putExtra("distance",completeRoute.distance)
+                        intent.putExtra("kcal",completeRoute.kcal)
+                        intent.putExtra("time", completeRoute.time)
+                        intent.putExtra("fixRouteId",finishRouteId)
+                        intent.putExtra("lineColor",completeRoute.color)
+                        intent.putExtra("title",completeRoute.title)
+                        startActivity(intent)
                         Toast.makeText(applicationContext,"수정하기", Toast.LENGTH_SHORT).show()
                         return@setOnMenuItemClickListener true
                     }
@@ -132,5 +160,13 @@ class CompleteRecordCard : AppCompatActivity() {
             }
         }
         return polyline
+    }
+
+    private fun formatTime(time : Int): String {
+        val hours = String.format("%02d", time/3600)
+        val minutes = String.format("%02d",(time%3600)/60)
+        val seconds = String.format("%02d",((time%3600)%60))
+
+        return "$hours:$minutes:$seconds"
     }
 }
