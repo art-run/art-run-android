@@ -1,5 +1,6 @@
 package com.example.art_run_android
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -65,38 +66,38 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         nickName.text = DataContainer.userNickname + " 님"
 
         //프로필 이미지 불러오기
-        /*
+
         //이건 glide를 사용해본 것
         val url = userProfileImg
-        val imageView = findViewById<ImageView>(R.id.img_sideProfile)
-        Glide.with(context)        //context어떻게 넣지...
+        val imageView = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.img_sideProfile)
+        Glide.with(App.context())        //context어떻게 넣지...
             .load(url) // 불러올 이미지 url
             .placeholder(R.mipmap.ic_artrun) // 이미지 로딩 시작하기 전 표시할 이미지
             .error(R.drawable.example_picture) // 로딩 에러 발생 시 표시할 이미지
             .fallback(R.drawable.example_picture) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
             .into(imageView) // 이미지를 넣을 뷰
 
+        /*S
+
+               //이건 그냥 뷰바인딩 사용해본 것
+               val url = userProfileImg
+               val binding=BaseHeaderBinding.inflate(layoutInflater)
+               binding.imgSideProfile.setImageURI(url?.toUri())
+               val url = userProfileImg
+               //피카소 사용해봤는데 안됨.
+               val binding=BaseHeaderBinding.inflate(layoutInflater)
+               Picasso.get().load(url).into(binding.imgSideProfile);
 
 
-        //이건 그냥 뷰바인딩 사용해본 것
-        val url = userProfileImg
-        val binding=BaseHeaderBinding.inflate(layoutInflater)
-        binding.imgSideProfile.setImageURI(url?.toUri())
-        val url = userProfileImg
-        //피카소 사용해봤는데 안됨.
-        val binding=BaseHeaderBinding.inflate(layoutInflater)
-        Picasso.get().load(url).into(binding.imgSideProfile);
+       //url을 비트맵으로 만들기
+               var image_task:URLtoBitmapTask= URLtoBitmapTask()
+               image_task=URLtoBitmapTask().apply{
+                   url=URL(userProfileImg)
+               }
+               var bitmap:Bitmap=image_task.execute().get()
 
-
-//url을 비트맵으로 만들기
-        var image_task:URLtoBitmapTask= URLtoBitmapTask()
-        image_task=URLtoBitmapTask().apply{
-            url=URL(userProfileImg)
-        }
-        var bitmap:Bitmap=image_task.execute().get()
-
-        val binding=BaseHeaderBinding.inflate(layoutInflater)
-        binding.imgSideProfile.setImageBitmap(bitmap)*/
+               val binding=BaseHeaderBinding.inflate(layoutInflater)
+               binding.imgSideProfile.setImageBitmap(bitmap)*/
 
     }
 
@@ -136,4 +137,19 @@ class URLtoBitmapTask() : AsyncTask<Void, Void, Bitmap>() {
     override fun onPostExecute(result: Bitmap) {
         super.onPostExecute(result)
     }
+}
+
+class App : Application() {
+
+    init{
+        instance = this
+    }
+
+    companion object {
+        var instance: App? = null
+        fun context() : Context {
+            return instance!!.applicationContext
+        }
+    }
+
 }

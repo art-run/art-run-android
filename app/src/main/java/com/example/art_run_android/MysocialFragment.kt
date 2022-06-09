@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.art_run_android.member_management.LoginActivity
 import com.example.art_run_android.member_management.SignUpResponse
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -108,12 +110,57 @@ class MysocialFragment : Fragment() {
 
                             for(i: Int in 0 .. size-1){
                                 Log.d("여기부터",i.toString())
+             //일단 여기부터
+                                //우선 wktroute자료부터 polylineOptions에 담자.
+                                var wktRoute:String?=response.body()?.get(i)?.wktRunRoute.toString()
+                                Log.d("루트타입","${wktRoute?.javaClass?.name}")
+                                Log.d("루트보기",wktRoute.toString())
+                                wktRoute=wktRoute?.replace("LINESTRING (","")
+                                wktRoute=wktRoute?.replace(")","")
+                                wktRoute=wktRoute?.replace("  ","")
+                                Log.d("루트에서 잡스러운것 다 빼기",wktRoute.toString())
+
+                                var wktRouteList: List<String> = wktRoute?.split(",")!!.toList()
+                                Log.d("루트만의 리스트 확인",wktRouteList.toString())
+
+                                val polylineOptions = PolylineOptions()
+                                for(i in 0..wktRouteList.size-1){
+                                    if (i==0) {
+                                        var lat = wktRouteList[i].split(" ")[1].toDouble()
+                                        Log.d("여기는 잘되나 lat", lat.toString())
+
+                                        var lng = wktRouteList[i].split(" ")[0].toDouble()
+                                        Log.d("여기는 잘되나 lng", lng.toString())
+
+                                        polylineOptions
+                                            .add(LatLng(lat, lng))
+                                    }
+                                    else{ //첫번째를 제외하고는!
+                                        var lat = wktRouteList[i].split(" ")[2].toDouble()
+                                        Log.d("여기는 잘되나 lat", lat.toString())
+
+                                        var lng = wktRouteList[i].split(" ")[1].toDouble()
+                                        Log.d("여기는 잘되나 lng", lng.toString())
+
+                                        polylineOptions
+                                            .add(LatLng(lat, lng))
+                                    }
+                                }
+
+
+                                Log.d("폴리라인 잘그려졌나",polylineOptions.toString())
+
+
+               //여기까지는 최근 소셜 다 복붙한것
+
+
                                 var socialData=SocialData(
                                     response.body()?.get(i)?.profileImg.toString(),
                                     response.body()?.get(i)?.nickname.toString(),
                                     response.body()?.get(i)?.title.toString(),
                                     response.body()?.get(i)?.distance.toString(),
-                                    response.body()?.get(i)?.createdAt.toString())
+                                    response.body()?.get(i)?.createdAt.toString(),
+                                polylineOptions)
 
                                 data.add(socialData)
 

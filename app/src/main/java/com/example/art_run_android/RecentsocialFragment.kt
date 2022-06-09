@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
@@ -102,6 +103,8 @@ class RecentsocialFragment : Fragment() {
                             for(i: Int in 0 .. size-1){
 
                                 Log.d("여기부터",i.toString())
+
+                                //우선 wktroute자료부터 polylineOptions에 담자.
                                 var wktRoute:String?=response.body()?.get(i)?.wktRunRoute.toString()
                                 Log.d("루트타입","${wktRoute?.javaClass?.name}")
                                 Log.d("루트보기",wktRoute.toString())
@@ -139,14 +142,11 @@ class RecentsocialFragment : Fragment() {
 
 
                                 Log.d("폴리라인 잘그려졌나",polylineOptions.toString())
-
-
                                 //var map = recyclerView.findViewById<MapView>(R.id.mapView5)
 
 
 
-
-
+                                //뷰에 표시할 데이터 만들기
                                 var socialData=SocialData(
                                     response.body()?.get(i)?.profileImg.toString(),
                                     response.body()?.get(i)?.nickname.toString(),
