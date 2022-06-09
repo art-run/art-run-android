@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".member_management.SignUpActivity2">
+
     <Button
         android:id="@+id/bt_back"
         android:layout_width="50dp"
@@ -12,6 +13,8 @@
         android:layout_marginStart="7dp"
         android:layout_marginTop="13dp"
         android:text="←"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 

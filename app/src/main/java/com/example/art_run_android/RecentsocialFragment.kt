@@ -68,7 +68,7 @@ class RecentsocialFragment : Fragment() {
             .build()
 
         var socialService = retrofit.create(SocialService::class.java)
-        val lastRouteId = 6
+        val lastRouteId = ""
 
 
 
@@ -94,7 +94,7 @@ class RecentsocialFragment : Fragment() {
                             Log.d("사이즈:4",response.body()?.size.toString())
                             var data : MutableList<SocialData> = mutableListOf()
 
-                            for(i: Int in size-1 downTo size-lastRouteId+1){
+                            for(i: Int in 0 .. size-1){
                                 Log.d("여기부터",i.toString())
                                 var socialData=SocialData(
                                     response.body()?.get(i)?.profileImg.toString(),
