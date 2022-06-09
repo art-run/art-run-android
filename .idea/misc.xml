@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/art-run-0603/app/src/main/res/layout/activity_social.xml" value="0.36614583333333334" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/base_activity_base.xml" value="0.1" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/base_appbar.xml" value="0.36614583333333334" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/base_header.xml" value="0.22" />
-        <entry key="..\:/art-run-0603/app/src/main/res/layout/fragment_recentsocial.xml" value="0.3619791666666667" />
-        <entry key="..\:/art-run-0603/app/src/main/res/layout/item_social.xml" value="0.3619791666666667" />
+        <entry key="..\:/art-run-0603/app/src/main/res/layout/fragment_recentsocial.xml" value="0.18" />
+        <entry key="..\:/art-run-0603/app/src/main/res/layout/item_my.xml" value="0.25" />
+        <entry key="..\:/art-run-0603/app/src/main/res/layout/item_social.xml" value="0.5" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/member_management_activity_delete_account.xml" value="0.2708333333333333" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/member_management_activity_edit_account_inform.xml" value="0.3619791666666667" />
         <entry key="..\:/art-run-0603/app/src/main/res/layout/member_management_activity_login.xml" value="0.3619791666666667" />

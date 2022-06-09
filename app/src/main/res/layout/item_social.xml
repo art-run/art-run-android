@@ -50,25 +50,6 @@
 
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mayLayout"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true">
-
-                <FrameLayout
-                    android:id="@+id/mapView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <FrameLayout
-                    android:id="@+id/drawRouteLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <!--            <ImageView-->
             <!--                android:id="@+id/item_image"-->
@@ -110,7 +91,7 @@
                     android:id="@+id/item_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="거리: ~~km"
+                    android:text="거리: ~~m"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/item_date"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -123,6 +104,14 @@
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView5"
+                    android:layout_width="121dp"
+                    android:layout_height="109dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>

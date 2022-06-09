@@ -69,7 +69,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         //이건 glide를 사용해본 것
         val url = userProfileImg
         val imageView = findViewById<ImageView>(R.id.img_sideProfile)
-        Glide.with(this)        //context어떻게 넣지...
+        Glide.with(context)        //context어떻게 넣지...
             .load(url) // 불러올 이미지 url
             .placeholder(R.mipmap.ic_artrun) // 이미지 로딩 시작하기 전 표시할 이미지
             .error(R.drawable.example_picture) // 로딩 에러 발생 시 표시할 이미지
@@ -87,8 +87,8 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val binding=BaseHeaderBinding.inflate(layoutInflater)
         Picasso.get().load(url).into(binding.imgSideProfile);
 
-        */
 
+//url을 비트맵으로 만들기
         var image_task:URLtoBitmapTask= URLtoBitmapTask()
         image_task=URLtoBitmapTask().apply{
             url=URL(userProfileImg)
@@ -96,7 +96,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         var bitmap:Bitmap=image_task.execute().get()
 
         val binding=BaseHeaderBinding.inflate(layoutInflater)
-        binding.imgSideProfile.setImageBitmap(bitmap)
+        binding.imgSideProfile.setImageBitmap(bitmap)*/
 
     }
 
