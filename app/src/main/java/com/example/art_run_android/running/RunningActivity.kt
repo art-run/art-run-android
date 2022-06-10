@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.widget.Chronometer
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -14,6 +15,7 @@ import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
 import com.example.art_run_android.running.record_card.MakeRecordCard
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,6 +52,7 @@ class RunningActivity : BaseActivity() {
         var runningKcal = 0.0
         var runningSpeed = 0.0
         var runningTime = 0.0
+        var runningTimePer = 0
         var pauseTime = 0L
         val finalRoute = mutableListOf<LatLng>()
 
@@ -73,12 +76,16 @@ class RunningActivity : BaseActivity() {
                     try {
                         sleep(100)
                         runningTime += 0.1
-                        mapsFragment.getMyLocation()
+                        runningTimePer += 1
+                        mapsFragment.getMyLocation(false)
                         finalRoute.add(LatLng(
                             mapsFragment.currentLocation.latitude,
                             mapsFragment.currentLocation.longitude
                         ))
                         runOnUiThread {
+                            if(runningTimePer%50==0){
+                                mapsFragment.animateCamera()
+                            }
                             prim1 = mapsFragment.drawPolyline(finalRoute, false, false)
                             runningDistance = prim1.sphericalPathLength
                             distanceTextView.text = runningDistance.roundToInt().toString() + " m"
@@ -140,6 +147,7 @@ class RunningActivity : BaseActivity() {
         mapsFragment.setMapInitializedListener(object : MapsFragment.MapInitializedListener {
             override fun onMapInitializedEvent() {
                 mapsFragment.drawPolyline(runningRoute, false, true)
+                mapsFragment.setMyLocationBtn(true)
                 tracker.start()
             }
         })
@@ -152,9 +160,14 @@ class RunningActivity : BaseActivity() {
         }
         super.onBackPressed()
     }
-
-    override fun onDestroy() {
-        // TODO: 백그라운드 처리하기
-        super.onDestroy()
+/*
+    override fun onPause() {
+        if(this::tracker.isInitialized) {
+            tracker.interrupt()
+            Log.e("on pause","tracker stopped")
+        }
+        super.onPause()
     }
+
+ */
 }

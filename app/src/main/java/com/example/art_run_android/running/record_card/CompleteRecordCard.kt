@@ -1,6 +1,7 @@
 package com.example.art_run_android.running.record_card
 
 import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
@@ -48,10 +50,20 @@ class CompleteRecordCard : AppCompatActivity() {
 
         val callback = OnMapReadyCallback { googleMap ->
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.5662952, 126.97794509999994), 16f))
+
             map = googleMap
             map.uiSettings.isMapToolbarEnabled = false
             val callGetRoute = ArtRunClient.routeApiService.getRoute(
                 DataContainer.header, finishRouteId)
+
+            try {
+                val success = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style2))
+                if (!success) {
+                    Log.e("loading Style", "Style parsing failed.");
+                }
+            } catch (e : Resources.NotFoundException) {
+                Log.e("loading Style", "Can't find style. Error: ", e);
+            }
 
             callGetRoute.enqueue(object : Callback<CompleteRoute> {
                 override fun onResponse(call: Call<CompleteRoute>, response: Response<CompleteRoute>) {
@@ -69,7 +81,7 @@ class CompleteRecordCard : AppCompatActivity() {
                         crcDist.text = "${completeRoute.distance} m"
                         crcSpeed.text = "${completeRoute.speed.roundToInt()} km/h"
                         crcTime.text = formatTime(completeRoute.time)
-                        crcKcal.text = "${completeRoute.kcal} km/h"
+                        crcKcal.text = "${completeRoute.kcal} kcal"
 
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
@@ -94,8 +106,8 @@ class CompleteRecordCard : AppCompatActivity() {
         }
 
         dotmenu.setOnClickListener {
-            var dotPopup = PopupMenu(applicationContext,it)
-            menuInflater?.inflate(R.menu.card_dotmenu,dotPopup.menu)
+            val dotPopup = PopupMenu(applicationContext,it)
+            menuInflater.inflate(R.menu.card_dotmenu,dotPopup.menu)
             dotPopup.show()
             dotPopup.setOnMenuItemClickListener {
                 when(it.itemId){

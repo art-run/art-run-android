@@ -25,6 +25,7 @@ class CourseRunActivity : BaseActivity() {
     private val mapsFragment = MapsFragment()
     lateinit var textView: TextView
     lateinit var runningWkt: String
+    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,12 @@ class CourseRunActivity : BaseActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.mapView3, mapsFragment)
         transaction.commit()
+
+        mapsFragment.setMapInitializedListener(object : MapsFragment.MapInitializedListener {
+            override fun onMapInitializedEvent() {
+                mapsFragment.setMyLocationBtn(true)
+            }
+        })
 
         initRecycler()
 
@@ -87,36 +94,16 @@ class CourseRunActivity : BaseActivity() {
         rvCourse.adapter = courseAdapter
 
         val distance = intent.getDoubleExtra("distance", 0.0)
+        courseAdapter.recommendedRoutes = recommendedRoutes
 
-        var queryMap1 = mapOf(
-            "distance" to distance.toInt().toString(), "offset" to "0",
-            "pageNumber" to "0"
-        )
-        val callGetRecommendationList = ArtRunClient.recommendationApiService.getRecommendationList(
-            DataContainer.header,
-            queryMap1
-        )
+        updateList(distance.roundToInt(),page)
 
-        callGetRecommendationList.enqueue(object : Callback<List<RecommendedRoute>> {
-            override fun onResponse(
-                call: Call<List<RecommendedRoute>>,
-                response: Response<List<RecommendedRoute>>
-            ) {
-                if (response.isSuccessful) { // <--> response.code == 200
-                    Log.d("경로 추천", "통신 성공")
-                    recommendedRoutes.addAll(response.body() as List<RecommendedRoute>)
-                    courseAdapter.recommendedRoutes = recommendedRoutes
-                    courseAdapter.notifyDataSetChanged()
-
-                } else { // code == 400
-                    Log.d("경로 추천", "통신 실패")
-                    Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+        rvCourse.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!rvCourse.canScrollHorizontally(1)) {
+                    updateList(distance.roundToInt(), ++page)
                 }
-            }
-
-            override fun onFailure(call: Call<List<RecommendedRoute>>, t: Throwable) {
-                Log.d("경로 추천", "통신 실패 : $t")
-                Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -150,7 +137,7 @@ class CourseRunActivity : BaseActivity() {
                                 expTime = ((data.distance / 1000.0 / 8) * 60).roundToInt()
                             }
                             infoTextView.text =
-                                "제목 ${data.title}\n거리: ${data.distance}m \n예상 소요 시간: ${expTime}분"
+                                "제목: ${data.title}\n거리: ${data.distance}m \n예상 시간: ${expTime}분"
 
                         } else { // code == 400
                             Log.d("경로 추천 보간", "통신 실패 : ")
@@ -167,5 +154,44 @@ class CourseRunActivity : BaseActivity() {
             }
         })
 
+    }
+
+    private fun updateList(distance:Int, pageNumber:Int){
+
+        val queryMap1 = mapOf(
+            "distance" to distance.toString(), "offset" to "0",
+            "page" to pageNumber.toString()
+        )
+        val callGetRecommendationList = ArtRunClient.recommendationApiService.getRecommendationList(
+            DataContainer.header,
+            queryMap1
+        )
+
+        callGetRecommendationList.enqueue(object : Callback<List<RecommendedRoute>> {
+            override fun onResponse(
+                call: Call<List<RecommendedRoute>>,
+                response: Response<List<RecommendedRoute>>
+            ) {
+                if (response.isSuccessful) { // <--> response.code == 200
+                    Log.d("경로 추천", "통신 성공")
+                    val responseBody = response.body() as List<RecommendedRoute>
+                    if (responseBody.isEmpty()){
+                        page--
+                        return
+                    }
+                    recommendedRoutes.addAll(responseBody)
+                    courseAdapter.notifyItemRangeInserted(5*page,5)
+
+                } else { // code == 400
+                    Log.d("경로 추천", "통신 실패")
+                    Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<RecommendedRoute>>, t: Throwable) {
+                Log.d("경로 추천", "통신 실패 : $t")
+                Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

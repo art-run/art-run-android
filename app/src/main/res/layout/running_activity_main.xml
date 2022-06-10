@@ -19,8 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/grey"
-            tools:ignore="NotSibling">
+            app:tabTextColor="@color/grey">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem_Free"
@@ -50,7 +49,6 @@
         app:tint="@color/white"
         app:fabCustomSize="67dp"
         app:maxImageSize="40dp"
-        app:rippleColor="@color/grey"
         android:layout_marginBottom="105dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

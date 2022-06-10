@@ -1,6 +1,8 @@
 package com.example.art_run_android.running
 
 import android.content.Context
+import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.art_run_android.R
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
 
 class CourseAdapter(private val context: Context) :
@@ -81,6 +84,15 @@ class CourseAdapter(private val context: Context) :
         override fun onMapReady(googleMap: GoogleMap) {
             MapsInitializer.initialize(context)
             // If map is not initialised properly
+            try {
+                val success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context,R.raw.map_style1))
+
+                if (!success) {
+                    Log.e("loading Style", "Style parsing failed.");
+                }
+            } catch (e : Resources.NotFoundException) {
+                Log.e("loading Style", "Can't find style. Error: ", e);
+            }
             map = googleMap
             map.uiSettings.isMapToolbarEnabled = false
             setMapLocation()

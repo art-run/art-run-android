@@ -6,21 +6,24 @@
     android:clickable="true"
     android:focusable="true">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/crCardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="24dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/courseMap"
-            android:layout_width="145dp"
-            android:layout_height="145dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:padding="-30dp"
             map:cameraZoom="13"
             map:liteMode="true"
             map:mapType="normal" />
@@ -31,27 +34,31 @@
         android:id="@+id/linearLayout12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
+        android:gravity="end"
         app:layout_constraintBottom_toBottomOf="@id/crCardView"
         app:layout_constraintEnd_toEndOf="@id/crCardView">
 
-        <TextView
+        <com.example.art_run_android.design.OutLineTextView
             android:id="@+id/courseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="제목: "
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15sp"
+            app:textStrokeColor="@color/white"
+            app:textStrokeWidth="5" />
 
-        <TextView
+        <com.example.art_run_android.design.OutLineTextView
             android:id="@+id/courseDist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="거리: "
             android:textColor="@color/black"
-            android:textSize="15dp" />
-
+            android:textSize="15sp"
+            app:textStrokeColor="@color/white"
+            app:textStrokeWidth="5" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

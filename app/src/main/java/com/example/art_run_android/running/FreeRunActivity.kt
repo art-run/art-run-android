@@ -1,6 +1,7 @@
 package com.example.art_run_android.running
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
@@ -31,8 +32,20 @@ class FreeRunActivity : BaseActivity() {
         transaction.add(R.id.mapView2, mapsFragment)
         transaction.commit()
 
+        mapsFragment.setMapInitializedListener(object : MapsFragment.MapInitializedListener {
+            override fun onMapInitializedEvent() {
+                mapsFragment.setMyLocationBtn(false)
+            }
+        })
+
         val drawRouteView = DrawRouteView(this)
         val drawRouteLayout: FrameLayout = findViewById(R.id.drawRouteLayout)
+        val toolbar: Toolbar = findViewById(R.id.toolbar2)
+        val undoButton: ImageButton = findViewById(R.id.undoButton)
+        val redoButton: ImageButton = findViewById(R.id.redoButton)
+        undoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+        redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+
         drawRouteLayout.addView(drawRouteView)
         drawRouteView.SetStrokeListener(object : DrawRouteView.StrokeListener {
             override fun onStrokeEvent(pointList: MutableList<Point>) {
@@ -60,6 +73,8 @@ class FreeRunActivity : BaseActivity() {
                                 val polyline = PolyUtil.decode(it.geometry)
                                 mapsFragment.drawPolyline(polyline, false, false)
                             }
+                            redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+                            undoButton.backgroundTintList = null
 
                         } else { // code == 400
                             Log.d("get Match","통신 실패 : " + response.errorBody()?.string()!!)
@@ -72,36 +87,45 @@ class FreeRunActivity : BaseActivity() {
                         Toast.makeText(applicationContext,"도보 데이터를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
                     }
                 })
-
-
             }
         })
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar2)
-        val undoButton: ImageButton = findViewById(R.id.undoButton)
         undoButton.setOnClickListener {
             mapsFragment.undoPolyline()
+            if(mapsFragment.undoPolylineList.size == 0){
+                undoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+            }
+            if(mapsFragment.redoPolylineList.size > 0){
+                redoButton.backgroundTintList = null
+            }
         }
 
-        val redoButton: ImageButton = findViewById(R.id.redoButton)
         redoButton.setOnClickListener {
             mapsFragment.redoPolyline()
+            if(mapsFragment.redoPolylineList.size == 0){
+                redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+            }
+            if(mapsFragment.undoPolylineList.size > 0){
+                undoButton.backgroundTintList = null
+            }
         }
 
         val mapButton: ImageButton = findViewById(R.id.mapButton)
         mapButton.setOnClickListener {
             if (drawRouteView.isVisible) {
-                mapButton.setBackgroundResource(R.drawable.ic_outline_draw_24)
+                mapButton.setBackgroundResource(R.drawable.ic_round_edit_24)
                 redoButton.isVisible = false
                 undoButton.isVisible = false
                 drawRouteView.isVisible = false
                 toolbar.subtitle = "지도 위치를 조정하세요."
+                mapsFragment.setMyLocationBtn(true)
             } else {
-                mapButton.setBackgroundResource(R.drawable.ic_baseline_map_24)
+                mapButton.setBackgroundResource(R.drawable.ic_map)
                 redoButton.isVisible = true
                 undoButton.isVisible = true
                 drawRouteView.isVisible = true
                 toolbar.subtitle = "지도 위에 경로를 그려주세요."
+                mapsFragment.setMyLocationBtn(false)
             }
         }
 

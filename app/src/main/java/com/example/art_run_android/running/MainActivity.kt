@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.core.widget.doOnTextChanged
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.R
@@ -11,6 +12,8 @@ import com.example.art_run_android.DataContainer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : BaseActivity() {
     private val mapsFragment = MapsFragment()
@@ -29,6 +32,12 @@ class MainActivity : BaseActivity() {
 
         transaction.add(R.id.mapView, mapsFragment)
         transaction.commit()
+
+        mapsFragment.setMapInitializedListener(object : MapsFragment.MapInitializedListener {
+            override fun onMapInitializedEvent() {
+                mapsFragment.setMyLocationBtn(true)
+            }
+        })
     }
 
 
@@ -60,8 +69,8 @@ class MainActivity : BaseActivity() {
         var opt2 = 0
         var distance = 0.0
 
-        val textView: TextView = bottomSheetView.findViewById(R.id.textView_bs)
-        val editText: EditText = bottomSheetView.findViewById(R.id.editText_bs)
+        val editText: TextInputEditText = bottomSheetView.findViewById(R.id.editText_bs)
+        val textInputLayout : TextInputLayout = bottomSheetView.findViewById(R.id.tilBs)
 
         val segmentedButtonGroup = bottomSheetView.findViewById<SegmentedButtonGroup>(R.id.sbg1).apply {
             this.setOnPositionChangedListener {
@@ -75,21 +84,30 @@ class MainActivity : BaseActivity() {
                 when(it) {
                     0 -> {
                         opt2 = 0
-                        textView.text = "m"
+                        textInputLayout.suffixText = "m"
+                        textInputLayout.hint = "거리..."
                     }
                     1 -> {
                         opt2 = 1
-                        textView.text = "분"
+                        textInputLayout.suffixText = "min"
+                        textInputLayout.hint = "시간..."
                     }
                     2 -> {
                         opt2 = 2
-                        textView.text = "kcal"
+                        textInputLayout.suffixText = "kcal"
+                        textInputLayout.hint = "칼로리..."
                     }
                 }
             }
         }
 
-        val okayButton: Button = bottomSheetView.findViewById(R.id.button_okay)
+        editText.doOnTextChanged { _, _, _, _ ->
+            if (textInputLayout.isErrorEnabled) {
+                textInputLayout.isErrorEnabled = false
+            }
+        }
+
+        val okayButton: FloatingActionButton = bottomSheetView.findViewById(R.id.button_okay)
 
         okayButton.setOnClickListener {
             val inputNum = editText.text.toString().toIntOrNull()
@@ -119,6 +137,7 @@ class MainActivity : BaseActivity() {
                 intent.putExtra("speed", opt1)
                 startActivity(intent)
             } else {
+                textInputLayout.error = "숫자를 입력해주세요"
                 Toast.makeText(applicationContext,"숫자를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }

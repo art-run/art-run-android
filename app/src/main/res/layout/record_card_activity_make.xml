@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginHorizontal="20dp"
-        android:background="#C2C2C2"
+        android:background="#ECECEC"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/FixedMap"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/FixedMap">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,7 +35,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="현재거리"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -44,7 +45,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="시간"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textView15"
@@ -53,7 +55,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="평균속도"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -62,7 +65,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="소모칼로리"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,7 +83,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="m"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/mrcTime"
@@ -88,7 +93,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="00:00:00"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/mrcSpeed"
@@ -97,7 +103,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="km/h"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/mrcKcal"
@@ -106,7 +113,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="kcal"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -114,7 +122,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:orientation="vertical">
 
 
@@ -128,7 +136,7 @@
                     android:id="@+id/color_change"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/coloricon"
+                    android:background="@drawable/ic_color"
                     android:scaleType="fitCenter" />
 
                 <ImageButton
@@ -136,7 +144,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_baseline_line_style_24"
+                    android:background="@drawable/ic_line_style"
                     android:scaleType="fitCenter" />
 
                 <ImageButton
@@ -145,7 +153,7 @@
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/ic_outline_lock_24"
+                    android:background="@drawable/ic_lock"
                     android:scaleType="fitCenter" />
 
             </LinearLayout>
@@ -163,48 +171,43 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutEt"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mrcTitle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:padding="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="35dp"
+        android:background="@color/transparent"
+        android:hint="제목..."
+        android:textColorHint="@color/grey"
+        app:boxBackgroundColor="#ECECEC"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:counterTextColor="@color/grey"
         app:layout_constraintBottom_toTopOf="@id/FixedMap"
-        android:background="@drawable/shape1"
-        android:backgroundTint="#ECECEC">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/mrcTitle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/id_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="10dp"
-            app:counterEnabled="true"
-            app:counterMaxLength="10">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/id_title_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="제목..."
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:textColor="@color/darkGrey" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:textColor="@color/darkGrey" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/FixedMap"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_width="370dp"
+        android:layout_height="370dp"
         android:layout_marginHorizontal="20dp"
         map:cameraZoom="13"
-        map:layout_constraintTop_toBottomOf="@id/linearLayoutEt"
         map:layout_constraintBottom_toTopOf="@id/linearLayout6"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toBottomOf="@id/mrcTitle"
         map:liteMode="true"
         map:mapType="normal" />
 

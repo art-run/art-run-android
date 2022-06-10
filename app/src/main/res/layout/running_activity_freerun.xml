@@ -15,7 +15,7 @@
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@color/lightblack"
             app:layout_constraintTop_toTopOf="parent"
             app:subtitle="지도 위에 경로를 그려주세요.">
 
@@ -24,14 +24,14 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
-                android:background="@drawable/ic_baseline_undo_24" />
+                android:background="@drawable/ic_undo"/>
 
             <ImageButton
                 android:id="@+id/redoButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/ic_baseline_redo_24" />
+                android:background="@drawable/ic_redo" />
 
             <ImageButton
                 android:id="@+id/mapButton"
@@ -39,7 +39,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/ic_baseline_map_24" />
+                android:background="@drawable/ic_map" />
 
         </androidx.appcompat.widget.Toolbar>
 

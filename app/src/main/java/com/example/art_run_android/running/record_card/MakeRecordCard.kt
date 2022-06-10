@@ -2,6 +2,7 @@ package com.example.art_run_android.running.record_card
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -47,7 +48,7 @@ class MakeRecordCard : AppCompatActivity() {
         var lineStyle = "line"
 
         val title: TextInputEditText = findViewById(R.id.id_title_text)
-        val titleLayout : TextInputLayout = findViewById(R.id.mrcTitle)
+        val titleLayout: TextInputLayout = findViewById(R.id.mrcTitle)
         val mrcDist: TextView = findViewById(R.id.mrcDist)
         val mrcKcal: TextView = findViewById(R.id.mrcKcal)
         val mrcSpeed: TextView = findViewById(R.id.mrcSpeed)
@@ -64,12 +65,22 @@ class MakeRecordCard : AppCompatActivity() {
         mrcDist.text = intent.getIntExtra("distance", 0).toString() + " m"
         mrcSpeed.text = intent.getIntExtra("speed", 0).toString() + " km/h"
         mrcTime.text = formatTime(intent.getIntExtra("time", 0))
-        mrcKcal.text = intent.getIntExtra("kcal",0).toString() + " kcal"
+        mrcKcal.text = intent.getIntExtra("kcal", 0).toString() + " kcal"
 
         val callback = OnMapReadyCallback { googleMap ->
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(routeLocation, 16f))
             map = googleMap
             map.uiSettings.isMapToolbarEnabled = false
+
+            try {
+                val success = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style2))
+                if (!success) {
+                    Log.e("loading Style", "Style parsing failed.");
+                }
+            } catch (e : Resources.NotFoundException) {
+                Log.e("loading Style", "Can't find style. Error: ", e);
+            }
+
             polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(finalRoute))
             if (intent.hasExtra("fixRouteId")) {
                 val fixRouteId = intent.getIntExtra("fixRouteId", 0)
@@ -90,17 +101,17 @@ class MakeRecordCard : AppCompatActivity() {
         lockBtn.setOnClickListener {
             if (lockStatus) {
                 lockStatus = false
-                lockBtn.setBackgroundResource(R.drawable.ic_outline_lock_open_24)
+                lockBtn.setBackgroundResource(R.drawable.ic_lock_open)
 
             } else {
                 lockStatus = true
-                lockBtn.setBackgroundResource(R.drawable.ic_outline_lock_24)
+                lockBtn.setBackgroundResource(R.drawable.ic_lock)
             }
         }
 
         lineChange.setOnClickListener { view ->
-            var linemenu = PopupMenu(applicationContext, view)
-            menuInflater?.inflate(R.menu.card_line, linemenu.menu)
+            val linemenu = PopupMenu(applicationContext, view)
+            menuInflater.inflate(R.menu.card_line, linemenu.menu)
             linemenu.show()
             linemenu.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -124,16 +135,20 @@ class MakeRecordCard : AppCompatActivity() {
         }
 
         title.doOnTextChanged { _, _, _, _ ->
-            if(titleLayout.isErrorEnabled){
+            if (titleLayout.isErrorEnabled) {
                 titleLayout.isErrorEnabled = false
             }
         }
 
-        val linearLayout:LinearLayout=findViewById(R.id.linearLayout6)
+        val linearLayout: LinearLayout = findViewById(R.id.linearLayout6)
 
         colorChange.setOnClickListener {
-            val popUpView = layoutInflater.inflate(R.layout.record_card_popupmenu,null)
-            val colorPopUp = PopupWindow(popUpView,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            val popUpView = layoutInflater.inflate(R.layout.record_card_popupmenu, null)
+            val colorPopUp = PopupWindow(
+                popUpView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             colorPopUp.isFocusable = true
             val intArray = IntArray(2)
             linearLayout.getLocationInWindow(intArray)
@@ -142,10 +157,15 @@ class MakeRecordCard : AppCompatActivity() {
 
             colorPopUp.elevation = 20F
             colorPopUp.animationStyle = R.style.Animation
-            colorPopUp.showAtLocation(colorChange,Gravity.NO_GRAVITY,intArray[0] + width/2 ,intArray[1] - height/4*3)
+            colorPopUp.showAtLocation(
+                colorChange,
+                Gravity.NO_GRAVITY,
+                intArray[0] + width / 2,
+                intArray[1] - height / 4 * 3
+            )
 
-            val colorWheel : ColorWheel = popUpView.findViewById(R.id.colorWheel)
-            val gradientSeekBar : GradientSeekBar = popUpView.findViewById(R.id.gradientSeekBar)
+            val colorWheel: ColorWheel = popUpView.findViewById(R.id.colorWheel)
+            val gradientSeekBar: GradientSeekBar = popUpView.findViewById(R.id.gradientSeekBar)
 
             colorWheel.colorChangeListener = { rgb ->
                 gradientSeekBar.startColor = rgb
