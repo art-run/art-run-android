@@ -160,7 +160,7 @@ class MysocialFragment : Fragment() {
                                     response.body()?.get(i)?.title.toString(),
                                     response.body()?.get(i)?.distance.toString(),
                                     response.body()?.get(i)?.createdAt.toString(),
-                                polylineOptions)
+                                    polylineOptions)
 
                                 data.add(socialData)
 

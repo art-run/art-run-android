@@ -58,8 +58,7 @@ class RecyclerAdapter_Social(val profileList : MutableList<SocialData>,val conte
         val createdAt = itemView.findViewById<TextView>(R.id.item_date)
         val userImage= itemView.findViewById<ImageView>(R.id.user_image)
         var map = itemView.findViewById<MapView>(R.id.mapView5)
-
-        // val wktRunRoute = = itemView.findViewById<TextView>(R.id.item_image)
+        //val wktRunRoute = = itemView.findViewById<TextView>(R.id.item_image)
         //val drawRouteLayout = itemView.findViewById<FrameLayout>(R.id.drawRouteLayout)
 
     }
