@@ -58,7 +58,7 @@ class MysocialFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_profile)
 //        fragment = targetFragment!!.childFragmentManager
         fragment = childFragmentManager
-        CallRecentSocial(1)
+        CallMySocial(1)
 //        val profileList = arrayListOf(
 //            SocialData("","내이름", "123", "3", "2022-02-13" ),
 //            SocialData("","내이름", "adsf22", "1.5", "2022-02-13"),
@@ -72,7 +72,7 @@ class MysocialFragment : Fragment() {
 //        recyclerView.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
     }
 
-    private fun CallRecentSocial(lastRouteId:Int){
+    private fun CallMySocial(lastRouteId:Int){
         //retrofit 만들기
         var retrofit = Retrofit.Builder()
             .baseUrl("http://artrun.kro.kr:80")
@@ -80,20 +80,12 @@ class MysocialFragment : Fragment() {
             .build()
 
         var socialService = retrofit.create(SocialService::class.java)
-        val lastRouteId = 6
-//            DataContainer.user_id
-        //val memberHeader = DataContainer.memberHeader
-        var testtoken =
-            "Bearer {" + "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2NTMxMTkxODF9.200u47deSU9q0YujpaWWTe9C1HWtZ2iAJYyhKoXL2DBaHG5lDBxKdQzHcVSWQmQGttFSuidLVyjiPOq-lrnKuQ}"
-        //Log.i("데이터 확인", "lastRouteId : " + lastRouteId)
-        //Log.i("데이터 확인", "memberHeader : " + memberHeader)
+        val lastRouteId = 2
 
 
 
-        //여기부터 시작
-
-
-        socialService.MyRoutesInfo(DataContainer.header,lastRouteId)
+        Log.d("헤더정보 확인",DataContainer.header.toString())
+        socialService.MyRoutesInfo(DataContainer.header,lastRouteId.toString())
             .enqueue(object: Callback<List<SocialDClass>>{
                 //통신 실패시 실행되는 코드
                 override fun onFailure(call: Call<List<SocialDClass>>, t: Throwable) {
@@ -105,76 +97,37 @@ class MysocialFragment : Fragment() {
                     var serverCheck=response
                     Log.d("서버에서 소셜정보 받아오기 : 성공1",serverCheck.toString())
                     Log.d("서버에서 소셜정보 받아오기 : 성공2",serverCheck.body().toString())
-
-
-                    /*if(response.code()==400){
-                        Log.d("서버에서 소셜정보 받아오기 : 서버보내는 양식 다시",response.errorBody()?.string()!!)
-                    }*/
-                }
-            }
-            )
-        /*
-        socialService.RecnetRoutesInfo(memberHeader, lastRouteId)
-            .enqueue(object : Callback<List<SocialDClass>> {
-                //통신 성공시
-                override fun onResponse(
-                    call: Call<List<SocialDClass>>,
-                    response: Response<List<SocialDClass>>
-                ) {
-                    Log.d("route 1 : 데이터파싱 테스트", response.body()?.get(0)?.nickname.toString())
-                    Log.i("route 1", " ROUTE 1 SIZE : " + response.body()?.size)
+                    Log.d("사이즈",response.body()?.size.toString())
                     if(response.body()?.size == 0 || response.body()?.size == null){
-                        val profileList = arrayListOf(
-                            SocialData("", "내이름", "123", "3", "2022-02-13"),
-                            SocialData("", "내이름", "adsf22", "1.5", "2022-02-13"),
-                            SocialData("", "내이름", "qwer", "11", "2022-12-12"),
-                            SocialData("", "내이름", "qwer44", "0", "2021-11-11"),
-                            SocialData("", "내이름", "asdf", "3", "2022-02-13"),
-                            SocialData("", "내이름", "adsf22", "1.5", "2022-02-13"),
-                        )
-
-                        recyclerView.adapter = RecyclerAdapter_My(profileList,context,fragment)
-                        recyclerView.layoutManager =
-                            LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
+                        Log.d("이상하다 데이터가없는데",response.body()?.size.toString())
                     }else{
                         val size: Int? = response.body()?.size
                         if (size != null) {
-                            for(i: Int in size downTo size-5){
-                                val profileList = arrayListOf(
-                                    SocialData(
-                                        ""
-                                        , response.body()?.get(i)?.nickname.toString()
-                                        , response.body()?.get(i)?.title.toString()
-                                        , response.body()?.get(i)?.distance.toString()
-                                        , response.body()?.get(i)?.createdAt.toString())
-                                )
-                                recyclerView.adapter = RecyclerAdapter_My(profileList,context,fragment)
+                            Log.d("사이즈:4",response.body()?.size.toString())
+                            var data : MutableList<SocialData> = mutableListOf()
+
+                            for(i: Int in size-1 downTo size-lastRouteId+1){
+                                Log.d("여기부터",i.toString())
+                                var socialData=SocialData(
+                                    response.body()?.get(i)?.profileImg.toString(),
+                                    response.body()?.get(i)?.nickname.toString(),
+                                    response.body()?.get(i)?.title.toString(),
+                                    response.body()?.get(i)?.distance.toString(),
+                                    response.body()?.get(i)?.createdAt.toString())
+
+                                data.add(socialData)
+
+                                Log.d("socialData 확인",socialData.toString())
+                                Log.d("data 확인",data.toString())
+                                //data라는 이름으로 데이터리스트 생성 완료!(for문을 다 마치면!)
+                                recyclerView.adapter = RecyclerAdapter_My(data,view!!.context)
                                 recyclerView.layoutManager =
                                     LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
-                                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                                    override fun onScrolled(recyclerView: RecyclerView, dx:Int, dy:Int){
-                                        super.onScrolled(recyclerView, dx, dy)
-                                        // 스크롤이 끝에 도달했는지 확인
-                                        if (!recyclerView.canScrollVertically(1)) {
-                                            CallRecentSocial(size-5)
-                                        }
-                                    }
-                                })
-
-
-
                             }
                         }
                     }
                 }
-                //통신 실패시
-                override fun onFailure(call: Call<List<SocialDClass>>, t: Throwable) {
-                    Log.e("통신실패", t.localizedMessage.toString())
-//                     Toast.makeText(this,"통신 실패!", Toast.LENGTH_LONG).show()
-
-                }//통신 실패시
             }
-            )
-    */
+        )
     }
 }
