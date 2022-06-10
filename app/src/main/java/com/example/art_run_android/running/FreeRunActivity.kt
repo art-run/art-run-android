@@ -1,17 +1,20 @@
 package com.example.art_run_android.running
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.example.art_run_android.BaseActivity
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
 import com.google.android.gms.maps.model.Polyline
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.maps.android.PolyUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +32,20 @@ class FreeRunActivity : BaseActivity() {
         transaction.add(R.id.mapView2, mapsFragment)
         transaction.commit()
 
+        mapsFragment.setMapInitializedListener(object : MapsFragment.MapInitializedListener {
+            override fun onMapInitializedEvent() {
+                mapsFragment.setMyLocationBtn(false)
+            }
+        })
+
         val drawRouteView = DrawRouteView(this)
         val drawRouteLayout: FrameLayout = findViewById(R.id.drawRouteLayout)
+        val toolbar: Toolbar = findViewById(R.id.toolbar2)
+        val undoButton: ImageButton = findViewById(R.id.undoButton)
+        val redoButton: ImageButton = findViewById(R.id.redoButton)
+        undoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+        redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+
         drawRouteLayout.addView(drawRouteView)
         drawRouteView.SetStrokeListener(object : DrawRouteView.StrokeListener {
             override fun onStrokeEvent(pointList: MutableList<Point>) {
@@ -58,50 +73,63 @@ class FreeRunActivity : BaseActivity() {
                                 val polyline = PolyUtil.decode(it.geometry)
                                 mapsFragment.drawPolyline(polyline, false, false)
                             }
+                            redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+                            undoButton.backgroundTintList = null
 
                         } else { // code == 400
-                            // 실패 처리
+                            Log.d("get Match","통신 실패 : " + response.errorBody()?.string()!!)
+                            Toast.makeText(applicationContext,"도보 데이터를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
                         }
                     }
 
                     override fun onFailure(call: Call<RouteDataClass>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        Log.d("get Match", "통신 실패 : $t")
+                        Toast.makeText(applicationContext,"도보 데이터를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
                     }
                 })
-
-
             }
         })
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar2)
-        val undoButton: ImageButton = findViewById(R.id.undoButton)
         undoButton.setOnClickListener {
             mapsFragment.undoPolyline()
+            if(mapsFragment.undoPolylineList.size == 0){
+                undoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+            }
+            if(mapsFragment.redoPolylineList.size > 0){
+                redoButton.backgroundTintList = null
+            }
         }
 
-        val redoButton: ImageButton = findViewById(R.id.redoButton)
         redoButton.setOnClickListener {
             mapsFragment.redoPolyline()
+            if(mapsFragment.redoPolylineList.size == 0){
+                redoButton.backgroundTintList = ColorStateList.valueOf(getColor(R.color.darkGrey))
+            }
+            if(mapsFragment.undoPolylineList.size > 0){
+                undoButton.backgroundTintList = null
+            }
         }
 
         val mapButton: ImageButton = findViewById(R.id.mapButton)
         mapButton.setOnClickListener {
             if (drawRouteView.isVisible) {
-                mapButton.setImageResource(R.drawable.ic_outline_draw_24)
+                mapButton.setBackgroundResource(R.drawable.ic_round_edit_24)
                 redoButton.isVisible = false
                 undoButton.isVisible = false
                 drawRouteView.isVisible = false
                 toolbar.subtitle = "지도 위치를 조정하세요."
+                mapsFragment.setMyLocationBtn(true)
             } else {
-                mapButton.setImageResource(R.drawable.ic_baseline_map_24)
+                mapButton.setBackgroundResource(R.drawable.ic_map)
                 redoButton.isVisible = true
                 undoButton.isVisible = true
                 drawRouteView.isVisible = true
-                toolbar.subtitle = "지도 위에 경로 그림을 그려주세요."
+                toolbar.subtitle = "지도 위에 경로를 그려주세요."
+                mapsFragment.setMyLocationBtn(false)
             }
         }
 
-        val startButton: ImageButton = findViewById(R.id.startButton2)
+        val startButton: FloatingActionButton = findViewById(R.id.startButton2)
         startButton.setOnClickListener {
             if (mapsFragment.undoPolylineList.isNotEmpty()) {
                 val intent = Intent(this, RunningActivity::class.java)
@@ -125,16 +153,18 @@ class FreeRunActivity : BaseActivity() {
 
                         } else { // code == 400
                             Log.d("post route start","통신 실패 : " + response.errorBody()?.string()!!)
+                            Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_LONG).show()
                         }
                     }
 
                     override fun onFailure(call: Call<RouteId>, t: Throwable) {
                         Log.d("post route start", "통신 실패 : $t")
+                        Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_LONG).show()
                     }
 
                 })
             } else {
-                //그림그려주세요
+                Toast.makeText(applicationContext,"그려진 경로가 없습니다.", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -155,18 +185,6 @@ class FreeRunActivity : BaseActivity() {
                 }
             }
         }
-        /*
-        polylineList.forEach{ polyline ->
-            polyline.points.forEach {
-                sb.append(it.longitude.toString())
-                sb.append(" ")
-                sb.append(it.latitude.toString())
-                if(it != polylineList.last().points.last()) {
-                    sb.append(", ")
-                }
-            }
-        }
-         */
         sb.append(")")
 
         return sb.toString()

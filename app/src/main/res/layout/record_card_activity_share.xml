@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="35dp"
+        android:background="#ECECEC"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/ShareViewContainer"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/shareTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="10pt" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ShareViewContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout9">
+        <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+            android:id="@+id/sbStyle"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            app:position="0"
+            app:ripple="true"
+            app:rippleColor="@color/grey"
+            app:selectedBackground="@color/lightblack"
+            app:selectedButtonRadius="10dp">
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                app:drawableGravity="top"
+                app:selectedBackground="#e8eaed"
+                app:selectedTextColor="@color/white"
+                app:text="●"
+                app:textColor="#e8eaed"
+                app:textSize="15sp" />
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                app:drawableGravity="top"
+                app:selectedBackground="#e0d4ac"
+                app:selectedTextColor="@color/white"
+                app:text="●"
+                app:textColor="#e0d4ac"
+                app:textSize="15sp" />
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                app:drawableGravity="top"
+                app:selectedTextColor="@color/white"
+                app:selectedBackground="#212121"
+                app:text="●"
+                app:textColor="#212121"
+                app:textSize="15sp" />
+
+            <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                app:drawableGravity="top"
+                app:selectedTextColor="@color/white"
+                app:selectedBackground="#222e3f"
+                app:text="●"
+                app:textColor="#222e3f"
+                app:textSize="15sp" />
+
+        </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ShareView"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            app:cardCornerRadius="10dp">
+
+            <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ShareMap"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:layout_gravity="center"
+                map:cameraZoom="13"
+                map:liteMode="true"
+                map:mapType="normal" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="5dp">
+
+                <com.example.art_run_android.design.OutLineTextView
+                    android:id="@+id/srcDist"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="m"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:textStrokeColor="@color/white"
+                    app:textStrokeWidth="8" />
+
+                <com.example.art_run_android.design.OutLineTextView
+                    android:id="@+id/srcTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:00:00"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:textStrokeColor="@color/white"
+                    app:textStrokeWidth="8" />
+
+                <com.example.art_run_android.design.OutLineTextView
+                    android:id="@+id/srcSpeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="km/h"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:textStrokeColor="@color/white"
+                    app:textStrokeWidth="8" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ShareViewContainer"
+        app:layout_constraintTop_toBottomOf="@id/ShareViewContainer">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/share_show_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지도표시"
+            android:layout_marginTop="-10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/share_show_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="러닝통계표시"
+            android:textColor="@color/black"
+            android:layout_marginTop="-10dp"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginEnd="20dp">
+
+            <ImageButton
+                android:id="@+id/share_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_back" />
+
+            <ImageButton
+                android:id="@+id/share_select_SNS"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/ic_share" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

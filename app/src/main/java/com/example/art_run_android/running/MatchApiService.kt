@@ -17,7 +17,7 @@ interface MatchApiService {
 object OsrmClient {
     private val retrofitClient : Retrofit.Builder by lazy {
         Retrofit.Builder()
-            .baseUrl("https://routing.openstreetmap.de/")
+            .baseUrl("http://routing.openstreetmap.de/")
             .addConverterFactory(GsonConverterFactory.create())
     }
     val matchApiService: MatchApiService by lazy {
