@@ -74,6 +74,9 @@ class SocialFragment(private val isMine: Boolean) : Fragment() {
             override fun onItemClick(v: View, data: SocialDClass) {
                 val intent = Intent(requireContext(), CompleteRecordCard::class.java)
                 intent.putExtra("finishRouteID", data.routeId)
+                if(!isMine){
+                    intent.putExtra("public",true)
+                }
                 startActivity(intent)
             }
         })
@@ -101,13 +104,13 @@ class SocialFragment(private val isMine: Boolean) : Fragment() {
 
                 } else { // code == 400
                     Log.d("social $isMine", "통신 실패 " + DataContainer.userNumber.toString())
-                    Toast.makeText(requireContext(), "기록을 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "기록을 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<SocialDClass>>, t: Throwable) {
                 Log.d("social $isMine", "통신 실패 : $t")
-                Toast.makeText(requireContext(), "기록을 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "기록을 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         })
     }

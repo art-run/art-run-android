@@ -40,6 +40,12 @@ interface RouteApiService {
         @Header("Authorization") authorization: String?,
         @Path("routeId") routeId: Int
     ): Call<CompleteRoute>
+
+    @DELETE("/route/{routeId}")
+    fun deleteRoute(
+        @Header("Authorization") authorization: String?,
+        @Path("routeId") routeId: Int
+    ): Call<DELETE>
 }
 
 object ArtRunClient {

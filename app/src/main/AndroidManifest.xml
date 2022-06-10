@@ -85,7 +85,7 @@
             android:exported="false" />
         <activity
             android:name=".running.record_card.CompleteRecordCard"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".running.record_card.ShareRecordCard1"
             android:exported="false" />

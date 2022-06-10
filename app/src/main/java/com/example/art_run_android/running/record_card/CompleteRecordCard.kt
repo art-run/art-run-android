@@ -1,11 +1,13 @@
 package com.example.art_run_android.running.record_card
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.running_activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.DELETE
 import kotlin.math.roundToInt
 
 class CompleteRecordCard : AppCompatActivity() {
@@ -48,13 +51,15 @@ class CompleteRecordCard : AppCompatActivity() {
         lateinit var completeRoute: CompleteRoute
         lockButton.isVisible = false
 
+        if(intent.hasExtra("public")){
+            dotmenu.isVisible = false
+        }
+
         val callback = OnMapReadyCallback { googleMap ->
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.5662952, 126.97794509999994), 16f))
 
             map = googleMap
             map.uiSettings.isMapToolbarEnabled = false
-            val callGetRoute = ArtRunClient.routeApiService.getRoute(
-                DataContainer.header, finishRouteId)
 
             try {
                 val success = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style2))
@@ -64,6 +69,9 @@ class CompleteRecordCard : AppCompatActivity() {
             } catch (e : Resources.NotFoundException) {
                 Log.e("loading Style", "Can't find style. Error: ", e);
             }
+
+            val callGetRoute = ArtRunClient.routeApiService.getRoute(
+                DataContainer.header, finishRouteId)
 
             callGetRoute.enqueue(object : Callback<CompleteRoute> {
                 override fun onResponse(call: Call<CompleteRoute>, response: Response<CompleteRoute>) {
@@ -86,14 +94,14 @@ class CompleteRecordCard : AppCompatActivity() {
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
                         mapView.isVisible = false
-                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<CompleteRoute>, t: Throwable) {
                     Log.d("get route", "통신 실패 : $t")
                     mapView.isVisible = false
-                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -130,8 +138,24 @@ class CompleteRecordCard : AppCompatActivity() {
                         intent.putExtra("fixRouteId",finishRouteId)
                         intent.putExtra("lineColor",completeRoute.color)
                         intent.putExtra("title",completeRoute.title)
+                        intent.putExtra("isPublic",completeRoute.isPublic)
                         startActivity(intent)
                         Toast.makeText(applicationContext,"수정하기", Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.card_delete -> {
+                        val alertDialogBuilder = AlertDialog.Builder(this);
+                        alertDialogBuilder.setTitle("기록카드 삭제")
+                        alertDialogBuilder.setMessage("삭제하시겠습니까?")
+                        alertDialogBuilder.setNegativeButton("예"
+                        ) { _: DialogInterface, _: Int ->
+                            callDelete(finishRouteId)
+                        }
+                        alertDialogBuilder.setPositiveButton("아니오"
+                        ) { _: DialogInterface, _: Int ->
+                            return@setPositiveButton
+                        }
+                        alertDialogBuilder.show()
                         return@setOnMenuItemClickListener true
                     }
                     else ->{ return@setOnMenuItemClickListener false}
@@ -140,8 +164,7 @@ class CompleteRecordCard : AppCompatActivity() {
         }
 
         saveCardButton.setOnClickListener {
-            val intent = Intent(this, SocialActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
 
     }
@@ -149,7 +172,8 @@ class CompleteRecordCard : AppCompatActivity() {
     // 뒤로 가기 하면 수정으로 돌아가는 것을 막기위해 뒤로가기 금지
     // *** 버튼으로 메뉴 클릭 시 공유/ 수정하기로 넘어갈 수 있다..
     override fun onBackPressed(){
-        //
+        val intent = Intent(this, SocialActivity::class.java)
+        startActivity(intent)
     }
 
     private fun calculateCenterPosition(polyline: MutableList<LatLng>): LatLng {
@@ -180,5 +204,30 @@ class CompleteRecordCard : AppCompatActivity() {
         val seconds = String.format("%02d",((time%3600)%60))
 
         return "$hours:$minutes:$seconds"
+    }
+
+    private fun callDelete(routeId : Int){
+        val callDeleteRoute = ArtRunClient.routeApiService.deleteRoute(DataContainer.header,routeId)
+        callDeleteRoute.enqueue(object : Callback<DELETE> {
+            override fun onResponse(call: Call<DELETE>, response: Response<DELETE>) {
+                if (response.isSuccessful) { // <--> response.code == 200
+                    Log.d("delete route","통신 성공")
+                    Toast.makeText(applicationContext,"기록을 삭제했습니다.", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this@CompleteRecordCard, SocialActivity::class.java)
+                    finishAffinity()
+                    startActivity(intent)
+
+                } else { // code == 400
+                    Log.d("delete route","통신 실패 : " + response.errorBody()?.string()!!)
+                    Toast.makeText(applicationContext,"삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<DELETE>, t: Throwable) {
+                Log.d("delete route", "통신 실패 : $t")
+                Toast.makeText(applicationContext,"삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

@@ -138,7 +138,6 @@ class MainActivity : BaseActivity() {
                 startActivity(intent)
             } else {
                 textInputLayout.error = "숫자를 입력해주세요"
-                Toast.makeText(applicationContext,"숫자를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }

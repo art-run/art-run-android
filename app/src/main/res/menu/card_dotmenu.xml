@@ -7,5 +7,7 @@
     <item
         android:title="수정하기"
         android:id="@+id/card_back_to_make"/>
-
+    <item
+        android:title="삭제하기"
+        android:id="@+id/card_delete"/>
 </menu>

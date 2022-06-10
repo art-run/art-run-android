@@ -93,14 +93,14 @@ class ShareRecordCard1 : AppCompatActivity() {
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
                         mapView.isVisible = false
-                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<CompleteRoute>, t: Throwable) {
                     Log.d("get route", "통신 실패 : $t")
                     mapView.isVisible = false
-                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                 }
             })
         }

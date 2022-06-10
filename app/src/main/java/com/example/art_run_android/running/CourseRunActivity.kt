@@ -71,19 +71,19 @@ class CourseRunActivity : BaseActivity() {
 
                         } else { // code == 400
                             Log.d("post route start", "통신 실패 : " + response.errorBody()?.string()!!)
-                            Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<RouteId>, t: Throwable) {
                         Log.d("post route start", "통신 실패 : $t")
-                        Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext,"서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
                     }
 
                 })
 
             } else {
-                Toast.makeText(applicationContext,"선택된 경로가 없습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"선택된 경로가 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -141,13 +141,13 @@ class CourseRunActivity : BaseActivity() {
 
                         } else { // code == 400
                             Log.d("경로 추천 보간", "통신 실패 : ")
-                            Toast.makeText(applicationContext,"경로를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext,"경로를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<RecommendedRoute>, t: Throwable) {
                         Log.d("경로 추천 보간", "통신 실패 : $t")
-                        Toast.makeText(applicationContext,"추천 경로를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext,"추천 경로를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
                 })
 
@@ -184,13 +184,13 @@ class CourseRunActivity : BaseActivity() {
 
                 } else { // code == 400
                     Log.d("경로 추천", "통신 실패")
-                    Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<RecommendedRoute>>, t: Throwable) {
                 Log.d("경로 추천", "통신 실패 : $t")
-                Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"추천 경로를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -88,6 +88,15 @@ class MakeRecordCard : AppCompatActivity() {
                 if (intent.hasExtra("lineColor")) {
                     polyline.color = intent.getStringExtra("lineColor")!!.toInt()
                 }
+                if(intent.hasExtra("isPublic")) {
+                    lockStatus = !intent.getBooleanExtra("isPublic",false)
+                    if (lockStatus) {
+                        lockBtn.setBackgroundResource(R.drawable.ic_lock)
+
+                    } else {
+                        lockBtn.setBackgroundResource(R.drawable.ic_lock_open)
+                    }
+                }
                 startRouteId = fixRouteId
             }
         }
@@ -224,7 +233,7 @@ class MakeRecordCard : AppCompatActivity() {
                             Toast.makeText(
                                 applicationContext,
                                 "서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.",
-                                Toast.LENGTH_LONG
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
@@ -234,13 +243,13 @@ class MakeRecordCard : AppCompatActivity() {
                         Toast.makeText(
                             applicationContext,
                             "서버와 연결하는 데 실패했습니다.\n다시 시도해 주세요.",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 })
             } else {
                 titleLayout.error = "제목을 입력해 주세요"
-                Toast.makeText(applicationContext, "제목을 입력해 주세요", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "제목을 입력해 주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }
