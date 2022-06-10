@@ -1,4 +1,4 @@
-package com.example.art_run_android.running
+package com.example.art_run_android
 
 import android.content.Context
 import android.content.res.Resources
@@ -6,32 +6,33 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.art_run_android.R
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
 
-class CourseAdapter(private val context: Context) :
-    RecyclerView.Adapter<CourseAdapter.ViewHolder>() {
+class SocialAdapter(private val context: Context) :
+    RecyclerView.Adapter<SocialAdapter.ViewHolder>() {
 
-    var recommendedRoutes = mutableListOf<RecommendedRoute>()
+    var socialRoutes = mutableListOf<SocialDClass>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.running_item_courserun, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.social_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = recommendedRoutes.size
+    override fun getItemCount(): Int = socialRoutes.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(recommendedRoutes[position])
+        holder.bind(socialRoutes[position])
     }
 
     interface OnItemClickListener {
-        fun onItemClick(v: View, data: RecommendedRoute)
+        fun onItemClick(v: View, data: SocialDClass)
     }
 
     private var listener: OnItemClickListener? = null
@@ -42,15 +43,18 @@ class CourseAdapter(private val context: Context) :
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), OnMapReadyCallback {
 
-        private val txtName: TextView = itemView.findViewById(R.id.courseName)
-        private val txtDistance: TextView = itemView.findViewById(R.id.courseDist)
-        private val mapView: MapView = itemView.findViewById<MapView?>(R.id.courseMap).apply {
+        val nickname: TextView = itemView.findViewById(R.id.user_nickname)
+        val title: TextView = itemView.findViewById(R.id.item_title)
+        val distance: TextView = itemView.findViewById(R.id.item_detail)
+        private val createdAt: TextView = itemView.findViewById(R.id.item_date)
+        private val userImage: ImageView = itemView.findViewById(R.id.user_image)
+        private val mapView: MapView = itemView.findViewById<MapView?>(R.id.rvSocialMV).apply {
             this.isClickable = false
         }
         private lateinit var map: GoogleMap
         private var centerLatLng = LatLng(37.5662952, 126.97794509999994)
         private var polyline = mutableListOf<LatLng>()
-        private var recommendationId = -1
+        private var routeId = -1
 
         init {
             with(mapView) {
@@ -69,12 +73,15 @@ class CourseAdapter(private val context: Context) :
             }
         }
 
-        fun bind(item: RecommendedRoute) {
-            txtName.text = item.title
-            txtDistance.text = item.distance.toString() + "m"
-            polyline = wktToPolyline(item.wktRoute)
+        fun bind(item: SocialDClass) {
+            nickname.text = item.nickname
+            title.text = item.title
+            distance.text = item.distance.toString() + "m"
+            createdAt.text = item.createdAt
+            Glide.with(context).load(item.profileImg).into(userImage)
+            polyline = wktToPolyline(item.wktRunRoute)
             centerLatLng = calculateCenterPosition(polyline)
-            recommendationId = item.id
+            routeId = item.routeId
             setMapLocation()
 
             itemView.setOnClickListener {

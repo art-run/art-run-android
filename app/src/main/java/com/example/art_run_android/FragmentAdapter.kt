@@ -1,7 +1,5 @@
 package com.example.art_run_android
 
-
-import android.view.ViewGroup
 import androidx.fragment.app.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
@@ -10,9 +8,8 @@ class FragmentAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fragme
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> RecentsocialFragment()
-            else -> MysocialFragment()
-            //else -> Error()
+            0 -> SocialFragment(false)
+            else -> SocialFragment(true)
         }
     }
 }

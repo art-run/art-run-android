@@ -13,21 +13,14 @@ import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.example.art_run_android.DataContainer.Companion.userProfileImg
-import com.example.art_run_android.databinding.BaseHeaderBinding
 import com.example.art_run_android.running.MainActivity
 import com.example.art_run_android.member_management.SelectSettingsActivity
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.navigation.NavigationView
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_my.*
 import java.net.URL
-import java.security.AccessController.getContext
 
 open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,7 +63,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         //이건 glide를 사용해본 것
         val url = userProfileImg
         val imageView = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.img_sideProfile)
-        Glide.with(App.context())        //context어떻게 넣지...
+        Glide.with(this)        //context어떻게 넣지...
             .load(url) // 불러올 이미지 url
             .placeholder(R.mipmap.ic_artrun) // 이미지 로딩 시작하기 전 표시할 이미지
             .error(R.drawable.example_picture) // 로딩 에러 발생 시 표시할 이미지
