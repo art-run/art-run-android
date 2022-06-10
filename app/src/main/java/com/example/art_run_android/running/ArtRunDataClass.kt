@@ -15,7 +15,7 @@ data class RouteStartRequest(
 data class RouteFinishRequest(
     val color: String,
     val distance: Int,
-    val isPublic: Boolean,
+    val isPublic: Int,
     val kcal: Int,
     val memberId: Int,
     val routeId: Int,

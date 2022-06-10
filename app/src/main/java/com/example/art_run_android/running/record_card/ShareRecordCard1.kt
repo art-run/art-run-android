@@ -1,17 +1,23 @@
 package com.example.art_run_android.running.record_card
 
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
+import androidx.cardview.widget.CardView
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import com.addisonelliott.segmentedbutton.SegmentedButtonGroup
 import com.example.art_run_android.DataContainer
 import com.example.art_run_android.R
+import com.example.art_run_android.design.OutLineTextView
 import com.example.art_run_android.running.ArtRunClient
 import com.example.art_run_android.running.CompleteRoute
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,32 +25,45 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import kotlinx.android.synthetic.main.running_activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.roundToInt
 
 
 class ShareRecordCard1 : AppCompatActivity() {
     private lateinit var map: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share_record_card1)
-        val showmap: Switch = findViewById(R.id.share_show_map)
-        val showstats : Switch = findViewById(R.id.share_show_statistic)
+        setContentView(R.layout.record_card_activity_share)
+        val showmap: SwitchCompat = findViewById(R.id.share_show_map)
+        val showstats : SwitchCompat = findViewById(R.id.share_show_statistic)
         val back : ImageButton = findViewById(R.id.share_back)
         val goto_share: ImageButton = findViewById(R.id.share_select_SNS)
-        val frameLayout : FrameLayout = findViewById(R.id.ShareView)
+        val cardView : CardView = findViewById(R.id.ShareView)
         val linearLayout : LinearLayout = findViewById(R.id.linearLayout8)
+
         val shareTitle : TextView = findViewById(R.id.shareTitle)
+        val srcDist: OutLineTextView = findViewById(R.id.srcDist)
+        val srcSpeed: OutLineTextView = findViewById(R.id.srcSpeed)
+        val srcTime: OutLineTextView = findViewById(R.id.srcTime)
 
         val finishRouteId = intent.getIntExtra("finishRouteId",0)
 
         lateinit var bm:Bitmap
+
+        var mapStatus = true
+        var mapStyle = 0
+
+        val mapView: MapView = findViewById<MapView?>(R.id.ShareMap).apply {
+            this.isClickable = false
+            this.onCreate(null)
+        }
 
         val callback = OnMapReadyCallback { googleMap ->
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.5662952, 126.97794509999994), 16f))
@@ -52,6 +71,8 @@ class ShareRecordCard1 : AppCompatActivity() {
             map.uiSettings.isMapToolbarEnabled = false
             val callGetRoute = ArtRunClient.routeApiService.getRoute(
                 DataContainer.header, finishRouteId)
+
+            setMapStyle(mapStatus,mapStyle)
 
             callGetRoute.enqueue(object : Callback<CompleteRoute> {
                 override fun onResponse(call: Call<CompleteRoute>, response: Response<CompleteRoute>) {
@@ -65,30 +86,30 @@ class ShareRecordCard1 : AppCompatActivity() {
                         val polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(polylinePrim))
                         polyline.color = completeRoute.color.toInt()
                         shareTitle.text = completeRoute.title
-
+                        srcDist.text = "${completeRoute.distance} m"
+                        srcSpeed.text = "${completeRoute.speed.roundToInt()} km/h"
+                        srcTime.text = formatTime(completeRoute.time)
 
                     } else { // code == 400
                         Log.d("get route","통신 실패 : " + response.errorBody()?.string()!!)
+                        mapView.isVisible = false
+                        Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<CompleteRoute>, t: Throwable) {
                     Log.d("get route", "통신 실패 : $t")
+                    mapView.isVisible = false
+                    Toast.makeText(applicationContext,"데이터를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                 }
-
             })
         }
-
-        val mapView: MapView = findViewById<MapView?>(R.id.ShareMap).apply {
-            this.isClickable = false
-            this.onCreate(null)
-            this.getMapAsync(callback)
-        }
+        mapView.getMapAsync(callback)
 
         // 이미지 공유 기능 ( 찾는 중.. )
         goto_share.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
-            bm = getBitmapFromView(frameLayout)
+            bm = getBitmapFromView(cardView)
             val uri: Uri? = saveImage(bm)
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_STREAM, uri)
@@ -100,20 +121,50 @@ class ShareRecordCard1 : AppCompatActivity() {
         back.setOnClickListener {
             finish()
         }
+
+        val segmentedButtonGroup = findViewById<SegmentedButtonGroup>(R.id.sbStyle).apply {
+            this.setOnPositionChangedListener {
+                mapStyle = it
+                setMapStyle(mapStatus,mapStyle)
+                when(it){
+                    0,1 -> {
+                        srcDist.setTextColor(Color.BLACK)
+                        srcDist.strokeColor = Color.WHITE
+                        srcSpeed.setTextColor(Color.BLACK)
+                        srcSpeed.strokeColor = Color.WHITE
+                        srcTime.setTextColor(Color.BLACK)
+                        srcTime.strokeColor = Color.WHITE
+                    }
+                    2,3 -> {
+                        srcDist.setTextColor(Color.WHITE)
+                        srcDist.strokeColor = Color.BLACK
+                        srcSpeed.setTextColor(Color.WHITE)
+                        srcSpeed.strokeColor = Color.BLACK
+                        srcTime.setTextColor(Color.WHITE)
+                        srcTime.strokeColor = Color.BLACK
+                    }
+                }
+            }
+        }
+
         // 지도 표시 스위치, 기본으로 표시를 한다
         showmap.isChecked = true
-        showmap.setOnCheckedChangeListener { CompoundButton, onSwitch ->
+        showmap.setOnCheckedChangeListener { _, onSwitch ->
             if(onSwitch){
                 Toast.makeText(applicationContext,"지도 표시",Toast.LENGTH_SHORT).show()
+                mapStatus = true
+                setMapStyle(mapStatus,mapStyle)
             }
             else{
                 Toast.makeText(applicationContext,"지도 표시 해제",Toast.LENGTH_SHORT).show()
+                mapStatus = false
+                setMapStyle(mapStatus,mapStyle)
             }
         }
 
         // 통계 표시 스위치 , 기본으로 표시 해놓는다.
         showstats.isChecked = true
-        showstats.setOnCheckedChangeListener { CompoundButton, onSwitch ->
+        showstats.setOnCheckedChangeListener { _, onSwitch ->
             if(onSwitch){
                 Toast.makeText(applicationContext,"통계 표시",Toast.LENGTH_SHORT).show()
                 linearLayout.isVisible = true
@@ -134,7 +185,6 @@ class ShareRecordCard1 : AppCompatActivity() {
     }
 
     private fun saveImage(image: Bitmap): Uri? {
-        //TODO - Should be processed in another thread
         val imagesFolder = File(cacheDir, "images")
         var uri: Uri? = null
         try {
@@ -171,5 +221,41 @@ class ShareRecordCard1 : AppCompatActivity() {
             }
         }
         return polyline
+    }
+
+    private fun formatTime(time : Int): String {
+        val hours = String.format("%02d", time/3600)
+        val minutes = String.format("%02d",(time%3600)/60)
+        val seconds = String.format("%02d",((time%3600)%60))
+
+        return "$hours:$minutes:$seconds"
+    }
+
+    private fun setMapStyle(mapStatus:Boolean, mapStyle: Int){
+        try {
+            val success = if (mapStatus) {
+                when(mapStyle) {
+                    0 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_on1))
+                    1 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_on2))
+                    2 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_on3))
+                    3 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_on4))
+                    else -> true
+                }
+            } else {
+                when(mapStyle) {
+                    0 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_off1))
+                    1 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_off2))
+                    2 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_off3))
+                    3 -> map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.share_style_off4))
+                    else -> true
+                }
+            }
+
+            if (!success) {
+                Log.e("loading Style", "Style parsing failed.");
+            }
+        } catch (e : Resources.NotFoundException) {
+            Log.e("loading Style", "Can't find style. Error: ", e);
+        }
     }
 }

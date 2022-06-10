@@ -32,28 +32,35 @@ class MapsFragment : Fragment() {
 
     private val DEFAULT_ZOOM_LEVEL = 16f
 
-    private var defaultLocation = LatLng(37.5662952, 126.97794509999994)
+    var defaultLocation = LatLng(37.5662952, 126.97794509999994)
 
     var currentLocation = defaultLocation
 
     private fun checkPermissions(): Boolean {
-
         for (permission in PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(requireActivity(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireActivity(),
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
     val undoPolylineList = mutableListOf<Polyline>()
-    private val redoPolylineList = mutableListOf<MutableList<LatLng>>()
+    val redoPolylineList = mutableListOf<MutableList<LatLng>>()
     private var lastLatLng: LatLng? = null
     lateinit var thisGoogleMap: GoogleMap
     lateinit var mapReadyListener: MapInitializedListener
@@ -61,21 +68,28 @@ class MapsFragment : Fragment() {
     @SuppressLint("MissingPermission")
     val callback = OnMapReadyCallback { googleMap ->
         googleMap.uiSettings.isMyLocationButtonEnabled = false
-
         when {
             checkPermissions() -> {
                 googleMap.isMyLocationEnabled = true
-                getMyLocation()
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
+                getMyLocation(true)
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLocation,
+                        DEFAULT_ZOOM_LEVEL
+                    )
+                )
             }
             else -> {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM_LEVEL))
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        defaultLocation,
+                        DEFAULT_ZOOM_LEVEL
+                    )
+                )
             }
         }
         thisGoogleMap = googleMap
-        if(this.activity!!::class.simpleName == RunningActivity::class.simpleName) {
-            mapReadyListener.onMapInitializedEvent()
-        }
+        mapReadyListener.onMapInitializedEvent()
     }
 
     override fun onCreateView(
@@ -87,17 +101,23 @@ class MapsFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    fun getMyLocation() {
-        val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+    fun getMyLocation(move: Boolean) {
+        val mFusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
         mFusedLocationClient.lastLocation
             .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
                 location?.let {
                     currentLocation = LatLng(it.latitude, it.longitude)
-                    thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
+                    if (move) {
+                        thisGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
+                    }
                 }
             }
             .addOnFailureListener { e ->
-                Log.d("MapsFragment@${activity!!::class.simpleName}", "Error trying to get last GPS location")
+                Log.d(
+                    "MapsFragment@${activity!!::class.simpleName}",
+                    "Error trying to get last GPS location"
+                )
                 e.printStackTrace()
             }
     }
@@ -122,15 +142,16 @@ class MapsFragment : Fragment() {
         }
     }
 
-    fun drawPolyline(polyline: List<LatLng>, isRedo: Boolean, isRunning: Boolean) : Polyline{
-        val result = thisGoogleMap.addPolyline(PolylineOptions().clickable(true).addAll(polyline)).apply {
-            undoPolylineList.add(this)
-        }
+    fun drawPolyline(polyline: List<LatLng>, isRedo: Boolean, isRunning: Boolean): Polyline {
+        val result =
+            thisGoogleMap.addPolyline(PolylineOptions().clickable(true).addAll(polyline)).apply {
+                undoPolylineList.add(this)
+            }
         lastLatLng = polyline.last()
         if (!isRedo) {
             redoPolylineList.clear()
         }
-        if(isRunning) {
+        if (isRunning) {
             result.pattern = listOf(Dash(20F), Gap(20F))
             result.color = Color.GRAY
         }
@@ -164,5 +185,18 @@ class MapsFragment : Fragment() {
 
     fun setMapInitializedListener(listener: MapInitializedListener) {
         mapReadyListener = listener
+    }
+
+    fun setMyLocationBtn(boolean: Boolean) {
+        thisGoogleMap.uiSettings.isMyLocationButtonEnabled = boolean
+    }
+
+    fun animateCamera() {
+        thisGoogleMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                currentLocation,
+                DEFAULT_ZOOM_LEVEL
+            )
+        )
     }
 }
