@@ -87,6 +87,7 @@ class MakeRecordCard : AppCompatActivity() {
                 title.setText(intent.getStringExtra("title"))
                 if (intent.hasExtra("lineColor")) {
                     polyline.color = intent.getStringExtra("lineColor")!!.toInt()
+                    lineColor = intent.getStringExtra("lineColor")!!
                 }
                 if(intent.hasExtra("isPublic")) {
                     lockStatus = !intent.getBooleanExtra("isPublic",false)
