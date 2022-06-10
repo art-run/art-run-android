@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
+        <entry key="../../../../layout/custom_preview.xml" value="0.22714385986328126" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/edge.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/edit_to_map.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic__034354_border_dashed_icon.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/ic__034399_border_dotted_icon.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/ic__081120_line_dotted_icon.xml" value="0.141" />
         <entry key="app/src/main/res/drawable/ic_arrow_forward.xml" value="0.141" />
         <entry key="app/src/main/res/drawable/ic_artrun_background.xml" value="0.1635" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.20371246337890625" />
@@ -25,6 +28,10 @@
         <entry key="app/src/main/res/drawable/ic_baseline_stop_circle_24.xml" value="0.174" />
         <entry key="app/src/main/res/drawable/ic_baseline_undo_24.xml" value="0.11" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_line.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/ic_line_dotted.xml" value="0.153912353515625" />
+        <entry key="app/src/main/res/drawable/ic_line_style.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/ic_line_style2.xml" value="0.154360595703125" />
         <entry key="app/src/main/res/drawable/ic_map.xml" value="0.158" />
         <entry key="app/src/main/res/drawable/ic_navigation_menu.xml" value="0.1245" />
         <entry key="app/src/main/res/drawable/ic_outline_draw_24.xml" value="0.174" />
@@ -80,7 +87,7 @@
         <entry key="app/src/main/res/layout/appbar.xml" value="0.154986572265625" />
         <entry key="app/src/main/res/layout/base_activity_base.xml" value="0.1" />
         <entry key="app/src/main/res/layout/base_appbar.xml" value="0.40718562874251496" />
-        <entry key="app/src/main/res/layout/base_header.xml" value="0.4538799130257324" />
+        <entry key="app/src/main/res/layout/base_header.xml" value="0.18562734954916985" />
         <entry key="app/src/main/res/layout/bottomsheet_setcourse.xml" value="0.2039333048311244" />
         <entry key="app/src/main/res/layout/content_test.xml" value="0.19794784095767423" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.17724388032638258" />
@@ -93,8 +100,8 @@
         <entry key="app/src/main/res/layout/header.xml" value="0.12297973632812498" />
         <entry key="app/src/main/res/layout/ic_pause.xml" value="0.19794784095767423" />
         <entry key="app/src/main/res/layout/ic_tick.xml" value="0.19794784095767423" />
-        <entry key="app/src/main/res/layout/item_my.xml" value="0.10218041898247114" />
-        <entry key="app/src/main/res/layout/item_social.xml" value="0.13467293715262932" />
+        <entry key="app/src/main/res/layout/item_my.xml" value="0.20225219726562502" />
+        <entry key="app/src/main/res/layout/item_social.xml" value="0.18514443373466058" />
         <entry key="app/src/main/res/layout/layer_button_checked.xml" value="0.1470713980333476" />
         <entry key="app/src/main/res/layout/layer_button_unchecked.xml" value="0.13766566908935443" />
         <entry key="app/src/main/res/layout/map_fragment_maps.xml" value="0.14460562103354488" />
@@ -102,8 +109,24 @@
         <entry key="app/src/main/res/layout/member_management_activity_delete_account.xml" value="0.10517315091919624" />
         <entry key="app/src/main/res/layout/member_management_activity_login.xml" value="0.19794784095767423" />
         <entry key="app/src/main/res/layout/member_management_activity_sign_up2.xml" value="0.10816588285592134" />
-
+        <entry key="app/src/main/res/layout/popupmenu.xml" value="0.1671654553227875" />
+        <entry key="app/src/main/res/layout/record_card_activity_compelete.xml" value="0.24193115234375012" />
+        <entry key="app/src/main/res/layout/record_card_activity_make.xml" value="0.16021536230071776" />
+        <entry key="app/src/main/res/layout/record_card_activity_share.xml" value="0.15312347412109378" />
+        <entry key="app/src/main/res/layout/record_card_popupmenu.xml" value="0.1958459530236586" />
+        <entry key="app/src/main/res/layout/record_card_popupmenu_line.xml" value="0.8728425290262094" />
+        <entry key="app/src/main/res/layout/running_activity_courserun.xml" value="0.36069946289062493" />
+        <entry key="app/src/main/res/layout/running_activity_freerun.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/running_activity_main.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/running_activity_running.xml" value="0.15601043701171877" />
+        <entry key="app/src/main/res/layout/running_bottomsheet_setcourse.xml" value="0.5025769534247635" />
+        <entry key="app/src/main/res/layout/running_courserun_item.xml" value="0.12111511230468751" />
+        <entry key="app/src/main/res/layout/running_courserunitem.xml" value="0.12270200940572894" />
+        <entry key="app/src/main/res/layout/running_item_courserun.xml" value="0.5010526315789474" />
+        <entry key="app/src/main/res/layout/selector_radio_button.xml" value="0.14920906370243694" />
+        <entry key="app/src/main/res/layout/selector_radio_text.xml" value="0.1470713980333476" />
         <entry key="app/src/main/res/layout/settings_activity.xml" value="0.13467293715262932" />
+        <entry key="app/src/main/res/layout/social_item.xml" value="0.10788757932910245" />
         <entry key="app/src/main/res/menu/card_color.xml" value="0.2265731811523437" />
         <entry key="app/src/main/res/menu/card_dotmenu.xml" value="0.42416229248046877" />
         <entry key="app/src/main/res/menu/card_line.xml" value="0.3005096435546875" />
