@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_artrun_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
+        android:name=".App"
         android:usesCleartextTraffic="true">
 
         <activity

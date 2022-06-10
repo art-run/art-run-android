@@ -1,6 +1,7 @@
 package com.example.art_run_android
 
 import com.google.gson.annotations.SerializedName
+import com.google.maps.android.data.LineString
 
 
 data class SocialDClass(

@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.art_run_android.databinding.FragmentRecentsocialBinding
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_recentsocial.*
+import kotlinx.android.synthetic.main.item_social.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +44,8 @@ class RecentsocialFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -60,7 +66,7 @@ class RecentsocialFragment : Fragment() {
 
     }
 
-    private fun CallRecentSocial(lastRouteId:Int){
+    fun CallRecentSocial(lastRouteId:Int){
         //retrofit 만들기
         var retrofit = Retrofit.Builder()
             .baseUrl("http://artrun.kro.kr:80")
@@ -68,7 +74,7 @@ class RecentsocialFragment : Fragment() {
             .build()
 
         var socialService = retrofit.create(SocialService::class.java)
-        val lastRouteId = 6
+        val lastRouteId = ""
 
 
 
@@ -94,14 +100,61 @@ class RecentsocialFragment : Fragment() {
                             Log.d("사이즈:4",response.body()?.size.toString())
                             var data : MutableList<SocialData> = mutableListOf()
 
-                            for(i: Int in size-1 downTo size-lastRouteId+1){
+                            for(i: Int in 0 .. size-1){
+
                                 Log.d("여기부터",i.toString())
+
+                                //우선 wktroute자료부터 polylineOptions에 담자.
+                                var wktRoute:String?=response.body()?.get(i)?.wktRunRoute.toString()
+                                Log.d("루트타입","${wktRoute?.javaClass?.name}")
+                                Log.d("루트보기",wktRoute.toString())
+                                wktRoute=wktRoute?.replace("LINESTRING (","")
+                                wktRoute=wktRoute?.replace(")","")
+                                wktRoute=wktRoute?.replace("  ","")
+                                Log.d("루트에서 잡스러운것 다 빼기",wktRoute.toString())
+
+                                var wktRouteList: List<String> = wktRoute?.split(",")!!.toList()
+                                Log.d("루트만의 리스트 확인",wktRouteList.toString())
+
+                                val polylineOptions = PolylineOptions()
+                                for(i in 0..wktRouteList.size-1){
+                                    if (i==0) {
+                                        var lat = wktRouteList[i].split(" ")[1].toDouble()
+                                        Log.d("여기는 잘되나 lat", lat.toString())
+
+                                        var lng = wktRouteList[i].split(" ")[0].toDouble()
+                                        Log.d("여기는 잘되나 lng", lng.toString())
+
+                                        polylineOptions
+                                            .add(LatLng(lat, lng))
+                                    }
+                                    else{ //첫번째를 제외하고는!
+                                        var lat = wktRouteList[i].split(" ")[2].toDouble()
+                                        Log.d("여기는 잘되나 lat", lat.toString())
+
+                                        var lng = wktRouteList[i].split(" ")[1].toDouble()
+                                        Log.d("여기는 잘되나 lng", lng.toString())
+
+                                        polylineOptions
+                                            .add(LatLng(lat, lng))
+                                    }
+                                }
+
+
+                                Log.d("폴리라인 잘그려졌나",polylineOptions.toString())
+                                //var map = recyclerView.findViewById<MapView>(R.id.mapView5)
+
+
+
+                                //뷰에 표시할 데이터 만들기
                                 var socialData=SocialData(
                                     response.body()?.get(i)?.profileImg.toString(),
                                     response.body()?.get(i)?.nickname.toString(),
                                     response.body()?.get(i)?.title.toString(),
                                     response.body()?.get(i)?.distance.toString(),
-                                    response.body()?.get(i)?.createdAt.toString())
+                                    response.body()?.get(i)?.createdAt.toString(),
+                                    polylineOptions
+                                    )
 
                                 data.add(socialData)
 
@@ -111,6 +164,23 @@ class RecentsocialFragment : Fragment() {
                                 recyclerView.adapter = RecyclerAdapter_Social(data,view!!.context)
                                 recyclerView.layoutManager =
                                     LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
+                                /*
+                                //시작
+                                recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+                                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                        super.onScrolled(recyclerView, dx, dy)
+                                        val lastVisibleItemPosition =
+                                            (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                                        val itemTotalCount = recyclerView.adapter!!.itemCount-1
+                                        // 스크롤이 끝에 도달했는지 확인
+                                        if (recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                                            CallRecentSocial(4)
+                                        }
+                                    }
+                                })
+                                //끝
+
+                                 */
 
                             }
                         }

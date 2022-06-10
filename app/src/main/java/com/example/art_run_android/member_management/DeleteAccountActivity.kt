@@ -37,7 +37,7 @@ class DeleteAccountActivity : AppCompatActivity() {
         var loginService=retrofit.create(LoginService::class.java)
 
 
-        //확인 버튼을 눌렀을 때 비밀번호가 맞다면 서버가 요청하는 데이터클래스를 생성해 보내준다.
+        //확인 버튼을 눌렀을 때 이메일이 맞다면 서버가 요청하는 데이터클래스를 생성해 보내준다.
 
         binding.btnDeleteAccountConfirm.setOnClickListener{
             if(binding.textEmail.text.toString()==DataContainer.userEmail){
@@ -57,13 +57,13 @@ class DeleteAccountActivity : AppCompatActivity() {
                             //val signupCheck=response.body()?.email.toString()
                             var deleteCheck=response
                             Log.d("계정 삭제",deleteCheck.toString())
-                            Log.d("계정삭제2",deleteCheck.body().toString())
+                            Log.d("계정 삭제2",deleteCheck.body().toString())
                             if(response.code()==204 || response.code()==200){
                                 Toast.makeText(this@DeleteAccountActivity,"계정이 정상적으로 삭제되었습니다.", Toast.LENGTH_LONG).show()
                             }
 
                             else if(response.code()==400){
-                                Log.d("이메일 중복확인2 : 중복임",response.errorBody()?.string()!!)
+                                Log.d("계정삭제 서버접속 실패",response.errorBody()?.string()!!)
 
                                 Toast.makeText(this@DeleteAccountActivity,"계정이 정상적으로 삭제되지 않았습니다.", Toast.LENGTH_LONG).show()
                             }
